@@ -30,7 +30,8 @@ public class LookingScript : MonoBehaviour {
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.y));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
 
-            //Debug.Log(newPoint);
+            //if()
+
         }
     }
 
@@ -46,27 +47,62 @@ public class LookingScript : MonoBehaviour {
 
         float lookAngleDeg = lookAngle * Mathf.Rad2Deg;
 
-        //Debug.Log(prevAngle + " vs " + lookAngleDeg);
-
         if(lookAngleDeg < 0)
         {
             lookAngleDeg = lookAngleDeg + 360;
         }
 
+        float distRight = lookAngleDeg;
+        float distLeft = 360 - lookAngleDeg;
+
+        Debug.Log(distLeft + " vs " + distRight);
+
         if (lookAngleDeg > prevAngle + 9)
         {
-            transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
-            GetComponent<CharacterMove>().SetMoveAbility(false);
+            if (distRight > distLeft)
+            {
+                TurnLeft();
+            }
+            else
+            {
+                TurnRight();
+            }
         }
         else if (lookAngleDeg < prevAngle - 9)
         {
-            transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
-            GetComponent<CharacterMove>().SetMoveAbility(false);
+            if(distRight < distLeft)
+            {
+                TurnRight();
+            }
+            else
+            {
+                TurnLeft();
+            }
         }
         else
         {
-            GetComponent<CharacterMove>().SetMoveAbility(true);
+            MoveToPoint();
         }
         
     }
+
+    void MoveToPoint()
+    {
+        GetComponent<CharacterMove>().SetMoveAbility(true);
+    }
+
+    void TurnRight()
+    {
+        transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
+        GetComponent<CharacterMove>().SetMoveAbility(false);
+
+    }
+
+    void TurnLeft()
+    {
+        transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
+        GetComponent<CharacterMove>().SetMoveAbility(false);
+
+    }
+
 }

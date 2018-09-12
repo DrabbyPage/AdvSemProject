@@ -45,7 +45,7 @@ public class CharacterMove : MonoBehaviour {
     {
         float distance = Mathf.Sqrt(Mathf.Pow(newPoint.x - transform.position.x, 2) + Mathf.Pow(newPoint.y - transform.position.y, 2));
 
-        Debug.Log(distance);
+        //Debug.Log(distance);
 
         if(distance > 0.5f && ableToMove)
         {
