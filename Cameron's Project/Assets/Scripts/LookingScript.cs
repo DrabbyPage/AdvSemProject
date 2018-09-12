@@ -7,7 +7,7 @@ public class LookingScript : MonoBehaviour {
     Vector2 newPoint;
     Vector2 mousePos;
 
-    float turnSpeed = 3.0f;
+    float turnSpeed = 7.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +30,7 @@ public class LookingScript : MonoBehaviour {
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.y));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
 
-            Debug.Log(newPoint);
+            //Debug.Log(newPoint);
         }
     }
 
@@ -56,10 +56,16 @@ public class LookingScript : MonoBehaviour {
         if (lookAngleDeg > prevAngle + 9)
         {
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
+            GetComponent<CharacterMove>().SetMoveAbility(false);
         }
-        if (lookAngleDeg < prevAngle - 9)
+        else if (lookAngleDeg < prevAngle - 9)
         {
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
+            GetComponent<CharacterMove>().SetMoveAbility(false);
+        }
+        else
+        {
+            GetComponent<CharacterMove>().SetMoveAbility(true);
         }
         
     }
