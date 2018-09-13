@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Human
   - Zombie
+  - SightLine
+  - Pointer
   layers:
   - Default
   - TransparentFX

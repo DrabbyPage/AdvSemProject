@@ -55,7 +55,7 @@ public class LookingScript : MonoBehaviour {
         float distRight = lookAngleDeg;
         float distLeft = 360 - lookAngleDeg;
 
-        Debug.Log(distLeft + " vs " + distRight);
+        //Debug.Log(distLeft + " vs " + distRight);
 
         if (lookAngleDeg > prevAngle + 9)
         {
