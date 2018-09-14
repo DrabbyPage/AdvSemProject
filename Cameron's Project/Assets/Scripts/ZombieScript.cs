@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ZombieScript : MonoBehaviour {
 
-    float zombieSpeed = 0.2f;
+    float zombieSpeed = 5.0f * 0.01f;
     float turnSpeed = 7.0f;
 
     Vector2 newPoint;
@@ -16,10 +16,10 @@ public class ZombieScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        MoveToClosestHuman();	
+        TurnToClosestHuman();	
 	}
 
-    void MoveToClosestHuman()
+    void TurnToClosestHuman()
     {
         GameObject GameMan = GameObject.Find("GameManager");
         GameObject target = GameMan.GetComponent<GameManagerScript>().FindClosestHuman(gameObject);
@@ -35,6 +35,11 @@ public class ZombieScript : MonoBehaviour {
 
         float lookAngleDeg = lookAngle * Mathf.Rad2Deg;
 
+        if(lookAngleDeg < 0)
+        {
+            lookAngleDeg = lookAngleDeg + 360;
+        }
+
         if (lookAngleDeg > prevAngle + 9)
         {
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
@@ -45,7 +50,7 @@ public class ZombieScript : MonoBehaviour {
         }
         else
         {
-            //transform.position = MoveToPoint(transform.eulerAngles.z);
+            transform.position = MoveToPoint(transform.eulerAngles.z);
         }
 
     }

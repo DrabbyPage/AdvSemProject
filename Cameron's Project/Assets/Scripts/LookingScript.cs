@@ -7,6 +7,9 @@ public class LookingScript : MonoBehaviour {
     Vector2 newPoint;
     Vector2 mousePos;
 
+    // see zombies in trigger area, draw raycast, see if theres anything in between,
+    // if nothing then freak out
+
     float turnSpeed = 7.0f;
 
 	// Use this for initialization
@@ -51,6 +54,8 @@ public class LookingScript : MonoBehaviour {
         {
             lookAngleDeg = lookAngleDeg + 360;
         }
+
+        Debug.Log(lookAngleDeg);
 
         float distRight = lookAngleDeg;
         float distLeft = 360 - lookAngleDeg;

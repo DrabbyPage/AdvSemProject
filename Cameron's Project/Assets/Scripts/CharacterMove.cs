@@ -51,7 +51,6 @@ public class CharacterMove : MonoBehaviour {
         {
             GetComponent<Rigidbody2D>().AddForce(transform.right * moveSpeed);
             
-
         }
         else
         {

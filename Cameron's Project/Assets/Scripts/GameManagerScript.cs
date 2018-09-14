@@ -37,7 +37,7 @@ public class GameManagerScript : MonoBehaviour {
     {
         foreach (GameObject zombie in GameObject.FindGameObjectsWithTag("Zombie"))
         {
-            humanList.Add(zombie);
+            zombieList.Add(zombie);
         }
     }
 
@@ -67,6 +67,10 @@ public class GameManagerScript : MonoBehaviour {
             }
         }
 
+        Debug.Log(humanList[closeHumIndex].gameObject.name);
+
         return humanList[closeHumIndex];
     }
+
+    // add a remove all from list 
 }

@@ -19,13 +19,13 @@ public class SightScript : MonoBehaviour {
         if(collision.gameObject.tag == "Zombie" || collision.gameObject.tag == "Player")
         {
             Debug.Log("PANIC!");
-            gameObject.transform.parent.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
-            gameObject.transform.parent.GetComponent<RunAwayScript>().SetPanic(true);
+            gameObject.transform.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
+            gameObject.transform.GetComponent<RunAwayScript>().SetPanic(true);
         }
         else
         {
             // you will have to adjust this
-            gameObject.transform.parent.GetComponent<RunAwayScript>().SetPanic(false);
+            gameObject.transform.GetComponent<RunAwayScript>().SetPanic(false);
         }
     }
 
@@ -35,8 +35,8 @@ public class SightScript : MonoBehaviour {
         if (collision.gameObject.tag == "Zombie" || collision.gameObject.tag == "Player")
         {
             Debug.Log("PANIC!");
-            gameObject.transform.parent.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
-            gameObject.transform.parent.GetComponent<RunAwayScript>().SetPanic(true);
+            gameObject.transform.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
+            gameObject.transform.GetComponent<RunAwayScript>().SetPanic(true);
         }
     }
 }
