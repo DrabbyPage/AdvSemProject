@@ -7,6 +7,7 @@ public class LookingScript : MonoBehaviour {
     Vector2 newPoint;
     Vector2 mousePos;
 
+
     // see zombies in trigger area, draw raycast, see if theres anything in between,
     // if nothing then freak out
 
@@ -29,6 +30,7 @@ public class LookingScript : MonoBehaviour {
     {
         if(Input.GetMouseButton(0))
         {
+            Debug.Log("New Point Made");
             newPoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.y));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
@@ -41,54 +43,34 @@ public class LookingScript : MonoBehaviour {
     void LookAtPoint()
     {
         float lookAngle;
-        float prevAngle = transform.eulerAngles.z;
+        float currAngle = transform.eulerAngles.z;
 
         float xDiff = newPoint.x - transform.position.x;
         float yDiff = newPoint.y - transform.position.y;
-        
+
         lookAngle = Mathf.Atan2(yDiff, xDiff);
 
         float lookAngleDeg = lookAngle * Mathf.Rad2Deg;
 
-        if(lookAngleDeg < 0)
+        float diff = lookAngleDeg - currAngle;
+
+        if (lookAngleDeg < 0)
         {
             lookAngleDeg = lookAngleDeg + 360;
         }
 
-        Debug.Log(lookAngleDeg);
+        if (diff > 180)
+            diff -= 360;
+        else if (diff < -180)
+            diff += 360;
 
-        float distRight = lookAngleDeg;
-        float distLeft = 360 - lookAngleDeg;
-
-        //Debug.Log(distLeft + " vs " + distRight);
-
-        if (lookAngleDeg > prevAngle + 9)
-        {
-            if (distRight > distLeft)
-            {
-                TurnLeft();
-            }
-            else
-            {
-                TurnRight();
-            }
-        }
-        else if (lookAngleDeg < prevAngle - 9)
-        {
-            if(distRight < distLeft)
-            {
-                TurnRight();
-            }
-            else
-            {
-                TurnLeft();
-            }
-        }
+        if (diff > 9)
+            TurnRight();
+        else if (diff < -9)
+            TurnLeft();
         else
-        {
             MoveToPoint();
-        }
-        
+
     }
 
     void MoveToPoint()

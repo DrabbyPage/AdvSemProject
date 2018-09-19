@@ -67,7 +67,7 @@ public class GameManagerScript : MonoBehaviour {
             }
         }
 
-        Debug.Log(humanList[closeHumIndex].gameObject.name);
+        //Debug.Log(humanList[closeHumIndex].gameObject.name);
 
         return humanList[closeHumIndex];
     }

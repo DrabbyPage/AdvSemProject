@@ -35,16 +35,23 @@ public class ZombieScript : MonoBehaviour {
 
         float lookAngleDeg = lookAngle * Mathf.Rad2Deg;
 
-        if(lookAngleDeg < 0)
+        float diff = lookAngleDeg - prevAngle;
+
+        if (lookAngleDeg < 0)
         {
             lookAngleDeg = lookAngleDeg + 360;
         }
 
-        if (lookAngleDeg > prevAngle + 9)
+        if (diff > 180)
+            diff -= 360;
+        else if (diff < -180)
+            diff += 360;
+
+        if (diff > 9)
         {
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
         }
-        else if (lookAngleDeg < prevAngle - 9)
+        else if (diff < -9)
         {
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
         }
