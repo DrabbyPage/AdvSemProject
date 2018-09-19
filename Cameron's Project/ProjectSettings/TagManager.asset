@@ -8,6 +8,7 @@ TagManager:
   - Zombie
   - SightLine
   - Pointer
+  - Dead
   layers:
   - Default
   - TransparentFX

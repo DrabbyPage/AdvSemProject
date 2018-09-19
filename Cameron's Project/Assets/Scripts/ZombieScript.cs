@@ -16,7 +16,8 @@ public class ZombieScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        TurnToClosestHuman();	
+        TurnToClosestHuman();
+        CheckToAttack();
 	}
 
     void TurnToClosestHuman()
@@ -74,5 +75,25 @@ public class ZombieScript : MonoBehaviour {
         newPoint = new Vector2(transform.position.x + (xPoint * zombieSpeed), transform.position.y + (yPoint * zombieSpeed));
 
         return newPoint;
+    }
+
+    void CheckToAttack()
+    {
+        GameObject GameMan = GameObject.Find("GameManager");
+        GameObject target = GameMan.GetComponent<GameManagerScript>().FindClosestHuman(gameObject);
+
+        float distX, distY;
+        distX = target.transform.position.x - gameObject.transform.position.x;
+        distY = target.transform.position.y - gameObject.transform.position.y;
+
+        float dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
+
+        if(dist < 1.0f)
+        {
+            target.GetComponent<RunAwayScript>().setBeingAttacked(true);
+            
+            // do some particle physics maybe?
+
+        }
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SightScript : MonoBehaviour {
 
+    bool panicking;
+    bool canCheck = true;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -11,21 +14,28 @@ public class SightScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        panicking = GetComponent<RunAwayScript>().panicMode;
+        if (panicking)
+            canCheck = false;
+        else
+            canCheck = true;
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Zombie" || collision.gameObject.tag == "Player")
         {
-            Debug.Log("PANIC!");
-            gameObject.transform.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
-            gameObject.transform.GetComponent<RunAwayScript>().SetPanic(true);
+            if (canCheck)
+            {
+                Debug.Log("PANIC!");
+                gameObject.transform.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
+                gameObject.GetComponent<RunAwayScript>().SetPanic(true);
+            }
         }
         else
         {
             // you will have to adjust this
-            gameObject.transform.GetComponent<RunAwayScript>().SetPanic(false);
+            //gameObject.transform.GetComponent<RunAwayScript>().SetPanic(false);
         }
     }
 

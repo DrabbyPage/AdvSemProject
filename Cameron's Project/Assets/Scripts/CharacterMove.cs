@@ -9,10 +9,12 @@ public class CharacterMove : MonoBehaviour {
     Vector2 mousePos;
 
     float moveSpeed = 10.0f;
-    float maxSpeed = 5.0f;
-    float minSpeed = 0.0f;
+    //float maxSpeed = 5.0f;
+    //float minSpeed = 0.0f;
 
     bool ableToMove = false;
+
+    float attackTime;
 
     // Use this for initialization
     void Start()
@@ -37,7 +39,6 @@ public class CharacterMove : MonoBehaviour {
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.y));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
 
-            //Debug.Log(newPoint);
         }
     }
 
@@ -65,4 +66,5 @@ public class CharacterMove : MonoBehaviour {
     {
         ableToMove = newMove;
     }
+
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RunAwayScript : MonoBehaviour {
 
-    bool panicMode = false;
+    public bool panicMode = false;
+    public bool beingAttacked = false;
 
     GameObject threat;
 
@@ -25,10 +26,16 @@ public class RunAwayScript : MonoBehaviour {
 
     void CheckSituation()
     {
-        if(panicMode)
+        if (!beingAttacked)
         {
-            RunAwayFromObject(threat);
+            if (panicMode)
+                RunAwayFromObject(threat);
         }
+        else
+        {
+            StartCoroutine(GetComponent<BeingAttackedScript>().BeingAttacked());
+        }
+        
     }
 
     void RunAwayFromObject(GameObject obj)
@@ -37,7 +44,7 @@ public class RunAwayScript : MonoBehaviour {
         float dist;
         dist = Mathf.Sqrt( Mathf.Pow(transform.position.x - obj.transform.position.x, 2) + Mathf.Pow(transform.position.y - obj.transform.position.y, 2) );
 
-        if (dist < 25)
+        if (dist < 15)
         {
             // calculate angle between the character and the object
             float lookAngle;
@@ -99,4 +106,8 @@ public class RunAwayScript : MonoBehaviour {
         threat = newThreat;
     }
 
+    public void setBeingAttacked(bool newState)
+    {
+        beingAttacked = newState;
+    }
 }

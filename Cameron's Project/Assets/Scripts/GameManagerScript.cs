@@ -72,5 +72,30 @@ public class GameManagerScript : MonoBehaviour {
         return humanList[closeHumIndex];
     }
 
+    public GameObject FindClosestHuman(Vector2 zombie)
+    {
+        float dist;
+        float closestDist = 1000;
+        int closeHumIndex = 0;
+
+        for (int i = 0; i < humanList.Count; i++)
+        {
+            float distX = humanList[i].transform.position.x - zombie.x;
+            float distY = humanList[i].transform.position.y - zombie.y;
+
+            dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
+
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                closeHumIndex = i;
+            }
+        }
+
+        //Debug.Log(humanList[closeHumIndex].gameObject.name);
+
+        return humanList[closeHumIndex];
+    }
+
     // add a remove all from list 
 }
