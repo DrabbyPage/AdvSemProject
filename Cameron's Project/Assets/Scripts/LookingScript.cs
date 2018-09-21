@@ -5,11 +5,9 @@ using UnityEngine;
 public class LookingScript : MonoBehaviour {
 
     Vector2 newPoint;
-    Vector2 mousePos;
-
 
     // see zombies in trigger area, draw raycast, see if theres anything in between,
-    // if nothing then freak out
+    // if something then freak out
 
     float turnSpeed = 7.0f;
 
@@ -20,24 +18,13 @@ public class LookingScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
         CheckForNewPoint();
         LookAtPoint();
 	}
 
     void CheckForNewPoint()
     {
-        if(Input.GetMouseButton(0))
-        {
-            Debug.Log("New Point Made");
-            newPoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.y));
-            newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
-
-            //if()
-
-        }
+        newPoint = GetComponent<CharacterMove>().newPoint;
     }
 
     void LookAtPoint()

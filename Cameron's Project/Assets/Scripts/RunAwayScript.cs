@@ -8,6 +8,7 @@ public class RunAwayScript : MonoBehaviour {
     public bool beingAttacked = false;
 
     GameObject threat;
+    Vector2 runAwayLoc;
 
     float charSpeed = 0.2f;
     float turnSpeed = 10;
@@ -42,7 +43,7 @@ public class RunAwayScript : MonoBehaviour {
     {
         // calcualte distance between obj and the character
         float dist;
-        dist = Mathf.Sqrt( Mathf.Pow(transform.position.x - obj.transform.position.x, 2) + Mathf.Pow(transform.position.y - obj.transform.position.y, 2) );
+        dist = Mathf.Sqrt( Mathf.Pow(transform.position.x - runAwayLoc.x, 2) + Mathf.Pow(transform.position.y - runAwayLoc.y, 2) );
 
         if (dist < 15)
         {
@@ -99,6 +100,9 @@ public class RunAwayScript : MonoBehaviour {
     public void SetPanic(bool newMode)
     {
         panicMode = newMode;
+
+        if (panicMode)
+            runAwayLoc = new Vector2(transform.position.x, transform.position.y);
     }
 
     public void SetThreat(GameObject newThreat)

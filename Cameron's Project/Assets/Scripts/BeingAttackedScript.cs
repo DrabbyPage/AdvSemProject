@@ -36,7 +36,6 @@ public class BeingAttackedScript : MonoBehaviour {
     {
         yield return new WaitForSeconds(timeToTurn);
 
-        GameObject newZombie;
         float objX, objY, objZ;
 
         objX = gameObject.transform.position.x;
@@ -49,7 +48,7 @@ public class BeingAttackedScript : MonoBehaviour {
 
         Vector3 objPos = new Vector3(objX, objY, objZ);
 
-        newZombie = Instantiate(Resources.Load("Prefabs/Zombie"),objPos, objQuat) as GameObject;
+        GameObject newZombie = Instantiate(Resources.Load("Prefabs/Zombie"),objPos, objQuat) as GameObject;
         Destroy(gameObject);
     }
 }

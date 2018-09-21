@@ -9,6 +9,8 @@ public class ZombieScript : MonoBehaviour {
 
     Vector2 newPoint;
 
+    bool attacking = false;
+
 	// Use this for initialization
 	void Start () {
         newPoint = new Vector2(transform.position.x, transform.position.y);
@@ -58,7 +60,8 @@ public class ZombieScript : MonoBehaviour {
         }
         else
         {
-            transform.position = MoveToPoint(transform.eulerAngles.z);
+            if (!attacking)
+                transform.position = MoveToPoint(transform.eulerAngles.z);
         }
 
     }
@@ -88,12 +91,16 @@ public class ZombieScript : MonoBehaviour {
 
         float dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
 
-        if(dist < 1.0f)
+        if (dist < 1.0f)
         {
+            attacking = true;
             target.GetComponent<RunAwayScript>().setBeingAttacked(true);
-            
-            // do some particle physics maybe?
 
+            // do some particle physics maybe?
+        }
+        else
+        {
+            attacking = false;
         }
     }
 }

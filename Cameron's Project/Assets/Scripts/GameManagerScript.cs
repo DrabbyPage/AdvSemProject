@@ -47,13 +47,14 @@ public class GameManagerScript : MonoBehaviour {
         zombieList.Add(human);
     }
     
+    // finds the closest human ro the gameobject/ zombie
     public GameObject FindClosestHuman(GameObject zombie)
     {
         float dist;
         float closestDist = 1000;
         int closeHumIndex = 0;
 
-        for(int i = 0; i<humanList.Count; i++)
+        for(int i = 0; i < humanList.Count; i++)
         {
             float distX = humanList[i].transform.position.x - zombie.transform.position.x;
             float distY = humanList[i].transform.position.y - zombie.transform.position.y;
@@ -67,33 +68,39 @@ public class GameManagerScript : MonoBehaviour {
             }
         }
 
-        //Debug.Log(humanList[closeHumIndex].gameObject.name);
-
         return humanList[closeHumIndex];
     }
 
-    public GameObject FindClosestHuman(Vector2 zombie)
+    // checks to see if a human is within range
+    public GameObject CloseToHuman(Vector3 point, float range)
     {
+
         float dist;
-        float closestDist = 1000;
         int closeHumIndex = 0;
 
         for (int i = 0; i < humanList.Count; i++)
         {
-            float distX = humanList[i].transform.position.x - zombie.x;
-            float distY = humanList[i].transform.position.y - zombie.y;
+            float distX = humanList[i].transform.position.x - point.x;
+            float distY = humanList[i].transform.position.y - point.y;
 
             dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
 
-            if (dist < closestDist)
+            if (dist <= range)
             {
-                closestDist = dist;
                 closeHumIndex = i;
+                break;
+            }
+            else
+            {
+                if (i == humanList.Count - 1)
+                {
+                    //Debug.Log("no target");
+                    return null;
+                }
             }
         }
 
-        //Debug.Log(humanList[closeHumIndex].gameObject.name);
-
+        //Debug.Log("target: " + humanList[closeHumIndex]);
         return humanList[closeHumIndex];
     }
 
