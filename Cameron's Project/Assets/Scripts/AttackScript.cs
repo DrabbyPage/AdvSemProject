@@ -21,7 +21,6 @@ public class AttackScript : MonoBehaviour
 
     void CheckToAttack()
     {
-        GameObject GameMan = GameObject.Find("GameManager");
         GameObject human = GetComponent<CharacterMove>().target;
 
         if (human != null && human.tag != "Dead")

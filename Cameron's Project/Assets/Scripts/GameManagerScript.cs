@@ -54,7 +54,10 @@ public class GameManagerScript : MonoBehaviour {
         float closestDist = 1000;
         int closeHumIndex = 0;
 
-        for(int i = 0; i < humanList.Count; i++)
+        if (humanList.Count == 0)
+            return null;
+
+        for (int i = 0; i < humanList.Count; i++)
         {
             float distX = humanList[i].transform.position.x - zombie.transform.position.x;
             float distY = humanList[i].transform.position.y - zombie.transform.position.y;
@@ -77,6 +80,9 @@ public class GameManagerScript : MonoBehaviour {
 
         float dist;
         int closeHumIndex = 0;
+
+        if (humanList.Count == 0)
+            return null;
 
         for (int i = 0; i < humanList.Count; i++)
         {
