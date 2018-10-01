@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunAwayScript : MonoBehaviour {
+public class RunAwayScript : MonoBehaviour
+{
 
     public bool panicMode = false;
     public bool beingAttacked = false;
@@ -16,12 +17,14 @@ public class RunAwayScript : MonoBehaviour {
     Vector2 newPoint;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         CheckSituation();
 	}
 
@@ -30,7 +33,9 @@ public class RunAwayScript : MonoBehaviour {
         if (!beingAttacked)
         {
             if (panicMode)
+            {
                 RunAwayFromObject(threat);
+            }
         }
         else
         {
@@ -60,7 +65,6 @@ public class RunAwayScript : MonoBehaviour {
             lookAngleDeg = lookAngleDeg + 180;
 
             // make character look in the opposite direction
-
             if (lookAngleDeg > prevAngle + 9)
             {
                 transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
@@ -73,7 +77,6 @@ public class RunAwayScript : MonoBehaviour {
             {
                 // run in the opposite direction
                 transform.position = MoveToPoint(transform.eulerAngles.z);
-
             }
 
         }
@@ -102,7 +105,9 @@ public class RunAwayScript : MonoBehaviour {
         panicMode = newMode;
 
         if (panicMode)
+        {
             runAwayLoc = new Vector2(transform.position.x, transform.position.y);
+        }
     }
 
     public void SetThreat(GameObject newThreat)

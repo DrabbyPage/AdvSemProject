@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LookingScript : MonoBehaviour {
+public class LookingScript : MonoBehaviour
+{
 
     Vector2 newPoint;
 
@@ -12,12 +13,14 @@ public class LookingScript : MonoBehaviour {
     float turnSpeed = 7.0f;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         newPoint = new Vector2(transform.position.x, transform.position.y);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         CheckForNewPoint();
         LookAtPoint();
 	}
@@ -47,16 +50,26 @@ public class LookingScript : MonoBehaviour {
         }
 
         if (diff > 180)
+        {
             diff -= 360;
+        }
         else if (diff < -180)
+        {
             diff += 360;
+        }
 
         if (diff > 9)
+        {
             TurnRight();
+        }
         else if (diff < -9)
+        {
             TurnLeft();
+        }
         else
+        {
             MoveToPoint();
+        }
 
     }
 
@@ -69,14 +82,12 @@ public class LookingScript : MonoBehaviour {
     {
         transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
         GetComponent<CharacterMove>().SetMoveAbility(false);
-
     }
 
     void TurnLeft()
     {
         transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
         GetComponent<CharacterMove>().SetMoveAbility(false);
-
     }
 
 }

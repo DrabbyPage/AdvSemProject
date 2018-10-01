@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManagerScript : MonoBehaviour {
+public class GameManagerScript : MonoBehaviour
+{
 
     List<GameObject> humanList;
     List<GameObject> zombieList;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         humanList = new List<GameObject>();
         zombieList = new List<GameObject>();
 
@@ -21,30 +23,14 @@ public class GameManagerScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update ()
+    {
 		
 	}
 
-    void AddHumansToList()
+    public void DeleteZombieFromList(GameObject zombie)
     {
-        foreach(GameObject human in GameObject.FindGameObjectsWithTag("Human"))
-        {
-            humanList.Add(human);
-        }
-    }
-
-    void AddZombieToList()
-    {
-        foreach (GameObject zombie in GameObject.FindGameObjectsWithTag("Zombie"))
-        {
-            zombieList.Add(zombie);
-        }
-    }
-
-    public void ConvertHumanToZombie(GameObject human)
-    {
-        humanList.Remove(human);
-        zombieList.Add(human);
+        zombieList.Remove(zombie);
     }
     
     // finds the closest human ro the gameobject/ zombie
@@ -55,7 +41,9 @@ public class GameManagerScript : MonoBehaviour {
         int closeHumIndex = 0;
 
         if (humanList.Count == 0)
+        {
             return null;
+        }
 
         for (int i = 0; i < humanList.Count; i++)
         {
@@ -82,7 +70,9 @@ public class GameManagerScript : MonoBehaviour {
         int closeHumIndex = 0;
 
         if (humanList.Count == 0)
+        {
             return null;
+        }
 
         for (int i = 0; i < humanList.Count; i++)
         {
@@ -111,4 +101,34 @@ public class GameManagerScript : MonoBehaviour {
     }
 
     // add a remove all from list 
+    public void AddStartHumansToList()
+    {
+        foreach (GameObject human in GameObject.FindGameObjectsWithTag("Human"))
+        {
+            humanList.Add(human);
+        }
+    }
+
+    void AddStartZombiesToList()
+    {
+        foreach (GameObject zombie in GameObject.FindGameObjectsWithTag("Zombie"))
+        {
+            zombieList.Add(zombie);
+        }
+    }
+
+    public void AddHumanToList(GameObject newHum)
+    {
+        humanList.Add(newHum);
+    }
+
+    public void AddZombieToList(GameObject newZom)
+    {
+        zombieList.Add(newZom);
+    }
+
+    public void DeleteHumanFromList(GameObject human)
+    {
+        humanList.Remove(human);
+    }
 }

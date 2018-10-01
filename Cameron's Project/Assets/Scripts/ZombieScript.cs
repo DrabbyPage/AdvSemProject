@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieScript : MonoBehaviour {
+public class ZombieScript : MonoBehaviour
+{
 
     float zombieSpeed = 5.0f * 0.01f;
     float turnSpeed = 7.0f;
@@ -12,12 +13,14 @@ public class ZombieScript : MonoBehaviour {
     bool attacking = false;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         newPoint = new Vector2(transform.position.x, transform.position.y);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         TurnToClosestHuman();
         CheckToAttack();
 	}
@@ -48,9 +51,14 @@ public class ZombieScript : MonoBehaviour {
             }
 
             if (diff > 180)
+            {
                 diff -= 360;
+            }
             else if (diff < -180)
+            {
                 diff += 360;
+            }
+               
 
             if (diff > 9)
             {
@@ -63,10 +71,11 @@ public class ZombieScript : MonoBehaviour {
             else
             {
                 if (!attacking)
+                {
                     transform.position = MoveToPoint(transform.eulerAngles.z);
+                }
             }
         }
-
     }
 
     Vector2 MoveToPoint(float degree)
@@ -101,7 +110,7 @@ public class ZombieScript : MonoBehaviour {
                 attacking = true;
                 target.GetComponent<RunAwayScript>().setBeingAttacked(true);
 
-                // do some particle physics maybe?
+                // add particle effects for blood
             }
             else
             {
