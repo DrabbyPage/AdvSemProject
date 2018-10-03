@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CharacterMove : MonoBehaviour
 {
-
     public GameObject target;
+    GameObject GameMan;
     
     public Vector2 newPoint;
 
@@ -19,6 +19,7 @@ public class CharacterMove : MonoBehaviour
     {
         target = null;
         newPoint = new Vector2(transform.position.x, transform.position.y);
+        GameMan = GameObject.Find("GameManager");
     }
 
     // Update is called once per frame
@@ -39,7 +40,6 @@ public class CharacterMove : MonoBehaviour
                 ableToMove = true;
             }
         }
-
     }
 
     void CheckForNewPoint()
@@ -51,10 +51,7 @@ public class CharacterMove : MonoBehaviour
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.y));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
 
-            if (target == null)
-            {
-                CheckHumanDist(mouseWorld);
-            }
+            CheckHumanDist(mouseWorld);
         }
     }
 
@@ -98,11 +95,15 @@ public class CharacterMove : MonoBehaviour
 
     void CheckHumanDist(Vector3 mouse)
     {
-        GameObject newTarget = GameObject.Find("GameManager").GetComponent<GameManagerScript>().CloseToHuman(mouse, lockOnRange);
+        GameObject newTarget = GameMan.GetComponent<GameManagerScript>().CloseToHuman(mouse, lockOnRange);
 
         if (newTarget != null)
         {
             target = newTarget;
+        }
+        else
+        {
+            target = null;
         }
     }
 

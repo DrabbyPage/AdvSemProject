@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AttackScript : MonoBehaviour
 {
-
     public float attackTime = 1.5f;
 
     // Use this for initialization

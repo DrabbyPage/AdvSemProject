@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ZombieScript : MonoBehaviour
 {
-
+    int zombieHealth = 1;
     float zombieSpeed = 5.0f * 0.01f;
     float turnSpeed = 7.0f;
 
@@ -117,6 +117,15 @@ public class ZombieScript : MonoBehaviour
                 attacking = false;
             }
         }
-        
+    }
+
+    public void HurtZombie()
+    {
+        zombieHealth = zombieHealth - 1;
+
+        if(zombieHealth <= 0)
+        {
+            // kill zombie
+        }
     }
 }

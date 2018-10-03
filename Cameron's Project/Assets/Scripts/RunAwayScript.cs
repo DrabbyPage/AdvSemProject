@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RunAwayScript : MonoBehaviour
 {
-
     public bool panicMode = false;
     public bool beingAttacked = false;
 

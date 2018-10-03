@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-
     List<GameObject> humanList;
     List<GameObject> zombieList;
 
@@ -14,8 +13,8 @@ public class GameManagerScript : MonoBehaviour
         humanList = new List<GameObject>();
         zombieList = new List<GameObject>();
 
-        AddHumansToList();
-        AddZombieToList();
+        AddStartHumansToList();
+        AddStartZombiesToList();
 
         Debug.Log("Human count: " + humanList.Count);
         Debug.Log("Zombie count: " + zombieList.Count);
@@ -38,7 +37,7 @@ public class GameManagerScript : MonoBehaviour
     {
         float dist;
         float closestDist = 1000;
-        int closeHumIndex = 0;
+        int closeHumIndex = -1;
 
         if (humanList.Count == 0)
         {
@@ -59,7 +58,14 @@ public class GameManagerScript : MonoBehaviour
             }
         }
 
-        return humanList[closeHumIndex];
+        if(closeHumIndex == -1)
+        {
+            return null;
+        }
+        else
+        {
+            return humanList[closeHumIndex];
+        }
     }
 
     // checks to see if a human is within range
