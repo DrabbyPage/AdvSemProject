@@ -8,17 +8,18 @@ public class RunAwayScript : MonoBehaviour
     public bool beingAttacked = false;
 
     GameObject threat;
-    Vector2 runAwayLoc;
+    GameObject closestBooth;
+    GameObject GameMan;
+
+    Vector2 newPoint;
 
     float charSpeed = 0.2f;
     float turnSpeed = 10;
 
-    Vector2 newPoint;
-
 	// Use this for initialization
 	void Start ()
     {
-		
+        GameMan = GameObject.Find("GameManager");
 	}
 	
 	// Update is called once per frame
@@ -33,7 +34,8 @@ public class RunAwayScript : MonoBehaviour
         {
             if (panicMode)
             {
-                RunAwayFromObject(threat);
+                //RunAwayFromObject(threat);
+                RunToBooth();
             }
         }
         else
@@ -43,46 +45,74 @@ public class RunAwayScript : MonoBehaviour
         
     }
 
-    void RunAwayFromObject(GameObject obj)
+    void RunToBooth()
     {
-        // calcualte distance between obj and the character
         float dist;
-        dist = Mathf.Sqrt( Mathf.Pow(transform.position.x - runAwayLoc.x, 2) + Mathf.Pow(transform.position.y - runAwayLoc.y, 2) );
+        closestBooth = GameMan.GetComponent<GameManagerScript>().ClosestBooth(gameObject.transform.position);
 
-        if (dist < 15)
+        if(closestBooth == null)
+        {
+            // run away
+
+            return;
+        }
+
+        float closestBoothX = closestBooth.transform.position.x;
+        float closestBoothY = closestBooth.transform.position.y;
+
+        dist = Mathf.Sqrt(Mathf.Pow(transform.position.x - closestBoothX, 2) + Mathf.Pow(transform.position.y - closestBoothY, 2));
+
+        if (dist > 0.4f)
         {
             // calculate angle between the character and the object
             float lookAngle;
             float prevAngle = transform.eulerAngles.z;
 
-            float xDiff = obj.transform.position.x - transform.position.x;
-            float yDiff = obj.transform.position.y - transform.position.y;
+            float xDiff = closestBoothX - transform.position.x;
+            float yDiff = closestBoothY - transform.position.y;
 
             lookAngle = Mathf.Atan2(yDiff, xDiff);
 
             float lookAngleDeg = lookAngle * Mathf.Rad2Deg;
-            lookAngleDeg = lookAngleDeg + 180;
 
-            // make character look in the opposite direction
-            if (lookAngleDeg > prevAngle + 9)
+
+            float diffAngle = lookAngleDeg - prevAngle;
+
+            if (lookAngleDeg < 0)
+            {
+                lookAngleDeg = lookAngleDeg + 360;
+            }
+
+            if (diffAngle > 180)
+            {
+                diffAngle -= 360;
+            }
+            else if (diffAngle < -180)
+            {
+                diffAngle += 360;
+            }
+
+            if (diffAngle > 9)
             {
                 transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
             }
-            else if (lookAngleDeg < prevAngle - 9)
+            else if (diffAngle < -9)
             {
                 transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
             }
             else
             {
-                // run in the opposite direction
                 transform.position = MoveToPoint(transform.eulerAngles.z);
             }
 
         }
         else
         {
+            closestBooth.GetComponent<PhoneBoothScript>().SetOccupation(true);
             panicMode = false;
         }
+
+
     }
 
     Vector2 MoveToPoint(float degree)
@@ -105,7 +135,8 @@ public class RunAwayScript : MonoBehaviour
 
         if (panicMode)
         {
-            runAwayLoc = new Vector2(transform.position.x, transform.position.y);
+            //runAwayLoc = new Vector2(transform.position.x, transform.position.y);
+            //runAwayLoc = GameMan.GetComponent<GameManagerScript>().ClosestBooth(gameObject.transform.position).transform.position;
         }
     }
 

@@ -6,33 +6,40 @@ public class BeingAttackedScript : MonoBehaviour
 {
     GameObject gameManObj;
     GameObject playerObj;
+    GameObject playerManager;
 
-    float timeToTurn = 7.0f;
-    bool underDistress = false;
+    float timeToTurn = 3.0f;
+    //bool underDistress = false;
 
 	// Use this for initialization
 	void Start ()
     {
         gameManObj = GameObject.Find("GameManager");
-        playerObj = GameObject.Find("Player");
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        playerManager = GameObject.Find("Main Camera");
+        playerObj = playerManager.GetComponent<FollowPlayerScript>().player;
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
 		
 	}
 
     public void ScreamForHelp()
     {
-        underDistress = true;
+        //underDistress = true;
     }
 
     public IEnumerator BeingAttacked()
     {
+        float dyingTime;
+
         ScreamForHelp();
 
-        float dyingTime = playerObj.GetComponent<AttackScript>().attackTime;
+        playerObj = playerManager.GetComponent<FollowPlayerScript>().player;
+
+        dyingTime = playerObj.GetComponent<AttackScript>().attackTime;
+
         yield return new WaitForSeconds(dyingTime);
 
         gameObject.tag = "Dead";

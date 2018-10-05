@@ -58,11 +58,11 @@ public class LookingScript : MonoBehaviour
             diff += 360;
         }
 
-        if (diff > 9)
+        if (diff > 10)
         {
             TurnRight();
         }
-        else if (diff < -9)
+        else if (diff < -10)
         {
             TurnLeft();
         }

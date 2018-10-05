@@ -27,7 +27,7 @@ public class SightScript : MonoBehaviour {
         {
             if (canCheck)
             {
-                Debug.Log("PANIC!");
+                //Debug.Log("PANIC!");
                 gameObject.transform.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
                 gameObject.GetComponent<RunAwayScript>().SetPanic(true);
             }
@@ -44,7 +44,7 @@ public class SightScript : MonoBehaviour {
 
         if (collision.gameObject.tag == "Zombie" || collision.gameObject.tag == "Player")
         {
-            Debug.Log("PANIC!");
+            //Debug.Log("PANIC!");
             gameObject.transform.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
             gameObject.transform.GetComponent<RunAwayScript>().SetPanic(true);
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ZombieScript : MonoBehaviour
 {
-    int zombieHealth = 1;
     float zombieSpeed = 5.0f * 0.01f;
     float turnSpeed = 7.0f;
 
@@ -119,13 +118,19 @@ public class ZombieScript : MonoBehaviour
         }
     }
 
-    public void HurtZombie()
+    public void ConvertToPlayer()
     {
-        zombieHealth = zombieHealth - 1;
+        GameObject newPlayerObj;
 
-        if(zombieHealth <= 0)
-        {
-            // kill zombie
-        }
+        newPlayerObj = Instantiate(Resources.Load("Prefabs/Player")) as GameObject;
+
+        newPlayerObj.name = "Player";
+        newPlayerObj.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+
+        GameObject.Find("Main Camera").GetComponent<FollowPlayerScript>().UpdatePlayerStatus(newPlayerObj);
+
+        GameObject.Find("GameManager").GetComponent<GameManagerScript>().DeleteZombieFromList(gameObject);
+
+        Destroy(gameObject);
     }
 }

@@ -12,7 +12,7 @@ public class CharacterMove : MonoBehaviour
     float moveSpeed = 10.0f;
     float lockOnRange = 0.5f;
 
-    bool ableToMove = true;
+    public bool ableToMove = false;
 
     // Use this for initialization
     void Start()
@@ -46,9 +46,9 @@ public class CharacterMove : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            newPoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+           // newPoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
-            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.y));
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.z));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
 
             CheckHumanDist(mouseWorld);

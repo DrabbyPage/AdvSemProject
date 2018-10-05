@@ -5,11 +5,13 @@ using UnityEngine;
 public class HealthScript : MonoBehaviour
 {
     int health;
+    GameObject GameMan;
 
 	// Use this for initialization
 	void Start ()
     {
         health = 1;
+        GameMan = GameObject.Find("GameManager");
 	}
 	
 	// Update is called once per frame
@@ -25,6 +27,26 @@ public class HealthScript : MonoBehaviour
         if(health <= 1)
         {
             // kill character
+            if (gameObject.tag == "Player")
+            {
+                //transfer to other zombie
+                GameObject closestZombie = GameMan.GetComponent<GameManagerScript>().ClosestZombie(gameObject.transform.position);
+                if (closestZombie != null)
+                {
+                    closestZombie.GetComponent<ZombieScript>().ConvertToPlayer();
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    // game over
+                }
+            }
+            else
+            {
+                // kill the obj
+                Destroy(gameObject);
+
+            }
         }
     }
 }

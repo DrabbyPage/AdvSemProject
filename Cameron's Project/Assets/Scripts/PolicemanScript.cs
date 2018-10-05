@@ -92,6 +92,7 @@ public class PolicemanScript : MonoBehaviour
                 else
                 {
                     // move towards the target
+                    //MoveToTarget();
                 }
 
             }
@@ -119,12 +120,13 @@ public class PolicemanScript : MonoBehaviour
             lookAngleDeg = lookAngleDeg + 360;
         }
 
-        newX = gameObject.transform.position.x;// + 2 * Mathf.Cos(transform.eulerAngles.z);
-        newY = gameObject.transform.position.y;// + 2 * Mathf.Sin(transform.eulerAngles.z);
+        newX = gameObject.transform.position.x;
+        newY = gameObject.transform.position.y;
 
         bullet = Instantiate(Resources.Load("Prefabs/Bullet")) as GameObject;
         bullet.GetComponent<BulletScript>().SetAngle(lookAngleDeg);
         bullet.transform.position = new Vector2(newX, newY);
+
         ableToAttack = false;
     }
 
