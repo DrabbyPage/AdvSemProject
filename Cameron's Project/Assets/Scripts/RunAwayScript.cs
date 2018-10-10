@@ -7,7 +7,7 @@ public class RunAwayScript : MonoBehaviour
     public bool panicMode = false;
     public bool beingAttacked = false;
 
-    GameObject threat;
+    //GameObject threat;
     GameObject closestBooth;
     GameObject GameMan;
 
@@ -30,6 +30,8 @@ public class RunAwayScript : MonoBehaviour
 
     void CheckSituation()
     {
+        beingAttacked = GetComponent<BeingAttackedScript>().GetBeingAttacked();
+
         if (!beingAttacked)
         {
             if (panicMode)
@@ -40,6 +42,7 @@ public class RunAwayScript : MonoBehaviour
         }
         else
         {
+            GetComponent<WanderingScript>().SetMoving(false);
             StartCoroutine(GetComponent<BeingAttackedScript>().BeingAttacked());
         }
         
@@ -142,11 +145,6 @@ public class RunAwayScript : MonoBehaviour
 
     public void SetThreat(GameObject newThreat)
     {
-        threat = newThreat;
-    }
-
-    public void setBeingAttacked(bool newState)
-    {
-        beingAttacked = newState;
+        //threat = newThreat;
     }
 }

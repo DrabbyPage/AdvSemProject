@@ -5,6 +5,7 @@ using UnityEngine;
 public class PhoneBoothScript : MonoBehaviour
 {
     public bool boothInUse;
+    GameObject user;
 
 	// Use this for initialization
 	void Start ()
@@ -36,6 +37,7 @@ public class PhoneBoothScript : MonoBehaviour
             }
             else
             {
+                user = col.gameObject;
                 boothInUse = true;
             }
         }
@@ -44,5 +46,30 @@ public class PhoneBoothScript : MonoBehaviour
     public void SetOccupation(bool newBool)
     {
         boothInUse = newBool;
+    }
+
+    IEnumerator CheckForCall()
+    {
+        yield return new WaitForSeconds(5.0f);
+
+        if (user.gameObject.tag == "Human")
+        {
+            float dist;
+            float distX, distY;
+
+            distX = user.gameObject.transform.position.x - gameObject.transform.position.x;
+            distY = user.gameObject.transform.position.y - gameObject.transform.position.y;
+
+            dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
+
+            if (dist > 1.0f)
+            {
+                // call the police
+            }
+            else
+            {
+                // call the police
+            }
+        }
     }
 }

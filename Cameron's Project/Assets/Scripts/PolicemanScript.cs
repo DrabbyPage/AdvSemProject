@@ -5,31 +5,45 @@ using UnityEngine;
 public class PolicemanScript : MonoBehaviour
 {
     GameObject target;
-    GameObject GameMan;
+    //GameObject GameMan;
     GameObject bullet;
 
-    Vector2 pointToWalk;
-
-    float policeSpeed = 0.05f;
     float turnSpeed = 7.0f;
     float shootingDist = 10.0f;
 
     bool ableToAttack;
-    bool targetKilled;
+    bool beingAttacked;
+    bool targetSighted;
 
     // Use this for initialization
     void Start ()
     {
-        GameMan = GameObject.Find("GameManager");
+        //GameMan = GameObject.Find("GameManager");
 
         ableToAttack = true;
-        pointToWalk = new Vector2(transform.position.x, transform.position.y);
+        beingAttacked = false;
+        targetSighted = false;
     }
 
     // Update is called once per frame
     void Update ()
     {
-        Aim();
+        beingAttacked = GetComponent<BeingAttackedScript>().GetBeingAttacked();
+
+        if(!beingAttacked)
+        {
+            if (targetSighted)
+                Aim();
+            else
+                GetComponent<WanderingScript>().SetMoving(true);
+        }
+        else
+        {
+            ableToAttack = false;
+            GetComponent<WanderingScript>().SetMoving(false);
+            GetComponent<BeingAttackedScript>().BeingAttacked();
+        }
+
 	}
 
     void Aim()
@@ -47,7 +61,7 @@ public class PolicemanScript : MonoBehaviour
 
             lookAngle = Mathf.Atan2(yDiff, xDiff);
 
-            float lookAngleDeg = (lookAngle * Mathf.Rad2Deg) - 90;
+            float lookAngleDeg = (lookAngle * Mathf.Rad2Deg);
 
             float diff = lookAngleDeg - prevAngle;
 
@@ -102,7 +116,6 @@ public class PolicemanScript : MonoBehaviour
 
     void Shoot()
     {
-
         // calculate angle between the character and the object
         float lookAngle;
 
@@ -113,7 +126,7 @@ public class PolicemanScript : MonoBehaviour
 
         lookAngle = Mathf.Atan2(yDiff, xDiff);
 
-        float lookAngleDeg = (lookAngle * Mathf.Rad2Deg) - 90;
+        float lookAngleDeg = (lookAngle * Mathf.Rad2Deg)-90;
 
         if (lookAngleDeg < 0)
         {
@@ -137,7 +150,7 @@ public class PolicemanScript : MonoBehaviour
             if(target == null)
             {
                 Debug.Log("new target for policeman");
-                targetKilled = true;
+                targetSighted = true;
                 target = col.gameObject;
             }
         }
@@ -147,13 +160,6 @@ public class PolicemanScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.75f);
         ableToAttack = true;
-    }
-
-    public void KilledTarget()
-    {
-        targetKilled = true;
-        target = null;
-        targetKilled = false;
     }
 
     public void BulletIsGone()

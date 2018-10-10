@@ -9,8 +9,13 @@ public class CharacterMove : MonoBehaviour
     
     public Vector2 newPoint;
 
-    float moveSpeed = 10.0f;
-    float lockOnRange = 0.5f;
+    float moveSpeed = 8.0f;
+    float turnSpeed = 7.0f;
+
+    float targetRadius = 0.8f;
+    float slowRadius = 5.0f;
+
+    float lockOnRange = 1.0f;
 
     public bool ableToMove = false;
 
@@ -25,33 +30,19 @@ public class CharacterMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckForTargetLife();
         CheckForNewPoint();
         CheckToMove();
-    }
-
-    void CheckForTargetLife()
-    {
-        if (target != null)
-        {
-            if (target.tag == "Dead")
-            {
-                target = null;
-                ableToMove = true;
-            }
-        }
     }
 
     void CheckForNewPoint()
     {
         if (Input.GetMouseButton(0))
         {
-           // newPoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.z));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
 
             CheckHumanDist(mouseWorld);
+            ableToMove = true;
         }
     }
 
@@ -72,24 +63,71 @@ public class CharacterMove : MonoBehaviour
 
     void MoveToPoint()
     {
-        if(target != null)
+        if (target != null)
         {
-            newPoint = new Vector2(target.transform.position.x, target.transform.position.y);
+            newPoint = target.transform.position;
         }
 
         float distance = Mathf.Sqrt(Mathf.Pow(newPoint.x - transform.position.x, 2) + Mathf.Pow(newPoint.y - transform.position.y, 2));
 
-        if(distance > 0.5f && ableToMove)
+        if (distance < targetRadius)
         {
-            GetComponent<Rigidbody2D>().AddForce(transform.right * moveSpeed);
-            
-        }
-        else
-        {
+            newPoint = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().angularVelocity = 0f;
 
             ableToMove = false;
+        }
+        else
+        {
+            LookAtPoint();
+            GetComponent<Rigidbody2D>().AddForce(transform.right * ((moveSpeed * distance) / slowRadius));
+        }
+
+    }
+
+    void LookAtPoint()
+    {
+        float lookAngle;
+        float currAngle = transform.eulerAngles.z;
+
+        float xDiff = newPoint.x - transform.position.x;
+        float yDiff = newPoint.y - transform.position.y;
+
+        lookAngle = Mathf.Atan2(yDiff, xDiff);
+
+        float lookAngleDeg = lookAngle * Mathf.Rad2Deg;
+
+        float diff = lookAngleDeg - currAngle;
+
+        if (lookAngleDeg < 0)
+        {
+            lookAngleDeg = lookAngleDeg + 360;
+        }
+
+        if (diff > 180)
+        {
+            diff -= 360;
+        }
+        else if (diff < -180)
+        {
+            diff += 360;
+        }
+
+        if (diff > 10)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().angularVelocity = 0f;
+
+            transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
+        }
+        else if (diff < -10)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().angularVelocity = 0f;
+
+            transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
         }
     }
 

@@ -9,20 +9,22 @@ public class BeingAttackedScript : MonoBehaviour
     GameObject playerManager;
 
     float timeToTurn = 3.0f;
-    //bool underDistress = false;
+    public bool beingAttacked = false;
 
 	// Use this for initialization
 	void Start ()
     {
         gameManObj = GameObject.Find("GameManager");
         playerManager = GameObject.Find("Main Camera");
-        playerObj = playerManager.GetComponent<FollowPlayerScript>().player;
     }
 
     // Update is called once per frame
     void Update ()
     {
-		
+        if (beingAttacked)
+        {
+            StartCoroutine(BeingAttacked());
+        }
 	}
 
     public void ScreamForHelp()
@@ -32,6 +34,10 @@ public class BeingAttackedScript : MonoBehaviour
 
     public IEnumerator BeingAttacked()
     {
+        //GetComponent<Rigidbody2D>().freezeRotation = true;
+        Debug.Log("being attacked");
+        GetComponent<Rigidbody2D>().simulated = false;
+
         float dyingTime;
 
         ScreamForHelp();
@@ -69,5 +75,15 @@ public class BeingAttackedScript : MonoBehaviour
         gameManObj.GetComponent<GameManagerScript>().AddZombieToList(newZombie);
 
         Destroy(gameObject);
+    }
+
+    public void SetBeingAttacked(bool newAttack)
+    {
+        beingAttacked = newAttack;
+    }
+
+    public bool GetBeingAttacked()
+    {
+        return beingAttacked;
     }
 }

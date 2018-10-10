@@ -33,8 +33,8 @@ public class AttackScript : MonoBehaviour
             if (dist < 1.5f)
             {
                 Debug.Log("player is attacking");
-                human.GetComponent<RunAwayScript>().setBeingAttacked(true);
-                GetComponent<CharacterMove>().SetMoveAbility(false);
+
+                human.GetComponent<BeingAttackedScript>().SetBeingAttacked(true);
 
                 // do some particle physics maybe?
             }

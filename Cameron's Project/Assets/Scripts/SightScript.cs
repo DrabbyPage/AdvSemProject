@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SightScript : MonoBehaviour {
-
+public class SightScript : MonoBehaviour
+{
     bool panicking;
     bool canCheck = true;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         panicking = GetComponent<RunAwayScript>().panicMode;
         if (panicking)
             canCheck = false;

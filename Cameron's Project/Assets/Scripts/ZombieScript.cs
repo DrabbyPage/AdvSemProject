@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ZombieScript : MonoBehaviour
 {
-    float zombieSpeed = 5.0f * 0.01f;
+    float zombieSpeed = 0.05f;
     float turnSpeed = 7.0f;
 
     Vector2 newPoint;
@@ -107,7 +107,7 @@ public class ZombieScript : MonoBehaviour
             if (dist < 1.0f)
             {
                 attacking = true;
-                target.GetComponent<RunAwayScript>().setBeingAttacked(true);
+                target.GetComponent<BeingAttackedScript>().SetBeingAttacked(true);
 
                 // add particle effects for blood
             }

@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class LookingScript : MonoBehaviour
 {
-
     Vector2 newPoint;
-
-    // see zombies in trigger area, draw raycast, see if theres anything in between,
-    // if something then freak out
 
     float turnSpeed = 7.0f;
 
@@ -58,11 +54,11 @@ public class LookingScript : MonoBehaviour
             diff += 360;
         }
 
-        if (diff > 10)
+        if (diff > 9)
         {
             TurnRight();
         }
-        else if (diff < -10)
+        else if (diff < -9)
         {
             TurnLeft();
         }
