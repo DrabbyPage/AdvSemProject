@@ -34,8 +34,6 @@ public class BeingAttackedScript : MonoBehaviour
 
     public IEnumerator BeingAttacked()
     {
-        //GetComponent<Rigidbody2D>().freezeRotation = true;
-        Debug.Log("being attacked");
         GetComponent<Rigidbody2D>().simulated = false;
 
         float dyingTime;

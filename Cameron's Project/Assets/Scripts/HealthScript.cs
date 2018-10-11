@@ -39,6 +39,7 @@ public class HealthScript : MonoBehaviour
                 else
                 {
                     // game over
+                    GameMan.GetComponent<GameManagerScript>().GameOver();
                 }
             }
             else

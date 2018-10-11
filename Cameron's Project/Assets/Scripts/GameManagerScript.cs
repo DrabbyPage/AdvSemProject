@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -8,9 +9,20 @@ public class GameManagerScript : MonoBehaviour
     List<GameObject> zombieList;
     List<GameObject> boothList;
 
+    GameObject sceneMan;
+
+    public GameObject mainCanvas;
+
+    public Text gameText;
+
+    //bool loadedLevel = false;
+
 	// Use this for initialization
 	void Start ()
     {
+        sceneMan = GameObject.Find("SceneManager");
+        gameText.text = "";
+
         humanList = new List<GameObject>();
         zombieList = new List<GameObject>();
         boothList = new List<GameObject>();
@@ -22,13 +34,22 @@ public class GameManagerScript : MonoBehaviour
         Debug.Log("Human count: " + humanList.Count);
         Debug.Log("Zombie count: " + zombieList.Count);
         Debug.Log("Booth count: " + boothList.Count);
+
     }
 
     // Update is called once per frame
     void Update ()
     {
-		
+        CheckForLevelEnd();
 	}
+    
+    void CheckForLevelEnd()
+    {
+        if(humanList.Count <= 0)
+        {
+            StartCoroutine(LevelComplete());
+        }
+    }
 
     // finds the closest human ro the gameobject/ zombie
     public GameObject FindClosestHuman(GameObject zombie)
@@ -222,4 +243,22 @@ public class GameManagerScript : MonoBehaviour
         zombieList.Remove(zombie);
     }
 
+    public void GameOver()
+    {
+        gameText.text = "You Lost";
+        StartCoroutine(GoBackToMenu());
+    }
+
+    IEnumerator LevelComplete()
+    {
+        gameText.text = "Level Complete";
+        yield return new WaitForSeconds(3.0f);
+        sceneMan.GetComponent<SceneManagerScript>().LoadScene("Level_Select");
+    }
+
+    IEnumerator GoBackToMenu()
+    {
+        yield return new WaitForSeconds(3.0f);
+        sceneMan.GetComponent<SceneManagerScript>().LoadScene("Main_Menu");
+    }
 }
