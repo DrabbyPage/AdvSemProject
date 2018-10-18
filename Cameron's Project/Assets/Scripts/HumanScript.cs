@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class HumanScript : MonoBehaviour
 {
+    // give feedback on call time
+    // police will be called to know pos but only those in the area of the pos
+    // if no police in that area grab teh closest one
+
     public bool panicMode = false;
     public bool hasGun = false;
     public bool beingAttacked = false;
@@ -189,14 +193,17 @@ public class HumanScript : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().angularVelocity = 0f;
 
-            Debug.Log("at the location");
+            //Debug.Log("at the location");
             RandomizeMovePoint();
         }
         else
         {
             GetComponent<Animator>().SetBool("Walking", true);
 
-            StartCoroutine(CheckForNotMoving());
+            if (checkForStop)
+            {
+                StartCoroutine(CheckForNotMoving());
+            }
 
             GetComponent<Rigidbody2D>().AddForce(transform.right * moveSpeed);
         }
@@ -280,7 +287,7 @@ public class HumanScript : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
 
-        if (GetComponent<Rigidbody2D>().velocity.magnitude == 0)
+        if (GetComponent<Rigidbody2D>().velocity.magnitude <= 0.5f)
         {
             RandomizeMovePoint();
         }

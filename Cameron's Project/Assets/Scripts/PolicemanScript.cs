@@ -28,18 +28,21 @@ public class PolicemanScript : MonoBehaviour
     void Start ()
     {
         //GameMan = GameObject.Find("GameManager");
+        target = null;
 
         ableToAttack = true;
         beingAttacked = false;
         targetSighted = false;
         canMove = true;
 
+        RandomizeMovePoint();
     }
 
     // Update is called once per frame
     void Update ()
     {
         beingAttacked = GetComponent<BeingAttackedScript>().GetBeingAttacked();
+
 
         if(!beingAttacked)
         {
@@ -56,6 +59,9 @@ public class PolicemanScript : MonoBehaviour
                     MoveToPoint();
                 }
             }
+
+            LookAtPoint();
+
         }
         else
         {
@@ -113,9 +119,10 @@ public class PolicemanScript : MonoBehaviour
                 {
                     if (ableToAttack)
                     {
-                        if(bullet == null)
+                        if(bullet == null && ableToAttack)
                         {
                             Shoot();
+                            StartCoroutine(TimeBetweenShots());
                         }
                     }
                     else
@@ -125,8 +132,7 @@ public class PolicemanScript : MonoBehaviour
                 }
                 else
                 {
-                    // move towards the target
-                    //MoveToTarget();
+                    targetSighted = false;
                 }
 
             }
@@ -275,7 +281,7 @@ public class PolicemanScript : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
 
-        if (GetComponent<Rigidbody2D>().velocity.magnitude == 0)
+        if (GetComponent<Rigidbody2D>().velocity.magnitude <= 0.5f)
         {
             RandomizeMovePoint();
         }
@@ -297,9 +303,12 @@ public class PolicemanScript : MonoBehaviour
 
     IEnumerator TimeBetweenShots()
     {
+        ableToAttack = false;
         yield return new WaitForSeconds(0.75f);
         ableToAttack = true;
     }
+
+
 
     public void BulletIsGone()
     {
