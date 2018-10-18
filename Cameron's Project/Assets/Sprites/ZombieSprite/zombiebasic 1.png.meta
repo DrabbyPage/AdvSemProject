@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 16b9f80c7fff31d4bb3cc59030ee2318
-timeCreated: 1539898633
+guid: 059ba26b638e9ac4ab560573714971dc
+timeCreated: 1539896318
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: player_walk_strip6_0
-    21300002: player_walk_strip6_1
-    21300004: player_walk_strip6_2
-    21300006: player_walk_strip6_3
-    21300008: player_walk_strip6_4
-    21300010: player_walk_strip6_5
+    21300000: zombiebasic 1_0
+    21300002: zombiebasic 1_1
+    21300004: zombiebasic 1_2
+    21300006: zombiebasic 1_3
+    21300008: zombiebasic 1_4
+    21300010: zombiebasic 1_5
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -46,7 +46,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 36
+  spritePixelsToUnits: 65
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -76,78 +76,78 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_walk_strip6_0
+      name: zombiebasic 1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 35
-        height: 57
+        x: 4
+        y: 147
+        width: 61
+        height: 59
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: player_walk_strip6_1
+      name: zombiebasic 1_1
       rect:
         serializedVersion: 2
-        x: 35
-        y: 0
-        width: 35
-        height: 57
+        x: 79
+        y: 150
+        width: 62
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: player_walk_strip6_2
+      name: zombiebasic 1_2
       rect:
         serializedVersion: 2
-        x: 70
-        y: 0
-        width: 35
-        height: 57
+        x: 3
+        y: 75
+        width: 61
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: player_walk_strip6_3
+      name: zombiebasic 1_3
       rect:
         serializedVersion: 2
-        x: 105
-        y: 0
-        width: 35
-        height: 57
+        x: 78
+        y: 73
+        width: 62
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: player_walk_strip6_4
+      name: zombiebasic 1_4
       rect:
         serializedVersion: 2
-        x: 140
-        y: 0
-        width: 35
-        height: 57
+        x: 1
+        y: 3
+        width: 61
+        height: 58
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: player_walk_strip6_5
+      name: zombiebasic 1_5
       rect:
         serializedVersion: 2
-        x: 175
+        x: 75
         y: 0
-        width: 35
-        height: 57
+        width: 62
+        height: 58
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

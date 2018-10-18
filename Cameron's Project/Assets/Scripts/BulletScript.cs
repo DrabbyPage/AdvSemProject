@@ -28,7 +28,10 @@ public class BulletScript : MonoBehaviour
         }
 
         // destroy the object
-        Destroy(gameObject);
+        if (col.gameObject != gameObject)
+        {
+            Destroy(gameObject.transform.parent);
+        }
     }
 
     void MoveBullet()

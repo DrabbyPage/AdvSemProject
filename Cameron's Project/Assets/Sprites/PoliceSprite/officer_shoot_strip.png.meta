@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0c97677c1ea4752429a7f2662d5ff43c
-timeCreated: 1537460518
+timeCreated: 1539896562
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -79,10 +79,10 @@ TextureImporter:
       name: officer_shoot_strip_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 4
-        width: 31
-        height: 38
+        x: 0
+        y: 0
+        width: 38
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -92,10 +92,10 @@ TextureImporter:
       name: officer_shoot_strip_1
       rect:
         serializedVersion: 2
-        x: 45
-        y: 4
-        width: 31
-        height: 38
+        x: 38
+        y: 0
+        width: 38
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -108,7 +108,7 @@ TextureImporter:
         x: 76
         y: 0
         width: 38
-        height: 42
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,10 +118,10 @@ TextureImporter:
       name: officer_shoot_strip_3
       rect:
         serializedVersion: 2
-        x: 93
-        y: 39
-        width: 4
-        height: 4
+        x: 114
+        y: 0
+        width: 38
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,10 +131,10 @@ TextureImporter:
       name: officer_shoot_strip_4
       rect:
         serializedVersion: 2
-        x: 121
-        y: 4
-        width: 31
-        height: 38
+        x: 152
+        y: 0
+        width: 38
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,10 +144,10 @@ TextureImporter:
       name: officer_shoot_strip_5
       rect:
         serializedVersion: 2
-        x: 159
-        y: 2
-        width: 69
-        height: 43
+        x: 190
+        y: 0
+        width: 38
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
