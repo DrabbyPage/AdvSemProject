@@ -38,7 +38,12 @@ public class WanderingScript : MonoBehaviour
 	void Update ()
     {
         if (ableToMove)
-            CheckForBehavior();
+        {
+            if (!gameObject.GetComponent<HumanScript>().panicMode)
+            {
+                CheckForBehavior();
+            }
+        }
 	}
 
     void CheckForBehavior()

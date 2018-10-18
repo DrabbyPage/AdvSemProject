@@ -20,6 +20,11 @@ public class HealthScript : MonoBehaviour
 		
 	}
 
+    public void HealCharacter(int healVal)
+    {
+        health = health + healVal;
+    }
+
     public void HurtCharacter()
     {
         health = health - 1;
@@ -31,6 +36,7 @@ public class HealthScript : MonoBehaviour
             {
                 //transfer to other zombie
                 GameObject closestZombie = GameMan.GetComponent<GameManagerScript>().ClosestZombie(gameObject.transform.position);
+
                 if (closestZombie != null)
                 {
                     closestZombie.GetComponent<ZombieScript>().ConvertToPlayer();
@@ -39,12 +45,14 @@ public class HealthScript : MonoBehaviour
                 else
                 {
                     // game over
+                    Destroy(gameObject);
                     GameMan.GetComponent<GameManagerScript>().GameOver();
                 }
             }
             else
             {
                 // kill the obj
+                GameMan.GetComponent<GameManagerScript>().DeleteZombieFromList(gameObject);
                 Destroy(gameObject);
 
             }

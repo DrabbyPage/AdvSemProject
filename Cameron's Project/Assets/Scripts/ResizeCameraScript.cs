@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ResizeCameraScript : MonoBehaviour
 {
+    float minCameraSize = 5.0f;
+    float maxCameraSize = 11.0f;
+    float cameraSizeChange = 0.5f;
 
 	// Use this for initialization
 	void Start ()
@@ -21,11 +24,11 @@ public class ResizeCameraScript : MonoBehaviour
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-        if(scroll > 0 && GetComponent<Camera>().orthographicSize > 3)
+        if(scroll > 0 && GetComponent<Camera>().orthographicSize > minCameraSize)
         {
             ShrinkView();
         }
-        else if(scroll < 0 && GetComponent<Camera>().orthographicSize < 11)
+        else if(scroll < 0 && GetComponent<Camera>().orthographicSize < maxCameraSize)
         {
             ExpandView();
         }
@@ -33,11 +36,11 @@ public class ResizeCameraScript : MonoBehaviour
 
     void ShrinkView()
     {
-        GetComponent<Camera>().orthographicSize = GetComponent<Camera>().orthographicSize - 0.5f;
+        GetComponent<Camera>().orthographicSize = GetComponent<Camera>().orthographicSize - cameraSizeChange;
     }
     
     void ExpandView()
     {
-        GetComponent<Camera>().orthographicSize = GetComponent<Camera>().orthographicSize + 0.5f;
+        GetComponent<Camera>().orthographicSize = GetComponent<Camera>().orthographicSize + cameraSizeChange;
     }
 }

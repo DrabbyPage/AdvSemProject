@@ -1,0 +1,194 @@
+Initialize engine version: 5.6.6f2 (6bac21139588)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1050 (ID=0x1c8d)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+    Driver:   25.21.14.1616
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.050 seconds
+Platform assembly: D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\GitHub\AdvSemProject\Cameron's Project\Build1_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 2.436886 ms
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 10.886212 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 300.
+Total: 0.258221 ms (FindLiveObjects: 0.023555 ms CreateObjectMapping: 0.019111 ms MarkObjects: 0.209777 ms  DeleteObjects: 0.005333 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.397332 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 541.
+Total: 0.283110 ms (FindLiveObjects: 0.033777 ms CreateObjectMapping: 0.024444 ms MarkObjects: 0.203999 ms  DeleteObjects: 0.019111 ms)
+
+Human count: 10
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Zombie count: 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Booth count: 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+new target for policeman
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+new target for policeman
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.GameObject:get_transform ()
+  at GameManagerScript.ClosestZombie (Vector3 point) [0x00000] in <filename unknown>:0 
+  at HealthScript.HurtCharacter () [0x00000] in <filename unknown>:0 
+  at BulletScript.OnTriggerEnter2D (UnityEngine.Collider2D col) [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.GameObject:get_transform ()
+  at GameManagerScript.ClosestZombie (Vector3 point) [0x00000] in <filename unknown>:0 
+  at HealthScript.HurtCharacter () [0x00000] in <filename unknown>:0 
+  at BulletScript.OnTriggerEnter2D (UnityEngine.Collider2D col) [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.GameObject:get_transform ()
+  at GameManagerScript.ClosestZombie (Vector3 point) [0x00000] in <filename unknown>:0 
+  at HealthScript.HurtCharacter () [0x00000] in <filename unknown>:0 
+  at BulletScript.OnTriggerEnter2D (UnityEngine.Collider2D col) [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.GameObject:get_transform ()
+  at GameManagerScript.ClosestZombie (Vector3 point) [0x00000] in <filename unknown>:0 
+  at HealthScript.HurtCharacter () [0x00000] in <filename unknown>:0 
+  at BulletScript.OnTriggerEnter2D (UnityEngine.Collider2D col) [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+new target for policeman
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.GameObject:get_transform ()
+  at GameManagerScript.ClosestZombie (Vector3 point) [0x00000] in <filename unknown>:0 
+  at HealthScript.HurtCharacter () [0x00000] in <filename unknown>:0 
+  at BulletScript.OnTriggerEnter2D (UnityEngine.Collider2D col) [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+new target for policeman
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.GameObject:get_transform ()
+  at GameManagerScript.ClosestZombie (Vector3 point) [0x00000] in <filename unknown>:0 
+  at HealthScript.HurtCharacter () [0x00000] in <filename unknown>:0 
+  at BulletScript.OnTriggerEnter2D (UnityEngine.Collider2D col) [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.GameObject:get_transform ()
+  at GameManagerScript.ClosestZombie (Vector3 point) [0x00000] in <filename unknown>:0 
+  at HealthScript.HurtCharacter () [0x00000] in <filename unknown>:0 
+  at BulletScript.OnTriggerEnter2D (UnityEngine.Collider2D col) [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.771110 ms
+
+Unloading 36 unused Assets to reduce memory usage. Loaded Objects now: 300.
+Total: 0.294666 ms (FindLiveObjects: 0.023111 ms CreateObjectMapping: 0.020888 ms MarkObjects: 0.199110 ms  DeleteObjects: 0.051111 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.363999 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 541.
+Total: 0.284888 ms (FindLiveObjects: 0.036444 ms CreateObjectMapping: 0.020888 ms MarkObjects: 0.206666 ms  DeleteObjects: 0.020444 ms)
+
+Human count: 10
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Zombie count: 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Booth count: 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+new target for policeman
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+new target for policeman
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.657332 ms
+
+Unloading 36 unused Assets to reduce memory usage. Loaded Objects now: 300.
+Total: 0.305333 ms (FindLiveObjects: 0.022666 ms CreateObjectMapping: 0.018666 ms MarkObjects: 0.210222 ms  DeleteObjects: 0.053333 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.560888 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 541.
+Total: 0.273333 ms (FindLiveObjects: 0.036444 ms CreateObjectMapping: 0.019555 ms MarkObjects: 0.197333 ms  DeleteObjects: 0.019111 ms)
+
+Human count: 10
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Zombie count: 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Booth count: 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+new target for policeman
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.769777 ms
+
+Unloading 48 unused Assets to reduce memory usage. Loaded Objects now: 300.
+Total: 0.352444 ms (FindLiveObjects: 0.023111 ms CreateObjectMapping: 0.019111 ms MarkObjects: 0.221333 ms  DeleteObjects: 0.088444 ms)
+
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 3230 -> priority: 1 
+  Thread -> id: 5678 -> priority: 1 
+  Thread -> id: d64 -> priority: 1 
+  Thread -> id: 13f8 -> priority: 1 

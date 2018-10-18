@@ -27,6 +27,14 @@ public class BeingAttackedScript : MonoBehaviour
         }
 	}
 
+    private void FixedUpdate()
+    {
+        if(beingAttacked)
+        {
+            TurnRed();
+        }
+    }
+
     public void ScreamForHelp()
     {
         //underDistress = true;
@@ -48,9 +56,19 @@ public class BeingAttackedScript : MonoBehaviour
 
         gameObject.tag = "Dead";
 
-        GetComponent<SpriteRenderer>().color = new Vector4(0.8f, 0.0f, 0.0f, 1.0f);
+        //GetComponent<SpriteRenderer>().color = new Vector4(0.8f, 0.0f, 0.0f, 1.0f);
 
         StartCoroutine(StartTurningDead());
+    }
+
+    void TurnRed()
+    {
+        float redColor = GetComponent<SpriteRenderer>().color.r;
+
+        if (redColor < 1.0f)
+        {
+            GetComponent<SpriteRenderer>().color = new Vector4(redColor + 1.0f, 0.0f, 0.0f, 1.0f);
+        }
     }
 
     IEnumerator StartTurningDead()

@@ -10,6 +10,7 @@ TagManager:
   - Pointer
   - Dead
   - Booth
+  - Chest
   layers:
   - Default
   - TransparentFX

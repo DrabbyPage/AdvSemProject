@@ -16,7 +16,7 @@ public class SightScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        panicking = GetComponent<RunAwayScript>().panicMode;
+        panicking = gameObject.GetComponent<HumanScript>().panicMode;
         if (panicking)
             canCheck = false;
         else
@@ -30,14 +30,14 @@ public class SightScript : MonoBehaviour
             if (canCheck)
             {
                 //Debug.Log("PANIC!");
-                gameObject.transform.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
-                gameObject.GetComponent<RunAwayScript>().SetPanic(true);
+                gameObject.transform.GetComponent<HumanScript>().SetThreat(collision.gameObject);
+                gameObject.GetComponent<HumanScript>().SetPanic(true);
             }
         }
         else
         {
             // you will have to adjust this
-            //gameObject.transform.GetComponent<RunAwayScript>().SetPanic(false);
+            //gameObject.transform.GetComponent<HumanScript>().SetPanic(false);
         }
     }
 
@@ -46,9 +46,8 @@ public class SightScript : MonoBehaviour
 
         if (collision.gameObject.tag == "Zombie" || collision.gameObject.tag == "Player")
         {
-            //Debug.Log("PANIC!");
-            gameObject.transform.GetComponent<RunAwayScript>().SetThreat(collision.gameObject);
-            gameObject.transform.GetComponent<RunAwayScript>().SetPanic(true);
+            gameObject.transform.GetComponent<HumanScript>().SetThreat(collision.gameObject);
+            gameObject.transform.GetComponent<HumanScript>().SetPanic(true);
         }
     }
 }

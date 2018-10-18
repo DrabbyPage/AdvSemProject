@@ -36,15 +36,15 @@ GameObject:
   m_Component:
   - component: {fileID: 4010117977157364}
   - component: {fileID: 212698981046363656}
+  - component: {fileID: 61040232533730162}
   - component: {fileID: 60945182269542152}
   - component: {fileID: 50321944360410830}
-  - component: {fileID: 114135051061424628}
+  - component: {fileID: 114940712607618044}
   - component: {fileID: 114206584649818042}
   - component: {fileID: 114931735999538562}
-  - component: {fileID: 61040232533730162}
   - component: {fileID: 114844109640256390}
   m_Layer: 0
-  m_Name: RunAwayChar
+  m_Name: Citizen
   m_TagString: Human
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,8 +89,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 10
+  m_AngularDrag: 0.1
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -151,19 +151,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114135051061424628
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1708230400951710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8dc04918eb9aa545ad1ece8adb00272, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panicMode: 0
-  beingAttacked: 0
 --- !u!114 &114206584649818042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,6 +184,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d84a55d44f8478642b7ccf3d36ed51d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beingAttacked: 0
+--- !u!114 &114940712607618044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708230400951710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8dc04918eb9aa545ad1ece8adb00272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panicMode: 0
+  hasGun: 0
   beingAttacked: 0
 --- !u!212 &212166276819505178
 SpriteRenderer:

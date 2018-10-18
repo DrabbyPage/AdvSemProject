@@ -34,16 +34,20 @@ public class AttackScript : MonoBehaviour
             {
                 human.GetComponent<BeingAttackedScript>().SetBeingAttacked(true);
 
-                // do some particle physics maybe?
+                // set teh particle system activity to true
+                transform.GetChild(0).gameObject.SetActive(true);
             }
             else
             {
+                // shut the particle system off
                 GetComponent<CharacterMove>().SetMoveAbility(true);
+                transform.GetChild(0).gameObject.SetActive(false);
             }
         }
         else
         {
             GetComponent<CharacterMove>().SetMoveAbility(true);
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

@@ -6,14 +6,14 @@ public class CharacterMove : MonoBehaviour
 {
     public GameObject target;
     GameObject GameMan;
+    GameObject crosshair;
     
     public Vector2 newPoint;
 
-    float moveSpeed = 8.0f;
+    float moveSpeed = 65.0f;
     float turnSpeed = 7.0f;
 
     float targetRadius = 0.8f;
-    float slowRadius = 5.0f;
 
     float lockOnRange = 1.0f;
 
@@ -25,6 +25,8 @@ public class CharacterMove : MonoBehaviour
         target = null;
         newPoint = new Vector2(transform.position.x, transform.position.y);
         GameMan = GameObject.Find("GameManager");
+        crosshair = Instantiate(Resources.Load("Prefabs/crosshair")) as GameObject;
+        crosshair.SetActive(false);// = false;
     }
 
     // Update is called once per frame
@@ -32,6 +34,7 @@ public class CharacterMove : MonoBehaviour
     {
         CheckForNewPoint();
         CheckToMove();
+        LookAtPoint();
     }
 
     void CheckForNewPoint()
@@ -41,8 +44,21 @@ public class CharacterMove : MonoBehaviour
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.z));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
 
-            CheckHumanDist(mouseWorld);
+            if (target != null)
+            {
+                target = null;
+            }
+
+            crosshair.GetComponent<SpriteRenderer>().color = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+
             ableToMove = true;
+        }
+        if(Input.GetMouseButton(1))
+        {
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.z));
+
+            CheckHumanDist(mouseWorld);
+
         }
     }
 
@@ -52,20 +68,20 @@ public class CharacterMove : MonoBehaviour
         {
             MoveToPoint();
         }
-        else
-        {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            GetComponent<Rigidbody2D>().angularVelocity = 0f;
-
-            ableToMove = false;
-        }
     }
 
     void MoveToPoint()
     {
+        crosshair.SetActive(true);
+
         if (target != null)
         {
             newPoint = target.transform.position;
+            crosshair.transform.position = target.transform.position;
+        }
+        else
+        {
+            crosshair.transform.position = newPoint;
         }
 
         float distance = Mathf.Sqrt(Mathf.Pow(newPoint.x - transform.position.x, 2) + Mathf.Pow(newPoint.y - transform.position.y, 2));
@@ -77,12 +93,12 @@ public class CharacterMove : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().angularVelocity = 0f;
 
+            crosshair.SetActive(false);
             ableToMove = false;
         }
         else
         {
-            LookAtPoint();
-            GetComponent<Rigidbody2D>().AddForce(transform.right * ((moveSpeed * distance) / slowRadius));
+            GetComponent<Rigidbody2D>().AddForce(transform.right * moveSpeed);
         }
 
     }
@@ -92,8 +108,22 @@ public class CharacterMove : MonoBehaviour
         float lookAngle;
         float currAngle = transform.eulerAngles.z;
 
-        float xDiff = newPoint.x - transform.position.x;
-        float yDiff = newPoint.y - transform.position.y;
+        float lookX;
+        float lookY;
+
+        if (target != null)
+        {
+            lookX = target.transform.position.x;
+            lookY = target.transform.position.y;
+        }
+        else
+        {
+            lookX = newPoint.x;
+            lookY = newPoint.y;
+        }
+
+        float xDiff = lookX - transform.position.x;
+        float yDiff = lookY - transform.position.y;
 
         lookAngle = Mathf.Atan2(yDiff, xDiff);
 
@@ -117,16 +147,10 @@ public class CharacterMove : MonoBehaviour
 
         if (diff > 10)
         {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            GetComponent<Rigidbody2D>().angularVelocity = 0f;
-
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
         }
         else if (diff < -10)
         {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            GetComponent<Rigidbody2D>().angularVelocity = 0f;
-
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
         }
     }
@@ -138,6 +162,7 @@ public class CharacterMove : MonoBehaviour
         if (newTarget != null)
         {
             target = newTarget;
+            crosshair.GetComponent<SpriteRenderer>().color = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
         }
         else
         {

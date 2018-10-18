@@ -8,6 +8,7 @@ public class GameManagerScript : MonoBehaviour
     List<GameObject> humanList;
     List<GameObject> zombieList;
     List<GameObject> boothList;
+    List<GameObject> chestList;
 
     GameObject sceneMan;
 
@@ -21,20 +22,26 @@ public class GameManagerScript : MonoBehaviour
 	void Start ()
     {
         sceneMan = GameObject.Find("SceneManager");
-        gameText.text = "";
+
+        if (gameText != null)
+        {
+            gameText.text = "";
+        }
 
         humanList = new List<GameObject>();
         zombieList = new List<GameObject>();
         boothList = new List<GameObject>();
+        chestList = new List<GameObject>();
 
         AddStartHumansToList();
         AddStartZombiesToList();
         AddBoothsToList();
+        AddChestsToList();
 
         Debug.Log("Human count: " + humanList.Count);
         Debug.Log("Zombie count: " + zombieList.Count);
         Debug.Log("Booth count: " + boothList.Count);
-
+        Debug.Log("Chest count: " + chestList.Count);
     }
 
     // Update is called once per frame
@@ -90,7 +97,6 @@ public class GameManagerScript : MonoBehaviour
     // checks to see if a human is within range
     public GameObject CloseToHuman(Vector3 point, float range)
     {
-
         float dist;
         int closeHumIndex = 0;
 
@@ -156,7 +162,6 @@ public class GameManagerScript : MonoBehaviour
 
         }
 
-        //Debug.Log("target: " + humanList[closeHumIndex]);
         if (closeBoothIndex == -1)
         {
             return null;
@@ -166,6 +171,46 @@ public class GameManagerScript : MonoBehaviour
             return boothList[closeBoothIndex];
         }
     }
+
+    // checks for closest booth for humans to run to
+    public GameObject ClosestChest(Vector3 point)
+    {
+        float dist;
+        float smallestDist = 1000f;
+        int closeChestIndex = -1;
+
+        if (chestList.Count == 0)
+        {
+            return null;
+        }
+
+        for (int i = 0; i < chestList.Count; i++)
+        {
+            float distX = chestList[i].transform.position.x - point.x;
+            float distY = chestList[i].transform.position.y - point.y;
+
+            dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
+
+            if (dist < smallestDist)
+            {
+                if (chestList[i].gameObject.GetComponent<ChestScript>().inUse == false)
+                {
+                    smallestDist = dist;
+                    closeChestIndex = i;
+                }
+            }
+        }
+
+        if (closeChestIndex == -1)
+        {
+            return null;
+        }
+        else
+        {
+            return chestList[closeChestIndex];
+        }
+    }
+
 
     // gives closest zombie from the list of zombies to the position given
     public GameObject ClosestZombie(Vector3 point)
@@ -223,6 +268,14 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+    void AddChestsToList()
+    {
+        foreach (GameObject chest in GameObject.FindGameObjectsWithTag("Chest"))
+        {
+            chestList.Add(chest);
+        }
+    }
+
     public void AddHumanToList(GameObject newHum)
     {
         humanList.Add(newHum);
@@ -245,13 +298,21 @@ public class GameManagerScript : MonoBehaviour
 
     public void GameOver()
     {
-        gameText.text = "You Lost";
+        if(gameText != null)
+        {
+            gameText.text = "You Lost";
+        }
+
         StartCoroutine(GoBackToMenu());
     }
 
     IEnumerator LevelComplete()
     {
-        gameText.text = "Level Complete";
+        if (gameText != null)
+        {
+            gameText.text = "Level Complete";
+        }
+
         yield return new WaitForSeconds(3.0f);
         sceneMan.GetComponent<SceneManagerScript>().LoadScene("Level_Select");
     }

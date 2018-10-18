@@ -109,11 +109,14 @@ public class ZombieScript : MonoBehaviour
                 attacking = true;
                 target.GetComponent<BeingAttackedScript>().SetBeingAttacked(true);
 
-                // add particle effects for blood
+                // activating particle system
+                transform.GetChild(0).gameObject.SetActive(true);
             }
             else
             {
                 attacking = false;
+                // shutting off particle system
+                transform.GetChild(0).gameObject.SetActive(false);
             }
         }
     }

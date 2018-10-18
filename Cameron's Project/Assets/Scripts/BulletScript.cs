@@ -10,7 +10,6 @@ public class BulletScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        //rotationAngle = transform.eulerAngles.z;
         StartCoroutine(DestroyBullet());
 	}
 	
@@ -26,13 +25,10 @@ public class BulletScript : MonoBehaviour
         {
             // hurt the obj
             col.gameObject.GetComponent<HealthScript>().HurtCharacter();
-            Destroy(gameObject);
         }
 
-        // particle effect
-
         // destroy the object
-
+        Destroy(gameObject);
     }
 
     void MoveBullet()
