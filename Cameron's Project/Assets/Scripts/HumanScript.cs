@@ -5,22 +5,22 @@ using UnityEngine;
 public class HumanScript : MonoBehaviour
 {
     // give feedback on call time
-    // police will be called to know pos but only those in the area of the pos
-    // if no police in that area grab teh closest one
 
     public bool panicMode = false;
-    public bool hasGun = false;
+    bool hasGun = false;
     public bool beingAttacked = false;
     bool canCheckCondition = true;
-    bool reachedPoint = false;
     bool canMove = true;
     bool checkForStop = true;
+    bool targetSighted = false;
+    bool ableToAttack = true;
 
     GameObject threat;
     GameObject closestBooth;
     GameObject closestChest;
     GameObject target;
     GameObject GameMan;
+    GameObject bullet;
 
     public Vector2 newPoint;
     public Vector2 threatsKnownLoc;
@@ -28,6 +28,7 @@ public class HumanScript : MonoBehaviour
     float turnSpeed = 10;
     float moveSpeed = 30f;
     float targetRadius = 0.2f;
+    float shootingDist = 15.0f;
 
     int runOrArm = 0;
 
@@ -51,9 +52,21 @@ public class HumanScript : MonoBehaviour
 
         if (!beingAttacked)
         {
-            if(panicMode)
+            if(panicMode && !hasGun)
             {
                 CheckCondition();
+            }
+            else if(hasGun)
+            {
+                if (targetSighted)
+                {
+                    Aim();
+                }
+                else
+                {
+                    MoveToPoint();
+                }
+
             }
             else
             {
@@ -68,10 +81,6 @@ public class HumanScript : MonoBehaviour
         else
         {
             GetComponent<Animator>().SetBool("Walking", false);
-
-            StartCoroutine(GetComponent<BeingAttackedScript>().BeingAttacked());
-           
-            
         }
         
     }
@@ -102,36 +111,37 @@ public class HumanScript : MonoBehaviour
 
         if(closestBooth == null)
         {
-            target = null;
+            RunToChest();
             return;
         }
         else
         {
             target = closestBooth;
-        }
 
-        float closestBoothX = closestBooth.transform.position.x;
-        float closestBoothY = closestBooth.transform.position.y;
+            float closestBoothX = closestBooth.transform.position.x;
+            float closestBoothY = closestBooth.transform.position.y;
 
-        dist = Mathf.Sqrt(Mathf.Pow(transform.position.x - closestBoothX, 2) + Mathf.Pow(transform.position.y - closestBoothY, 2));
+            dist = Mathf.Sqrt(Mathf.Pow(transform.position.x - closestBoothX, 2) + Mathf.Pow(transform.position.y - closestBoothY, 2));
 
-        if (dist > 0.4f)
-        {
-            if(canMove)
+            if (dist > 0.4f)
             {
-                MoveToPoint();
+                if (canMove)
+                {
+                    MoveToPoint();
+                }
+            }
+            else
+            {
+                canMove = false;
+
+                GetComponent<Animator>().SetBool("Walking", false);
+
+                closestBooth.GetComponent<PhoneBoothScript>().SetOccupation(true);
+
+                StartCoroutine(WaitForCall());
             }
         }
-        else
-        {
-            canMove = false;
 
-            GetComponent<Animator>().SetBool("Walking", false);
-
-            closestBooth.GetComponent<PhoneBoothScript>().SetOccupation(true);
-
-            StartCoroutine(WaitForCall());
-        }
     }
 
     void RunToChest()
@@ -141,37 +151,31 @@ public class HumanScript : MonoBehaviour
 
         if (closestChest == null)
         {
-            target = null;
+            RunToBooth();
             return;
         }
         else
         {
             target = closestChest;
-        }
 
-        float closestChestX = closestChest.transform.position.x;
-        float closestChestY = closestChest.transform.position.y;
+            float closestChestX = closestChest.transform.position.x;
+            float closestChestY = closestChest.transform.position.y;
 
-        dist = Mathf.Sqrt(Mathf.Pow(transform.position.x - closestChestX, 2) + Mathf.Pow(transform.position.y - closestChestY, 2));
+            dist = Mathf.Sqrt(Mathf.Pow(transform.position.x - closestChestX, 2) + Mathf.Pow(transform.position.y - closestChestY, 2));
 
-        if (dist > 0.4f)
-        {
-            MoveToPoint();
-        }
-        else
-        {
-            GetComponent<Animator>().SetBool("Walking", false);
-
-            if(checkForStop)
+            if (dist > 0.4f)
             {
+                MoveToPoint();
+            }
+            else
+            {
+                GetComponent<Animator>().SetBool("Walking", false);
+
                 closestChest.GetComponent<ChestScript>().ChangeUse(true);
 
+                StartCoroutine(WaitForItem());
             }
-
-            StartCoroutine(WaitForItem());
         }
-
-
     }
 
     void MoveToPoint()
@@ -187,7 +191,6 @@ public class HumanScript : MonoBehaviour
 
         if (distance < targetRadius)
         {
-            reachedPoint = true;
             GetComponent<Animator>().SetBool("Walking", false);
 
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -203,6 +206,7 @@ public class HumanScript : MonoBehaviour
             if (checkForStop)
             {
                 StartCoroutine(CheckForNotMoving());
+
             }
 
             GetComponent<Rigidbody2D>().AddForce(transform.right * moveSpeed);
@@ -277,17 +281,115 @@ public class HumanScript : MonoBehaviour
         randY = Random.Range(-wanderArea, wanderArea);
 
         newPoint = new Vector2(gameObject.transform.position.x + randX, gameObject.transform.position.y + randY);
+    }
 
-        reachedPoint = false;
+    void Aim()
+    {
+        if (target != null)
+        {
+            Debug.Log("aiming at zombie");
+            // calculate angle between the character and the object
+            float lookAngle;
+            float prevAngle = transform.eulerAngles.z;
+
+            float xDiff = target.transform.position.x - transform.position.x;
+            float yDiff = target.transform.position.y - transform.position.y;
+
+            float dist = Mathf.Sqrt((xDiff * xDiff) + (yDiff * yDiff));
+
+            lookAngle = Mathf.Atan2(yDiff, xDiff);
+
+            float lookAngleDeg = (lookAngle * Mathf.Rad2Deg);
+
+            float diff = lookAngleDeg - prevAngle;
+
+            if (lookAngleDeg < 0)
+            {
+                lookAngleDeg = lookAngleDeg + 360;
+            }
+
+            if (diff > 180)
+            {
+                diff -= 360;
+            }
+            else if (diff < -180)
+            {
+                diff += 360;
+            }
+
+            if (diff > 5)
+            {
+                transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
+            }
+            else if (diff < -5)
+            {
+                transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
+            }
+            else
+            {
+                if (dist < shootingDist)
+                {
+                    if (ableToAttack)
+                    {
+                        if (bullet == null && ableToAttack)
+                        {
+                            Shoot();
+                            StartCoroutine(TimeBetweenShots());
+                        }
+                    }
+                    else
+                    {
+                        StartCoroutine(TimeBetweenShots());
+                    }
+                }
+                else
+                {
+                    targetSighted = false;
+                }
+
+            }
+        }
+
+    }
+
+    void Shoot()
+    {
+        // calculate angle between the character and the object
+        float lookAngle;
+
+        float newX, newY;
+
+        float xDiff = target.transform.position.x - transform.position.x;
+        float yDiff = target.transform.position.y - transform.position.y;
+
+        lookAngle = Mathf.Atan2(yDiff, xDiff);
+
+        float lookAngleDeg = (lookAngle * Mathf.Rad2Deg) - 90;
+
+        if (lookAngleDeg < 0)
+        {
+            lookAngleDeg = lookAngleDeg + 360;
+        }
+
+        newX = gameObject.transform.position.x;
+        newY = gameObject.transform.position.y;
+
+        Debug.Log("spawning new bullet");
+
+        bullet = Instantiate(Resources.Load("Prefabs/Bullet")) as GameObject;
+        bullet.GetComponent<BulletScript>().SetAngle(lookAngleDeg);
+        bullet.transform.position = new Vector2(newX, newY);
+
+        ableToAttack = false;
     }
 
     IEnumerator CheckForNotMoving()
     {
         checkForStop = false;
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.2f);
 
-        if (GetComponent<Rigidbody2D>().velocity.magnitude <= 0.5f)
+        if (GetComponent<Rigidbody2D>().velocity.magnitude <= 0.9f)
         {
             RandomizeMovePoint();
         }
@@ -296,26 +398,36 @@ public class HumanScript : MonoBehaviour
 
     IEnumerator WaitForCall()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(5.0f);
 
         if(!beingAttacked)
         {
-            // call the police
+            if (closestBooth != null)
+            {
+                // call the police to (the last known loc of the threat)
+                if (threat != null)
+                {
 
-            // get the game manager and send a message to the police to go to a location
-            // (the last known loc of the threat)
+                    closestBooth.GetComponent<PhoneBoothScript>().CallThePoPo(threatsKnownLoc);
+                }
+            }
+
+
+            canCheckCondition = true;
+            panicMode = false;
+            canMove = true;
         }
 
-        canCheckCondition = true;
-        panicMode = false;
-        canMove = false;
     }
 
     IEnumerator WaitForItem()
     {
         yield return new WaitForSeconds(3.0f);
 
-        hasGun = true;
+        if (!beingAttacked)
+        {
+            hasGun = true;
+        }
 
         canCheckCondition = true;
         panicMode = false;
@@ -324,9 +436,23 @@ public class HumanScript : MonoBehaviour
         newPoint = threatsKnownLoc;
     }
 
+    IEnumerator TimeBetweenShots()
+    {
+        ableToAttack = false;
+        yield return new WaitForSeconds(0.75f);
+        ableToAttack = true;
+    }
+
     public void SetPanic(bool newMode)
     {
-        panicMode = newMode;
+        if(hasGun)
+        {
+            targetSighted = newMode;
+        }
+        else
+        {
+            panicMode = newMode;
+        }
     }
 
     public void SetThreatLocation(GameObject newThreat)
@@ -334,5 +460,10 @@ public class HumanScript : MonoBehaviour
         // this will be used for calling the police or going back to the loc when armed
         threat = newThreat;
         threatsKnownLoc = threat.transform.position;
+
+        if(hasGun)
+        {
+            target = newThreat;
+        }
     }
 }

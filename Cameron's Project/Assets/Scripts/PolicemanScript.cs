@@ -12,7 +12,7 @@ public class PolicemanScript : MonoBehaviour
     public Vector2 newPoint;
     public Vector2 threatsKnownLoc;
 
-    float shootingDist = 10.0f;
+    float shootingDist = 12.0f;
     float turnSpeed = 10;
     float moveSpeed = 30f;
     float targetRadius = 0.2f;
@@ -22,7 +22,6 @@ public class PolicemanScript : MonoBehaviour
     bool targetSighted;
     bool canMove;
     bool checkForStop;
-    bool reachedPoint;
 
     // Use this for initialization
     void Start ()
@@ -41,10 +40,16 @@ public class PolicemanScript : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        CheckSituation();
+	}
+
+    void CheckSituation()
+    {
+
         beingAttacked = GetComponent<BeingAttackedScript>().GetBeingAttacked();
 
 
-        if(!beingAttacked)
+        if (!beingAttacked)
         {
             if (targetSighted)
             {
@@ -66,11 +71,10 @@ public class PolicemanScript : MonoBehaviour
         else
         {
             ableToAttack = false;
-
+            canMove = false;
             GetComponent<BeingAttackedScript>().BeingAttacked();
         }
-
-	}
+    }
 
     void Aim()
     {
@@ -182,13 +186,12 @@ public class PolicemanScript : MonoBehaviour
 
         if (distance < targetRadius)
         {
-            reachedPoint = true;
             //GetComponent<Animator>().SetBool("Walking", false);
 
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().angularVelocity = 0f;
 
-            Debug.Log("at the location");
+            //Debug.Log("at the location");
             RandomizeMovePoint();
         }
         else
@@ -272,16 +275,15 @@ public class PolicemanScript : MonoBehaviour
 
         newPoint = new Vector2(gameObject.transform.position.x + randX, gameObject.transform.position.y + randY);
 
-        reachedPoint = false;
     }
 
     IEnumerator CheckForNotMoving()
     {
         checkForStop = false;
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.2f);
 
-        if (GetComponent<Rigidbody2D>().velocity.magnitude <= 0.5f)
+        if (GetComponent<Rigidbody2D>().velocity.magnitude <= 0.9f)
         {
             RandomizeMovePoint();
         }
@@ -294,7 +296,7 @@ public class PolicemanScript : MonoBehaviour
         {
             if(target == null)
             {
-                Debug.Log("new target for policeman");
+                //Debug.Log("new target for policeman");
                 targetSighted = true;
                 target = col.gameObject;
             }
@@ -308,10 +310,14 @@ public class PolicemanScript : MonoBehaviour
         ableToAttack = true;
     }
 
-
-
     public void BulletIsGone()
     {
         bullet = null;
+    }
+
+    public void CallInTarget(Vector2 targetPoint)
+    {
+        Debug.Log("threat was called in");
+        newPoint = targetPoint;
     }
 }

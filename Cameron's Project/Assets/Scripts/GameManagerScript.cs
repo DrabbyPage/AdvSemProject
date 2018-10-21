@@ -18,6 +18,9 @@ public class GameManagerScript : MonoBehaviour
 
     //bool loadedLevel = false;
 
+    bool checkingForBooth = false;
+    bool checkingForChest = false;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -138,37 +141,50 @@ public class GameManagerScript : MonoBehaviour
         float smallestDist = 1000f;
         int closeBoothIndex = -1;
 
-        if (boothList.Count == 0)
+        if(!checkingForBooth)
         {
-            return null;
-        }
-
-        for (int i = 0; i < boothList.Count; i++)
-        {
-            float distX = boothList[i].transform.position.x - point.x;
-            float distY = boothList[i].transform.position.y - point.y;
-
-            dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
-
-            if (dist < smallestDist)// && boothList[i].GetComponent<PhoneBoothScript>().boothInUse == false)
+            checkingForBooth = true;
+            if (boothList.Count == 0)
             {
-                if(boothList[i].gameObject.GetComponent<PhoneBoothScript>().boothInUse == false)
+                return null;
+            }
+
+            for (int i = 0; i < boothList.Count; i++)
+            {
+                if (boothList[i].GetComponent<PhoneBoothScript>().boothInUse == false)
                 {
-                    smallestDist = dist;
-                    closeBoothIndex = i;
+                    float distX = boothList[i].transform.position.x - point.x;
+                    float distY = boothList[i].transform.position.y - point.y;
+
+                    dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
+
+                    if (dist < smallestDist)
+                    {
+                        if (boothList[i].gameObject.GetComponent<PhoneBoothScript>().boothInUse == false)
+                        {
+                            smallestDist = dist;
+                            closeBoothIndex = i;
+                        }
+
+                    }
                 }
 
             }
 
-        }
-
-        if (closeBoothIndex == -1)
-        {
-            return null;
+            if (closeBoothIndex == -1)
+            {
+                checkingForBooth = false;
+                return null;
+            }
+            else
+            {
+                checkingForBooth = false;
+                return boothList[closeBoothIndex];
+            }
         }
         else
         {
-            return boothList[closeBoothIndex];
+            return null;
         }
     }
 
@@ -179,38 +195,49 @@ public class GameManagerScript : MonoBehaviour
         float smallestDist = 1000f;
         int closeChestIndex = -1;
 
-        if (chestList.Count == 0)
+        if(!checkingForChest)
         {
-            return null;
-        }
+            checkingForChest = true;
+            if (chestList.Count == 0)
+            {
+                return null;
+            }
 
-        for (int i = 0; i < chestList.Count; i++)
-        {
-            float distX = chestList[i].transform.position.x - point.x;
-            float distY = chestList[i].transform.position.y - point.y;
-
-            dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
-
-            if (dist < smallestDist)
+            for (int i = 0; i < chestList.Count; i++)
             {
                 if (chestList[i].gameObject.GetComponent<ChestScript>().inUse == false)
                 {
-                    smallestDist = dist;
-                    closeChestIndex = i;
-                }
-            }
-        }
+                    float distX = chestList[i].transform.position.x - point.x;
+                    float distY = chestList[i].transform.position.y - point.y;
 
-        if (closeChestIndex == -1)
-        {
-            return null;
+                    dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
+
+                    if (dist < smallestDist)
+                    {
+                        smallestDist = dist;
+                        closeChestIndex = i;
+                    }
+                }
+
+            }
+
+            if (closeChestIndex == -1)
+            {
+                checkingForChest = false;
+                return null;
+            }
+            else
+            {
+                checkingForChest = false;
+                return chestList[closeChestIndex];
+            }
         }
         else
         {
-            return chestList[closeChestIndex];
+            return null;
         }
-    }
 
+    }
 
     // gives closest zombie from the list of zombies to the position given
     public GameObject ClosestZombie(Vector3 point)
@@ -243,6 +270,40 @@ public class GameManagerScript : MonoBehaviour
         
     }
 
+    // gives closest policeman from the list of humans to the position given
+    public GameObject ClosestPoliceman(Vector3 point)
+    {
+        float dist;
+        float closestDist = 1000;
+        int closePoliceIndex = 0;
+
+        if (humanList.Count == 0)
+        {
+            return null;
+        }
+
+        for (int i = 0; i < humanList.Count; i++)
+        {
+            if (humanList[i].tag == "Policeman")
+            {
+                float distX = humanList[i].transform.position.x - point.x;
+                float distY = humanList[i].transform.position.y - point.y;
+
+                dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
+
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closePoliceIndex = i;
+                }
+            }
+
+        }
+
+        return humanList[closePoliceIndex];
+
+    }
+
     // add a remove all from list 
     public void AddStartHumansToList()
     {
@@ -250,6 +311,12 @@ public class GameManagerScript : MonoBehaviour
         {
             humanList.Add(human);
         }
+
+        foreach (GameObject policeman in GameObject.FindGameObjectsWithTag("Policeman"))
+        {
+            humanList.Add(policeman);
+        }
+
     }
 
     void AddStartZombiesToList()

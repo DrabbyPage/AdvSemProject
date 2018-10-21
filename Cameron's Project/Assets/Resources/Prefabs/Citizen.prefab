@@ -175,6 +175,7 @@ MonoBehaviour:
   panicMode: 0
   hasGun: 0
   beingAttacked: 0
+  ableToAttack: 1
   newPoint: {x: 0, y: 0}
   threatsKnownLoc: {x: 0, y: 0}
 --- !u!212 &212698981046363656
@@ -208,7 +209,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 16b9f80c7fff31d4bb3cc59030ee2318, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

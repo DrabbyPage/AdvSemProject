@@ -31,6 +31,8 @@ public class SightScript : MonoBehaviour
             {
                 //Debug.Log("PANIC!");
                 gameObject.GetComponent<HumanScript>().SetPanic(true);
+                gameObject.GetComponent<HumanScript>().SetThreatLocation(collision.gameObject);
+
             }
         }
         else

@@ -1,25 +1,51 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PhoneBoothScript : MonoBehaviour
 {
+    GameObject GameMan;
     public bool boothInUse;
-    GameObject user;
+
+    Image progCircle;
+
+    float time;
+    float timeAmount = 5.0f;
+
 
 	// Use this for initialization
 	void Start ()
     {
+        GameMan = GameObject.Find("GameManager");
         boothInUse = false;
+        SetUpProgCircle();
+        time = timeAmount;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-		
+		if(boothInUse)
+        {
+            //StartCallBar();
+        }
 	}
 
-    private void OnTriggerExit2D(Collider2D col)
+    void SetUpProgCircle()
+    {
+        /*
+        float boothX = gameObject.transform.position.x;
+        float boothY = gameObject.transform.position.y;
+        float boothZ = gameObject.transform.position.z;
+
+        float diffY = 0.3f;
+
+        progCircle = Instantiate(Resources.Load("Prefabs/ProgressCircle")) as Image;
+        */
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Human")
         {
@@ -37,9 +63,36 @@ public class PhoneBoothScript : MonoBehaviour
             }
             else
             {
-                user = col.gameObject;
                 boothInUse = true;
             }
+        }
+    }
+
+    public void StartCallBar()
+    {
+        if (time>0)
+        {
+            time = time - Time.deltaTime;
+            //progCircle.fillAmount = time / timeAmount;
+        }
+        else
+        {
+            boothInUse = false;
+        }
+    }
+
+    public void CallThePoPo(Vector2 targetPos)
+    {
+        GameObject closePoPo;
+        closePoPo = GameMan.GetComponent<GameManagerScript>().ClosestPoliceman(targetPos);
+
+        if(closePoPo != null)
+        {
+            closePoPo.GetComponent<PolicemanScript>().CallInTarget(targetPos);
+        }
+        else
+        {
+
         }
     }
 

@@ -25,13 +25,10 @@ public class BulletScript : MonoBehaviour
         {
             // hurt the obj
             col.gameObject.GetComponent<HealthScript>().HurtCharacter();
-        }
+            Destroy(gameObject);
 
-        // destroy the object
-        if (col.gameObject != gameObject)
-        {
-            Destroy(gameObject.transform.parent);
         }
+        
     }
 
     void MoveBullet()

@@ -5,17 +5,17 @@ using UnityEngine;
 public class BeingAttackedScript : MonoBehaviour
 {
     GameObject gameManObj;
-    GameObject playerObj;
-    GameObject playerManager;
 
     float timeToTurn = 3.0f;
+    float dyingTime = 2.0f;
+    float time = 0.0f;
+
     public bool beingAttacked = false;
 
 	// Use this for initialization
 	void Start ()
     {
         gameManObj = GameObject.Find("GameManager");
-        playerManager = GameObject.Find("Main Camera");
     }
 
     // Update is called once per frame
@@ -44,13 +44,7 @@ public class BeingAttackedScript : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().simulated = false;
 
-        float dyingTime;
-
         ScreamForHelp();
-
-        playerObj = playerManager.GetComponent<FollowPlayerScript>().player;
-
-        dyingTime = playerObj.GetComponent<AttackScript>().attackTime;
 
         yield return new WaitForSeconds(dyingTime);
 
@@ -64,10 +58,16 @@ public class BeingAttackedScript : MonoBehaviour
     void TurnRed()
     {
         float redColor = GetComponent<SpriteRenderer>().color.r;
+        float timeModifier = 1000f;
+
+        if(time < 1.0)
+        {
+            time = (time + Time.deltaTime) / timeModifier;
+        }
 
         if (redColor < 1.0f)
         {
-            GetComponent<SpriteRenderer>().color = new Vector4(redColor + 1.0f, 0.0f, 0.0f, 1.0f);
+            GetComponent<SpriteRenderer>().color = new Vector4( time, 0.0f, 0.0f, 1.0f);
         }
     }
 

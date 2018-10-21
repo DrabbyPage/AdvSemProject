@@ -6,11 +6,11 @@ TagManager:
   tags:
   - Human
   - Zombie
-  - SightLine
-  - Pointer
   - Dead
   - Booth
   - Chest
+  - Environment
+  - Policeman
   layers:
   - Default
   - TransparentFX
