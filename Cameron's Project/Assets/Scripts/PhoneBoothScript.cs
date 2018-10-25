@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PhoneBoothScript : MonoBehaviour
 {
     GameObject GameMan;
+    GameObject timerBar;
     public bool boothInUse;
 
     Image progCircle;
@@ -18,8 +19,8 @@ public class PhoneBoothScript : MonoBehaviour
 	void Start ()
     {
         GameMan = GameObject.Find("GameManager");
+        timerBar = gameObject.transform.GetChild(0).gameObject;
         boothInUse = false;
-        SetUpProgCircle();
         time = timeAmount;
 	}
 	
@@ -28,22 +29,10 @@ public class PhoneBoothScript : MonoBehaviour
     {
 		if(boothInUse)
         {
-            //StartCallBar();
+            StartCallBar();
         }
 	}
 
-    void SetUpProgCircle()
-    {
-        /*
-        float boothX = gameObject.transform.position.x;
-        float boothY = gameObject.transform.position.y;
-        float boothZ = gameObject.transform.position.z;
-
-        float diffY = 0.3f;
-
-        progCircle = Instantiate(Resources.Load("Prefabs/ProgressCircle")) as Image;
-        */
-    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -70,10 +59,10 @@ public class PhoneBoothScript : MonoBehaviour
 
     public void StartCallBar()
     {
-        if (time>0)
+        if (time > 0)
         {
             time = time - Time.deltaTime;
-            //progCircle.fillAmount = time / timeAmount;
+            timerBar.transform.localScale = new Vector3(time / 5, timerBar.transform.localScale.y, timerBar.transform.localScale.z);
         }
         else
         {

@@ -107,11 +107,16 @@ public class HumanScript : MonoBehaviour
     void RunToBooth()
     {
         float dist;
-        closestBooth = GameMan.GetComponent<GameManagerScript>().ClosestBooth(gameObject.transform.position);
+        //closestBooth = GameMan.GetComponent<GameManagerScript>().ClosestBooth(gameObject.transform.position);
 
         if(closestBooth == null)
         {
-            RunToChest();
+            closestBooth = GameMan.GetComponent<GameManagerScript>().ClosestBooth(gameObject.transform.position);
+
+            if(closestBooth == null)
+            {
+                runOrArm = 0;
+            }
             return;
         }
         else
@@ -147,11 +152,15 @@ public class HumanScript : MonoBehaviour
     void RunToChest()
     {
         float dist;
-        closestChest = GameMan.GetComponent<GameManagerScript>().ClosestChest(gameObject.transform.position);
 
         if (closestChest == null)
         {
-            RunToBooth();
+            closestChest = GameMan.GetComponent<GameManagerScript>().ClosestChest(gameObject.transform.position);
+
+            if(closestChest == null)
+            {
+                runOrArm = 1;
+            }
             return;
         }
         else

@@ -275,7 +275,7 @@ public class GameManagerScript : MonoBehaviour
     {
         float dist;
         float closestDist = 1000;
-        int closePoliceIndex = 0;
+        int closePoliceIndex = -1;
 
         if (humanList.Count == 0)
         {
@@ -300,7 +300,14 @@ public class GameManagerScript : MonoBehaviour
 
         }
 
-        return humanList[closePoliceIndex];
+        if (closePoliceIndex == -1)
+        {
+            return null;
+        }
+        else
+        {
+            return humanList[closePoliceIndex];
+        }
 
     }
 
