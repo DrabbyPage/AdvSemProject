@@ -7,25 +7,32 @@ public class ChestScript : MonoBehaviour
     public bool inUse;
 
     GameObject user;
+    GameObject timerBox;
 
     Animator chestAnimator;
+
+    float time;
+    float totalTime = 3.0f;
 
 	// Use this for initialization
 	void Start ()
     {
         inUse = false;
 
-        chestAnimator = gameObject.GetComponent<Animator>();	
+        timerBox = gameObject.transform.GetChild(0).gameObject;
+
+        chestAnimator = gameObject.GetComponent<Animator>();
+
+        time = totalTime;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         UpdateAnim();
-
-        if(user != null)
+        if(inUse)
         {
-            CheckUserDist();
+            CountDownTimer();
         }
 	}
 
@@ -38,8 +45,27 @@ public class ChestScript : MonoBehaviour
 
         if (dist > 1.0f)
         {
-            user = null;
+            //user = null;
             inUse = false;
+        }
+        else
+        {
+            inUse = true;
+            //CountDownTimer();
+        }
+    }
+
+    void CountDownTimer()
+    {
+        if (time > 0)
+        {
+            time = time - Time.deltaTime;
+            timerBox.transform.localScale = new Vector3(time / 5, timerBox.transform.localScale.y, timerBox.transform.localScale.z);
+        }
+        else
+        {
+            inUse = false;
+            user = null;
         }
     }
 

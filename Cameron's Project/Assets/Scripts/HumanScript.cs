@@ -107,7 +107,6 @@ public class HumanScript : MonoBehaviour
     void RunToBooth()
     {
         float dist;
-        //closestBooth = GameMan.GetComponent<GameManagerScript>().ClosestBooth(gameObject.transform.position);
 
         if(closestBooth == null)
         {
@@ -433,14 +432,12 @@ public class HumanScript : MonoBehaviour
     {
         yield return new WaitForSeconds(3.0f);
 
-        if (!beingAttacked)
-        {
-            hasGun = true;
-        }
-
+        hasGun = true;
         canCheckCondition = true;
         panicMode = false;
         canMove = true;
+
+        target = null;
 
         newPoint = threatsKnownLoc;
     }

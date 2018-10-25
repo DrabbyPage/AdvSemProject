@@ -101,7 +101,7 @@ public class GameManagerScript : MonoBehaviour
     public GameObject CloseToHuman(Vector3 point, float range)
     {
         float dist;
-        int closeHumIndex = 0;
+        int closeHumIndex = -1;
 
         if (humanList.Count == 0)
         {
@@ -131,7 +131,14 @@ public class GameManagerScript : MonoBehaviour
         }
 
         //Debug.Log("target: " + humanList[closeHumIndex]);
-        return humanList[closeHumIndex];
+        if (closeHumIndex < 0)
+        {
+            return null;
+        }
+        else
+        {
+            return humanList[closeHumIndex];
+        }
     }
 
     // checks for closest booth for humans to run to
@@ -268,6 +275,42 @@ public class GameManagerScript : MonoBehaviour
 
         return zombieList[closeZomIndex];
         
+    }
+
+    public GameObject CloseToZombie(Vector3 point, float range)
+    {
+        float dist;
+        int zomIndex = -1;
+
+        if (zombieList.Count == 0)
+        {
+            Debug.Log("there arent any zombies");
+            return null;
+        }
+
+        for (int i = 0; i < zombieList.Count; i++)
+        {
+            float distX = zombieList[i].transform.position.x - point.x;
+            float distY = zombieList[i].transform.position.y - point.y;
+
+            dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
+
+            if (dist <= range)
+            {
+                zomIndex = i;
+                break;
+            }
+        }
+
+        //Debug.Log("target: " + humanList[closeHumIndex]);
+        if(zomIndex < 0)
+        {
+            return null;
+        }
+        else
+        {
+            return zombieList[zomIndex];
+        }
     }
 
     // gives closest policeman from the list of humans to the position given

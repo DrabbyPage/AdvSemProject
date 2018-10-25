@@ -39,7 +39,7 @@ public class CharacterMove : MonoBehaviour
 
     void CheckForNewPoint()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.z));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
@@ -49,11 +49,13 @@ public class CharacterMove : MonoBehaviour
                 target = null;
             }
 
+            CheckZombieDist(mouseWorld);
+
             crosshair.GetComponent<SpriteRenderer>().color = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 
             ableToMove = true;
         }
-        if(Input.GetMouseButton(1))
+        if(Input.GetMouseButtonUp(1))
         {
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.z));
 
@@ -162,6 +164,32 @@ public class CharacterMove : MonoBehaviour
         if (newTarget != null)
         {
             target = newTarget;
+            crosshair.GetComponent<SpriteRenderer>().color = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            target = null;
+        }
+    }
+
+    void CheckZombieDist(Vector3 mouse)
+    {
+        GameObject newTarget = GameMan.GetComponent<GameManagerScript>().CloseToZombie(mouse, lockOnRange);
+
+        if (newTarget != null)
+        {
+            GameObject newZombie;
+
+            newZombie = Instantiate(Resources.Load("Prefabs/Zombie")) as GameObject;
+            newZombie.transform.position = gameObject.transform.position;
+
+            GameMan.GetComponent<GameManagerScript>().AddZombieToList(newZombie);
+
+            gameObject.transform.position = newTarget.transform.position;
+
+            GameMan.GetComponent<GameManagerScript>().DeleteZombieFromList(newTarget);
+            Destroy(newTarget);
+
             crosshair.GetComponent<SpriteRenderer>().color = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
         }
         else
