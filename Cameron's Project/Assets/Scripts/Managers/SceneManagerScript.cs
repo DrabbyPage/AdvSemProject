@@ -10,7 +10,6 @@ public class SceneManagerScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        DontDestroyOnLoad(gameObject);
         currentLevel = "Main_Menu";
 	}
 	

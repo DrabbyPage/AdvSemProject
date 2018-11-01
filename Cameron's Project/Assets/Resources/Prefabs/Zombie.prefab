@@ -22,8 +22,11 @@ GameObject:
   - component: {fileID: 212163101323668876}
   - component: {fileID: 50535043257981136}
   - component: {fileID: 58334569591114482}
+  - component: {fileID: 114746808355706866}
   - component: {fileID: 114446376162973974}
+  - component: {fileID: 114929149435343096}
   - component: {fileID: 114064529577076264}
+  - component: {fileID: 114006887888667048}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Zombie
@@ -55,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1161098494587480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.45625973, y: -2.5409522, z: 0}
+  m_LocalPosition: {x: 6.1, y: 6.1122665, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4774798695511778}
@@ -87,7 +90,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 10
   m_AngularDrag: 0.1
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -110,6 +113,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114006887888667048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1161098494587480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da7005f97f6acdb4e9804ce16826808b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114064529577076264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,6 +146,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36121a8071a324a479b0e63a3d4758f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
+  targetSighted: 0
+--- !u!114 &114746808355706866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1161098494587480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bfe056570ab7bc4ca24e580853d6974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 13
+  turnSpeed: 10
+  target: {fileID: 0}
+  canMove: 1
+--- !u!114 &114929149435343096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1161098494587480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c811aa46db3f44794f6d46aa168734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackTime: 1.5
 --- !u!198 &198779351456681472
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3340,7 +3383,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 059ba26b638e9ac4ab560573714971dc, type: 3}
   m_Color: {r: 0.09019608, g: 0.5647059, b: 0.19215687, a: 1}
   m_FlipX: 0

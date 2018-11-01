@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212404454090260184}
   - component: {fileID: 50941186562510922}
   - component: {fileID: 58000205340652016}
+  - component: {fileID: 114062647965017040}
   - component: {fileID: 114543532824298970}
   - component: {fileID: 114535289401831492}
   - component: {fileID: 114485968455859436}
@@ -56,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1684864927137306}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.1784595, y: -3.7958655, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4838061771324790}
@@ -111,6 +112,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114062647965017040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684864927137306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bfe056570ab7bc4ca24e580853d6974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 20
+  turnSpeed: 10
+  target: {fileID: 0}
+  canMove: 1
 --- !u!114 &114485968455859436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,8 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  newPoint: {x: 0, y: 0}
-  ableToMove: 1
+  canMove: 1
 --- !u!198 &198730666555137770
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3356,7 +3371,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 059ba26b638e9ac4ab560573714971dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

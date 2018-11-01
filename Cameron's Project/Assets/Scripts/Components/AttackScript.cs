@@ -20,9 +20,9 @@ public class AttackScript : MonoBehaviour
 
     void CheckToAttack()
     {
-        GameObject human = GetComponent<CharacterMove>().target;
+        GameObject human = GetComponent<MoveScript>().target;
 
-        if (human != null && human.tag != "Dead")
+        if (human != null)
         {
             float distX, distY;
             distX = human.transform.position.x - gameObject.transform.position.x;
@@ -36,17 +36,29 @@ public class AttackScript : MonoBehaviour
 
                 // set teh particle system activity to true
                 transform.GetChild(0).gameObject.SetActive(true);
+
+                if (gameObject.tag == "Zombie")
+                {
+                    gameObject.GetComponent<ZombieScript>().SetMoveBool(false);
+                }
+                else if (gameObject.tag == "Player")
+                {
+                    gameObject.GetComponent<CharacterScript>().SetMoveBool(false);
+                    gameObject.GetComponent<MoveScript>().SetMoveVec2(gameObject.transform.position);
+                }
+                
             }
             else
             {
                 // shut the particle system off
-                GetComponent<CharacterMove>().SetMoveAbility(true);
+                gameObject.GetComponent<MoveScript>().SetMoveBool(true);
                 transform.GetChild(0).gameObject.SetActive(false);
+                gameObject.GetComponent<MoveScript>().SetMoveVec2(gameObject.transform.position);
             }
         }
         else
         {
-            GetComponent<CharacterMove>().SetMoveAbility(true);
+            GetComponent<MoveScript>().SetMoveBool(true);
             transform.GetChild(0).gameObject.SetActive(false);
         }
     }

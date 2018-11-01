@@ -74,7 +74,7 @@ public class ChestScript : MonoBehaviour
         chestAnimator.SetBool("ChestInUse", inUse);
     }
 
-    public void ChangeUse(bool newBool)
+    public void SetOccupation(bool newBool)
     {
         inUse = newBool;
     }

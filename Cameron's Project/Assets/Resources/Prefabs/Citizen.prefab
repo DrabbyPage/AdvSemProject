@@ -25,8 +25,12 @@ GameObject:
   - component: {fileID: 60945182269542152}
   - component: {fileID: 50321944360410830}
   - component: {fileID: 114940712607618044}
-  - component: {fileID: 114206584649818042}
+  - component: {fileID: 114360185885446276}
+  - component: {fileID: 114075239961847358}
   - component: {fileID: 114931735999538562}
+  - component: {fileID: 114206584649818042}
+  - component: {fileID: 114671844521047194}
+  - component: {fileID: 114346249604544002}
   m_Layer: 0
   m_Name: Citizen
   m_TagString: Human
@@ -138,6 +142,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114075239961847358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708230400951710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bfe056570ab7bc4ca24e580853d6974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  turnSpeed: 10
+  target: {fileID: 0}
+  canMove: 1
 --- !u!114 &114206584649818042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,6 +166,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84a0ba1872e40894fbd9b55689d4a38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114346249604544002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708230400951710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a57692799b2c4245a6f4895793f821d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114360185885446276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708230400951710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3402e52acef48f409c161c7a7b487bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  threat: {fileID: 0}
+  threatsKnownLoc: {x: 0, y: 0}
+--- !u!114 &114671844521047194
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1708230400951710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a99b2f3f4fd41c4c846b7f4baea657d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114931735999538562
@@ -175,9 +230,8 @@ MonoBehaviour:
   panicMode: 0
   hasGun: 0
   beingAttacked: 0
-  ableToAttack: 1
-  newPoint: {x: 0, y: 0}
-  threatsKnownLoc: {x: 0, y: 0}
+  targetSighted: 0
+  canMove: 1
 --- !u!212 &212698981046363656
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -5,6 +5,24 @@ using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
+    static GameManagerScript instance;
+
+    public static GameManagerScript getInstance()
+    {
+        if (instance == null)
+        {
+            instance = GameObject.FindObjectOfType<GameManagerScript>();
+
+            if (instance == null)
+            {
+                GameObject tmp = new GameObject("TmpManager");
+                instance = tmp.AddComponent<GameManagerScript>();
+            }
+        }
+
+        return instance;
+    }
+
     List<GameObject> humanList;
     List<GameObject> zombieList;
     List<GameObject> boothList;
@@ -12,17 +30,30 @@ public class GameManagerScript : MonoBehaviour
 
     GameObject sceneMan;
 
-    public GameObject mainCanvas;
+    //public GameObject mainCanvas;
 
     public Text gameText;
-
-    //bool loadedLevel = false;
+    public Text humanText;
 
     bool checkingForBooth = false;
     bool checkingForChest = false;
 
-	// Use this for initialization
-	void Start ()
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        if (instance != this)
+        {
+            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(instance);
+            instance = this;
+        }
+    }
+
+    // Use this for initialization
+    void Start ()
     {
         sceneMan = GameObject.Find("SceneManager");
 
@@ -45,6 +76,21 @@ public class GameManagerScript : MonoBehaviour
         Debug.Log("Zombie count: " + zombieList.Count);
         Debug.Log("Booth count: " + boothList.Count);
         Debug.Log("Chest count: " + chestList.Count);
+
+        CheckAmountHumansLeft();
+    }
+
+    void CheckAmountHumansLeft()
+    {
+        
+        if(humanText != null)
+        {
+            humanText.GetComponent<Text>().text = "Number of Humans Left: " + humanList.Count;
+        }
+        else
+        {
+            Debug.Log("No Human Text");
+        }
     }
 
     // Update is called once per frame
@@ -61,6 +107,7 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+    #region Finding objs
     // finds the closest human ro the gameobject/ zombie
     public GameObject FindClosestHuman(GameObject zombie)
     {
@@ -284,7 +331,7 @@ public class GameManagerScript : MonoBehaviour
 
         if (zombieList.Count == 0)
         {
-            Debug.Log("there arent any zombies");
+           // Debug.Log("there arent any zombies");
             return null;
         }
 
@@ -354,6 +401,49 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
+    public List<GameObject> FindZombiesWithinArea(Vector3 pos, float sizeX, float sizeY)
+    {
+        List<GameObject> tempList = new List<GameObject>();
+
+        float rightBound = pos.x + Mathf.Abs(sizeX / 2);
+        float leftBound = pos.x - Mathf.Abs(sizeX / 2);
+        float topBound = pos.y + Mathf.Abs(sizeY / 2);
+        float bottomBound = pos.y - Mathf.Abs(sizeY / 2);
+
+        if (zombieList.Count == 0)
+        {
+            Debug.Log("there arent any zombies");
+            return null;
+        }
+
+        for (int i = 0; i < zombieList.Count; i++)
+        {
+            float zomX = zombieList[i].transform.position.x;
+            float zomY = zombieList[i].transform.position.y;
+
+            if (leftBound < zomX && zomX < rightBound)
+            {
+                if(topBound > zomY && zomY > bottomBound)
+                {
+                    tempList.Add(zombieList[i]);
+                }
+            }
+        }
+
+        if(tempList.Count > 0)
+        {
+            return tempList;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    #endregion
+
+    #region Lists Management
+
     // add a remove all from list 
     public void AddStartHumansToList()
     {
@@ -413,6 +503,8 @@ public class GameManagerScript : MonoBehaviour
         zombieList.Remove(zombie);
     }
 
+    #endregion
+
     public void GameOver()
     {
         if(gameText != null)
@@ -431,12 +523,12 @@ public class GameManagerScript : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3.0f);
-        sceneMan.GetComponent<SceneManagerScript>().LoadScene("Level_Select");
+        GetComponent<SceneManagerScript>().LoadScene("Level_Select");
     }
 
     IEnumerator GoBackToMenu()
     {
         yield return new WaitForSeconds(3.0f);
-        sceneMan.GetComponent<SceneManagerScript>().LoadScene("Main_Menu");
+        GetComponent<SceneManagerScript>().LoadScene("Main_Menu");
     }
 }

@@ -37,7 +37,7 @@ public class HealthScript : MonoBehaviour
                 //transfer to other zombie
                 GameObject closestZombie = GameMan.GetComponent<GameManagerScript>().ClosestZombie(gameObject.transform.position);
 
-                if (closestZombie != null)
+                if (closestZombie != null && closestZombie.tag != "Player")
                 {
                     closestZombie.GetComponent<ZombieScript>().ConvertToPlayer();
                     Destroy(gameObject);
