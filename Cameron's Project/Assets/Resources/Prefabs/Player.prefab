@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114543532824298970}
   - component: {fileID: 114535289401831492}
   - component: {fileID: 114485968455859436}
+  - component: {fileID: 95953003755715364}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -112,6 +113,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!95 &95953003755715364
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684864927137306}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e74cf3bdd1e0ba48a7d03426e1863be, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114062647965017040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -125,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 20
   turnSpeed: 10
+  walkToPoint: {x: 0, y: 0}
   target: {fileID: 0}
   canMove: 1
 --- !u!114 &114485968455859436

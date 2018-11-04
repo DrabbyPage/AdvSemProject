@@ -72,11 +72,12 @@ public class GameManagerScript : MonoBehaviour
         AddBoothsToList();
         AddChestsToList();
 
+        /*
         Debug.Log("Human count: " + humanList.Count);
         Debug.Log("Zombie count: " + zombieList.Count);
         Debug.Log("Booth count: " + boothList.Count);
         Debug.Log("Chest count: " + chestList.Count);
-
+        */
         CheckAmountHumansLeft();
     }
 
@@ -523,12 +524,12 @@ public class GameManagerScript : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3.0f);
-        GetComponent<SceneManagerScript>().LoadScene("Level_Select");
+        //GetComponent<SceneManagerScript>().LoadScene("Level_Select");
     }
 
     IEnumerator GoBackToMenu()
     {
         yield return new WaitForSeconds(3.0f);
-        GetComponent<SceneManagerScript>().LoadScene("Main_Menu");
+        //GetComponent<SceneManagerScript>().LoadScene("Main_Menu");
     }
 }

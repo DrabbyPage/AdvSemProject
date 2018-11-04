@@ -37,6 +37,22 @@ public class ShootScript : MonoBehaviour
         target = GetComponent<MoveScript>().target;
         turnSpeed = GetComponent<MoveScript>().turnSpeed;
 
+        if (target == null || target.GetComponent<HealthScript>().isDying)
+        {
+            if (gameObject.tag == "Human")
+            {
+                GetComponent<HumanScript>().SetTarget(null);
+                GetComponent<HumanScript>().SetTargetSighted(false);
+                GetComponent<HumanScript>().SetMoveBool(true);
+            }
+            else if (gameObject.tag == "Policeman")
+            {
+                GetComponent<PolicemanScript>().SetTarget(null);
+                GetComponent<PolicemanScript>().SetTargetSighted(false);
+                GetComponent<PolicemanScript>().SetMoveBool(true);
+            }
+        }
+
         if (gameObject.tag == "Human")
         {
             targetSighted = GetComponent<HumanScript>().targetSighted;
@@ -59,7 +75,16 @@ public class ShootScript : MonoBehaviour
                 GetComponent<PolicemanScript>().SetMoveBool(false);
             }
 
-            Aim();
+            if (ableToShoot)
+            {
+                Shoot();
+            }
+            else
+            {
+                TimeBetweenShots();
+            }
+
+            //Aim();
         }
         else
         {
@@ -71,9 +96,12 @@ public class ShootScript : MonoBehaviour
             {
                 GetComponent<PolicemanScript>().SetMoveBool(true);
             }
+
+            TimeBetweenShots();
+            
         }
     }
-
+    /*
     void Aim()
     {
         if (target != null)
@@ -161,7 +189,7 @@ public class ShootScript : MonoBehaviour
         }
 
     }
-
+    */
     void Shoot()
     {
         // calculate angle between the character and the object
@@ -186,15 +214,19 @@ public class ShootScript : MonoBehaviour
         newX = gameObject.transform.position.x;
         newY = gameObject.transform.position.y;
 
-        Debug.Log("spawning new bullet");
+        Debug.Log("bullet is shot");
 
         newBullet = Instantiate(bullet) as GameObject;
         newBullet.GetComponent<BulletScript>().SetAngle(lookAngleDeg);
         newBullet.transform.position = new Vector2(newX, newY);
 
+        GetComponent<Animator>().SetBool("Attacking", true);
+
         ableToShoot = false;
+
+        GetComponent<Animator>().SetBool("Attacking", false);
     }
-    
+
     void TimeBetweenShots()
     {
         if(time < fireRate)

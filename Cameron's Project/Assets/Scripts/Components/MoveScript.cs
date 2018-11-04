@@ -10,14 +10,14 @@ public class MoveScript : MonoBehaviour
     public float turnSpeed = 10;
     float distToTargetPos = 0.2f;
 
-    Vector2 walkToPoint;
+    public Vector2 walkToPoint;
     public GameObject target;
 
     public bool canMove = true;
     bool stuck = false;
 
     float notMovingTimer = 0;
-    float maxTime = 2.0f;
+    float maxTime = 3.0f;
 
     private void Start()
     {
@@ -51,7 +51,12 @@ public class MoveScript : MonoBehaviour
             MoveToPoint();
             CheckForNotMoving();
         }
-	}
+        else
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        }
+    }
 
     public void MoveToPoint()
     {
@@ -69,13 +74,16 @@ public class MoveScript : MonoBehaviour
         if (distance < distToTargetPos)
         {
             //GetComponent<Animator>().SetBool("Walking", false);
-
+            
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().angularVelocity = 0f;
 
             if (gameObject.tag == "Human" || gameObject.tag == "Policeman")
             {
+                //Debug.Log("At the point");
                 gameObject.GetComponent<WanderScript>().RandomizePoint();
+                //Debug.Log(walkToPoint);
+
             }
 
             GetComponent<Animator>().SetBool("Walking", false);
@@ -88,16 +96,19 @@ public class MoveScript : MonoBehaviour
                 {
                     gameObject.GetComponent<WanderScript>().RandomizePoint();
                 }
+
+                stuck = false;
+
             }
 
             //GetComponent<Rigidbody2D>().AddForce(transform.right * moveSpeed);
             GetComponent<Rigidbody2D>().AddForce(direction.normalized * moveSpeed);
 
-            if(direction.normalized.x > 0.3f)
+            if(direction.normalized.x > 0.4f)
             {
                 GetComponent<SpriteRenderer>().flipX = false;
             }
-            else if (direction.normalized.x < 0.3f)
+            else if (direction.normalized.x < -0.4f)
             {
                 GetComponent<SpriteRenderer>().flipX = true;
             }

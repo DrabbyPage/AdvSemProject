@@ -6,6 +6,8 @@ public class AttackScript : MonoBehaviour
 {
     public float attackTime = 1.5f;
 
+    bool canAttack = true;
+
     // Use this for initialization
     void Start()
     {
@@ -15,7 +17,10 @@ public class AttackScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckToAttack();
+        if(canAttack)
+        {
+            CheckToAttack();
+        }
     }
 
     void CheckToAttack()
@@ -66,5 +71,10 @@ public class AttackScript : MonoBehaviour
 
             GetComponent<Animator>().SetBool("Attacking", false);
         }
+    }
+
+    public void SetAttackAbility(bool newBool)
+    {
+        canAttack = newBool;
     }
 }

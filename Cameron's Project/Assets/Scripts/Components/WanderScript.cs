@@ -21,7 +21,7 @@ public class WanderScript : MonoBehaviour
     {
         float randX;
         float randY;
-        float wanderArea = 5.0f;
+        float wanderArea = 6.0f;
 
         randX = Random.Range(-wanderArea, wanderArea);
         randY = Random.Range(-wanderArea, wanderArea);

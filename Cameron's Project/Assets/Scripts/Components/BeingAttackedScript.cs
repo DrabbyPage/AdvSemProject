@@ -44,6 +44,8 @@ public class BeingAttackedScript : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().simulated = false;
 
+        GetComponent<Animator>().SetBool("Dead", true);
+
         ScreamForHelp();
 
         yield return new WaitForSeconds(dyingTime);

@@ -8,6 +8,8 @@ public class HealthScript : MonoBehaviour
 
     float deathAnimTime = 3.0f;
 
+    public bool isDying = false;
+
     GameObject GameMan;
 
 	// Use this for initialization
@@ -34,6 +36,12 @@ public class HealthScript : MonoBehaviour
 
         if(health <= 1)
         {
+            isDying = true;
+
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0;
+            gameObject.GetComponent<Collider2D>().enabled = false;
+
             // kill character
             if (gameObject.tag == "Player")
             {
@@ -46,12 +54,18 @@ public class HealthScript : MonoBehaviour
 
                     GetComponent<Animator>().SetBool("Death", true);
 
+                    GetComponent<CharacterScript>().SetMoveBool(false);
+                    GetComponent<AttackScript>().SetAttackAbility(false);
+
                     StartCoroutine(WaitForDeathAnim());
                 }
                 else
                 {
                     // game over
                     GetComponent<Animator>().SetBool("Death", true);
+
+                    GetComponent<CharacterScript>().SetMoveBool(false);
+                    GetComponent<AttackScript>().SetAttackAbility(false);
 
                     GameMan.GetComponent<GameManagerScript>().GameOver();
                 }
@@ -62,6 +76,10 @@ public class HealthScript : MonoBehaviour
                 GameMan.GetComponent<GameManagerScript>().DeleteZombieFromList(gameObject);
 
                 GetComponent<Animator>().SetBool("Death", true);
+
+                GetComponent<ZombieScript>().SetMoveBool(false);
+                GetComponent<MoveScript>().SetMoveBool(false);
+                GetComponent<AttackScript>().SetAttackAbility(false);
 
                 StartCoroutine(WaitForDeathAnim());
             }

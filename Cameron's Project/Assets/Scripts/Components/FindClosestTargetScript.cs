@@ -30,9 +30,19 @@ public class FindClosestTargetScript : MonoBehaviour
 
     void GetClosestTarget()
     {
-        GameObject newTarget = GameObject.Find("GameManager").GetComponent<GameManagerScript>().FindClosestHuman(gameObject);
+        GameObject GameMan = GameObject.Find("GameManager");
+        GameObject newTarget;
 
-        if(gameObject.tag == "Zombie")
+        if (GameMan != null)
+        {
+            newTarget = GameMan.GetComponent<GameManagerScript>().FindClosestHuman(gameObject);
+        }
+        else
+        {
+            newTarget = null;
+        }
+
+        if (gameObject.tag == "Zombie")
         {
             GetComponent<MoveScript>().SetTarget(newTarget);
         }
