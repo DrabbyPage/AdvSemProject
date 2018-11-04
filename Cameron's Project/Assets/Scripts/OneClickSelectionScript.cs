@@ -62,7 +62,7 @@ public class OneClickSelectionScript : MonoBehaviour
             if(Player != null)
             {
                 Player.GetComponent<CharacterScript>().SetNewTarget(null);
-                Player.GetComponent<CharacterScript>().SetMoveBool(true);
+                //Player.GetComponent<CharacterScript>().SetMoveBool(true);
                 Player.GetComponent<MoveScript>().SetMoveVec2(newPoint);
             }
 
@@ -71,7 +71,7 @@ public class OneClickSelectionScript : MonoBehaviour
 
             crosshair.transform.position = newPoint;
 
-            CheckZombieDist(mouseWorld);
+            //CheckZombieDist(mouseWorld);
 
         }
         if (Input.GetMouseButton(1))
@@ -107,7 +107,7 @@ public class OneClickSelectionScript : MonoBehaviour
             Player.GetComponent<CharacterScript>().SetNewTarget(null);
         }
     }
-
+    /*
     void CheckZombieDist(Vector3 mouse)
     {
         GameObject newTarget = null;
@@ -154,7 +154,7 @@ public class OneClickSelectionScript : MonoBehaviour
 
         }
     }
-
+    */
     void CheckCrosshairDist()
     {
         if(Player != null)

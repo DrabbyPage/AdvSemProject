@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMoveScript : MonoBehaviour
 {
     public int bound = 50; // distance from edge scrolling starts
-    public int speed = 15;
+    public int speed = 20;
 
     int screenWidth;
     int screenHeight;
@@ -53,23 +53,50 @@ public class CameraMoveScript : MonoBehaviour
         float newX = gameObject.transform.position.x;
         float newY = gameObject.transform.position.y;
 
+        float xSpeed = 0;
+        float ySpeed = 0;
+
+        // move the camera horizontally
         if (Input.mousePosition.x > screenWidth - bound)
         {
-            newX = transform.position.x + speed * Time.deltaTime;
+            xSpeed = speed;
+            //newX = transform.position.x + speed * Time.deltaTime;
         }
         if (Input.mousePosition.x < 0 + bound)
         {
-            newX = transform.position.x - speed * Time.deltaTime;
+            xSpeed = -speed;
         }
 
+        if(Input.GetKey(KeyCode.A))
+        {
+            xSpeed = -speed;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            xSpeed = speed;
+        }
+
+        // move the camera vertically
         if (Input.mousePosition.y > screenHeight - bound)
         {
-            newY = transform.position.y + speed * Time.deltaTime;
+            ySpeed = speed;
         }
         if (Input.mousePosition.y < 0 + bound)
         {
-            newY = transform.position.y - speed * Time.deltaTime;
+            ySpeed = -speed;
         }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            ySpeed = -speed;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            ySpeed = speed;
+        }
+
+        newX = transform.position.x + xSpeed * Time.deltaTime;
+        newY = transform.position.y + ySpeed * Time.deltaTime;
 
         gameObject.transform.position = new Vector3(newX, newY, gameObject.transform.position.z);
     }

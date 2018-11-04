@@ -8,7 +8,7 @@ public class ShootScript : MonoBehaviour
     float turnSpeed;
 
     float time = 0.0f;
-    float fireRate = 1.0f;
+    float fireRate = 1.4f;
 
     bool ableToShoot = true;
     bool targetSighted;
@@ -24,7 +24,16 @@ public class ShootScript : MonoBehaviour
     void Start ()
     {
         bullet = Resources.Load("Prefabs/Bullet") as GameObject;
-	}
+
+        if(gameObject.tag == "Policeman")
+        {
+            fireRate = 0.8f;
+        }
+        else if( gameObject.tag == "Human")
+        {
+            fireRate = 1.4f;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -37,7 +46,7 @@ public class ShootScript : MonoBehaviour
         target = GetComponent<MoveScript>().target;
         turnSpeed = GetComponent<MoveScript>().turnSpeed;
 
-        if (target == null || target.GetComponent<HealthScript>().isDying)
+        if (target == null)
         {
             if (gameObject.tag == "Human")
             {
@@ -83,8 +92,7 @@ public class ShootScript : MonoBehaviour
             {
                 TimeBetweenShots();
             }
-
-            //Aim();
+            
         }
         else
         {
@@ -96,100 +104,10 @@ public class ShootScript : MonoBehaviour
             {
                 GetComponent<PolicemanScript>().SetMoveBool(true);
             }
-
-            TimeBetweenShots();
-            
+            gameObject.GetComponent<Animator>().SetBool("Attacking", false);
         }
     }
-    /*
-    void Aim()
-    {
-        if (target != null)
-        {
-            // calculate angle between the character and the object
-            float lookAngle;
-            float lookAngleDeg;
-            float prevAngle = transform.eulerAngles.z;
 
-            float diff;
-            float dist;
-
-            float xDiff = target.transform.position.x - transform.position.x;
-            float yDiff = target.transform.position.y - transform.position.y;
-
-            lookAngle = Mathf.Atan2(yDiff, xDiff);
-
-            lookAngleDeg = (lookAngle * Mathf.Rad2Deg);
-
-            diff = lookAngleDeg - prevAngle;
-
-            if (diff > 180)
-            {
-                diff -= 360;
-            }
-            else if (diff < -180)
-            {
-                diff += 360;
-            }
-
-            if (diff > 5)
-            {
-                transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
-            }
-            else if (diff < -5)
-            {
-                transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
-            }
-            else
-            {
-                if (ableToShoot)
-                {
-                    dist = Mathf.Sqrt((xDiff * xDiff) + (yDiff * yDiff));
-
-                    if (dist < shootingDist)
-                    {
-                        Shoot();
-                    }
-                    else
-                    {
-                        if(gameObject.tag == "Policeman")
-                        {
-                            GetComponent<PolicemanScript>().SetTargetSighted(false);
-                            GetComponent<PolicemanScript>().SetTargetLastLoc(target.transform.position);
-                            GetComponent<PolicemanScript>().SetTarget(null);
-
-                        }
-                        else if (gameObject.tag == "Human")
-                        {
-                            GetComponent<HumanScript>().SetTargetSighted(false);
-                            GetComponent<HumanScript>().SetTargetLastLoc(target.transform.position);
-                            GetComponent<HumanScript>().SetTarget(null);
-
-                        }
-                    }
-                }
-                else
-                {
-                    TimeBetweenShots();
-                }
-
-
-            }
-        }
-        else
-        {
-            if (gameObject.tag == "Policeman")
-            {
-                GetComponent<PolicemanScript>().SetTargetSighted(false);
-            }
-            else if (gameObject.tag == "Human")
-            {
-                GetComponent<HumanScript>().SetTargetSighted(false);
-            }
-        }
-
-    }
-    */
     void Shoot()
     {
         // calculate angle between the character and the object
@@ -201,6 +119,17 @@ public class ShootScript : MonoBehaviour
         float yDiff = target.transform.position.y - transform.position.y;
 
         GameObject newBullet;
+
+        if(target.transform.position.x > gameObject.transform.position.x)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+
+        gameObject.GetComponent<Animator>().SetBool("Attacking", true);
 
         lookAngle = Mathf.Atan2(yDiff, xDiff);
 
@@ -220,11 +149,9 @@ public class ShootScript : MonoBehaviour
         newBullet.GetComponent<BulletScript>().SetAngle(lookAngleDeg);
         newBullet.transform.position = new Vector2(newX, newY);
 
-        GetComponent<Animator>().SetBool("Attacking", true);
-
         ableToShoot = false;
 
-        GetComponent<Animator>().SetBool("Attacking", false);
+        //gameObject.GetComponent<Animator>().SetBool("Attacking", false);
     }
 
     void TimeBetweenShots()
@@ -237,6 +164,7 @@ public class ShootScript : MonoBehaviour
         {
             time = 0;
             ableToShoot = true;
+            gameObject.GetComponent<Animator>().SetBool("Attacking", false);
         }
     }
 

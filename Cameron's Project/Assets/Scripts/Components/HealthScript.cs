@@ -42,6 +42,9 @@ public class HealthScript : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0;
             gameObject.GetComponent<Collider2D>().enabled = false;
 
+            GetComponent<CharacterScript>().SetMoveBool(false);
+            GetComponent<AttackScript>().SetAttackAbility(false);
+
             // kill character
             if (gameObject.tag == "Player")
             {
@@ -54,18 +57,12 @@ public class HealthScript : MonoBehaviour
 
                     GetComponent<Animator>().SetBool("Death", true);
 
-                    GetComponent<CharacterScript>().SetMoveBool(false);
-                    GetComponent<AttackScript>().SetAttackAbility(false);
-
                     StartCoroutine(WaitForDeathAnim());
                 }
                 else
                 {
                     // game over
                     GetComponent<Animator>().SetBool("Death", true);
-
-                    GetComponent<CharacterScript>().SetMoveBool(false);
-                    GetComponent<AttackScript>().SetAttackAbility(false);
 
                     GameMan.GetComponent<GameManagerScript>().GameOver();
                 }
@@ -77,8 +74,6 @@ public class HealthScript : MonoBehaviour
 
                 GetComponent<Animator>().SetBool("Death", true);
 
-                GetComponent<ZombieScript>().SetMoveBool(false);
-                GetComponent<MoveScript>().SetMoveBool(false);
                 GetComponent<AttackScript>().SetAttackAbility(false);
 
                 StartCoroutine(WaitForDeathAnim());
