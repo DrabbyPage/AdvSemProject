@@ -110,7 +110,12 @@ public class OneClickSelectionScript : MonoBehaviour
 
     void CheckZombieDist(Vector3 mouse)
     {
-        GameObject newTarget = GameMan.GetComponent<GameManagerScript>().CloseToZombie(mouse, lockOnRange);
+        GameObject newTarget = null;
+
+        if (GameMan != null)
+        {
+            newTarget = GameMan.GetComponent<GameManagerScript>().CloseToZombie(mouse, lockOnRange);
+        }
 
         if (newTarget != null)
         {

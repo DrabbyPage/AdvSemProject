@@ -46,7 +46,8 @@ public class AttackScript : MonoBehaviour
                     gameObject.GetComponent<CharacterScript>().SetMoveBool(false);
                     gameObject.GetComponent<MoveScript>().SetMoveVec2(gameObject.transform.position);
                 }
-                
+                GetComponent<Animator>().SetBool("Attacking", true);
+
             }
             else
             {
@@ -54,12 +55,16 @@ public class AttackScript : MonoBehaviour
                 gameObject.GetComponent<MoveScript>().SetMoveBool(true);
                 transform.GetChild(0).gameObject.SetActive(false);
                 gameObject.GetComponent<MoveScript>().SetMoveVec2(gameObject.transform.position);
+
+                GetComponent<Animator>().SetBool("Attacking", false);
             }
         }
         else
         {
             GetComponent<MoveScript>().SetMoveBool(true);
             transform.GetChild(0).gameObject.SetActive(false);
+
+            GetComponent<Animator>().SetBool("Attacking", false);
         }
     }
 }

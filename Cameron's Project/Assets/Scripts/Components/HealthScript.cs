@@ -5,6 +5,9 @@ using UnityEngine;
 public class HealthScript : MonoBehaviour
 {
     int health;
+
+    float deathAnimTime = 3.0f;
+
     GameObject GameMan;
 
 	// Use this for initialization
@@ -40,12 +43,16 @@ public class HealthScript : MonoBehaviour
                 if (closestZombie != null && closestZombie.tag != "Player")
                 {
                     closestZombie.GetComponent<ZombieScript>().ConvertToPlayer();
-                    Destroy(gameObject);
+
+                    GetComponent<Animator>().SetBool("Death", true);
+
+                    StartCoroutine(WaitForDeathAnim());
                 }
                 else
                 {
                     // game over
-                    Destroy(gameObject);
+                    GetComponent<Animator>().SetBool("Death", true);
+
                     GameMan.GetComponent<GameManagerScript>().GameOver();
                 }
             }
@@ -53,9 +60,18 @@ public class HealthScript : MonoBehaviour
             {
                 // kill the obj
                 GameMan.GetComponent<GameManagerScript>().DeleteZombieFromList(gameObject);
-                Destroy(gameObject);
 
+                GetComponent<Animator>().SetBool("Death", true);
+
+                StartCoroutine(WaitForDeathAnim());
             }
         }
+    }
+
+    IEnumerator WaitForDeathAnim()
+    {
+        yield return new WaitForSeconds(deathAnimTime);
+        Destroy(gameObject);
+
     }
 }

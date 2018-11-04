@@ -47,7 +47,7 @@ public class MoveScript : MonoBehaviour
 
         if (canMove)
         {
-            LookAtPoint();
+            //LookAtPoint();
             MoveToPoint();
             CheckForNotMoving();
         }
@@ -56,6 +56,8 @@ public class MoveScript : MonoBehaviour
     public void MoveToPoint()
     {
         float distance;
+        Vector2 playerPos = gameObject.transform.position;
+        Vector2 direction = walkToPoint - playerPos;
 
         if (target != null)
         {
@@ -75,6 +77,8 @@ public class MoveScript : MonoBehaviour
             {
                 gameObject.GetComponent<WanderScript>().RandomizePoint();
             }
+
+            GetComponent<Animator>().SetBool("Walking", false);
         }
         else
         {
@@ -86,11 +90,24 @@ public class MoveScript : MonoBehaviour
                 }
             }
 
-            GetComponent<Rigidbody2D>().AddForce(transform.right * moveSpeed);
+            //GetComponent<Rigidbody2D>().AddForce(transform.right * moveSpeed);
+            GetComponent<Rigidbody2D>().AddForce(direction.normalized * moveSpeed);
+
+            if(direction.normalized.x > 0.3f)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+            else if (direction.normalized.x < 0.3f)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+
+            GetComponent<Animator>().SetBool("Walking", true);
+
         }
 
     }
-
+    /*
     void LookAtPoint()
     {
         float lookAngle;
@@ -142,7 +159,7 @@ public class MoveScript : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
         }
     }
-
+    */
     void CheckForNotMoving()
     {
         if (notMovingTimer > 0)
@@ -176,5 +193,6 @@ public class MoveScript : MonoBehaviour
     public void SetMoveBool(bool newMove)
     {
         canMove = newMove;
+        GetComponent<Animator>().SetBool("Walking", newMove);
     }
 }
