@@ -28,8 +28,6 @@ public class GameManagerScript : MonoBehaviour
     List<GameObject> boothList;
     List<GameObject> chestList;
 
-    GameObject sceneMan;
-
     //public GameObject mainCanvas;
 
     public Text gameText;
@@ -55,7 +53,6 @@ public class GameManagerScript : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        sceneMan = GameObject.Find("SceneManager");
 
         if (gameText != null)
         {
@@ -83,14 +80,13 @@ public class GameManagerScript : MonoBehaviour
 
     void CheckAmountHumansLeft()
     {
-        
         if(humanText != null)
         {
             humanText.GetComponent<Text>().text = "Number of Humans Left: " + humanList.Count;
         }
         else
         {
-            Debug.Log("No Human Text");
+            //Debug.Log("No Human Text");
         }
     }
 

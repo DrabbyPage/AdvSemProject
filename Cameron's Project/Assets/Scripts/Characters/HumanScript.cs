@@ -12,8 +12,6 @@ public class HumanScript : MonoBehaviour
     public bool beingAttacked = false;
     public bool targetSighted = false;
     public bool canMove = true;
-
-    GameObject target;
 	
 	// Update is called once per frame
 	void Update ()
@@ -61,7 +59,6 @@ public class HumanScript : MonoBehaviour
 
     public void SetTarget(GameObject newObj)
     {
-        target = newObj;
         GetComponent<MoveScript>().SetTarget(newObj);
     }
 

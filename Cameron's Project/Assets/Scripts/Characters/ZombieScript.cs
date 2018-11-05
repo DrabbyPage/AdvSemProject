@@ -6,7 +6,6 @@ public class ZombieScript : MonoBehaviour
 {
     bool attacking = false;
     public bool canMove = true;
-    public bool targetSighted = false;
 
     // Use this for initialization
     void Start ()
@@ -32,7 +31,6 @@ public class ZombieScript : MonoBehaviour
     public void SetMovePoint(Vector2 newPos)
     {
         GetComponent<MoveScript>().SetMoveVec2(newPos);
-        //newPoint = newPos;
     }
 
     public void ConvertToPlayer()

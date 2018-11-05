@@ -7,9 +7,6 @@ public class CameraMoveScript : MonoBehaviour
     public int bound = 50; // distance from edge scrolling starts
     public int speed = 20;
 
-    int screenWidth;
-    int screenHeight;
-
     bool canMove;
 
     FollowPlayerScript folPlayScript;
@@ -17,9 +14,6 @@ public class CameraMoveScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        screenHeight = Screen.height;
-        screenWidth = Screen.width;
-
         folPlayScript = gameObject.GetComponent<FollowPlayerScript>();
     }
 
@@ -56,7 +50,8 @@ public class CameraMoveScript : MonoBehaviour
         float xSpeed = 0;
         float ySpeed = 0;
 
-        // move the camera horizontally
+        // move the camera horizontally with mouse pos
+        /*
         if (Input.mousePosition.x > screenWidth - bound)
         {
             xSpeed = speed;
@@ -67,6 +62,19 @@ public class CameraMoveScript : MonoBehaviour
             xSpeed = -speed;
         }
 
+        // move the camera vertically with mouse pos 
+        /*
+        if (Input.mousePosition.y > screenHeight - bound)
+        {
+            ySpeed = speed;
+        }
+        if (Input.mousePosition.y < 0 + bound)
+        {
+            ySpeed = -speed;
+        }
+        */
+
+        // keyboard camera movement horizontally
         if(Input.GetKey(KeyCode.A))
         {
             xSpeed = -speed;
@@ -76,16 +84,7 @@ public class CameraMoveScript : MonoBehaviour
             xSpeed = speed;
         }
 
-        // move the camera vertically
-        if (Input.mousePosition.y > screenHeight - bound)
-        {
-            ySpeed = speed;
-        }
-        if (Input.mousePosition.y < 0 + bound)
-        {
-            ySpeed = -speed;
-        }
-
+        // keyboard camera movement vertically
         if (Input.GetKey(KeyCode.S))
         {
             ySpeed = -speed;

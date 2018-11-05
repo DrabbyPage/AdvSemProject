@@ -6,7 +6,7 @@ public class AttackScript : MonoBehaviour
 {
     public float attackTime = 1.5f;
 
-    bool canAttack = true;
+    public bool canAttack = true;
 
     // Use this for initialization
     void Start()
@@ -38,6 +38,7 @@ public class AttackScript : MonoBehaviour
             if (dist < 1.5f)
             {
                 human.GetComponent<BeingAttackedScript>().SetBeingAttacked(true);
+                GetComponent<Animator>().SetBool("Attacking", true);
 
                 // set teh particle system activity to true
                 transform.GetChild(0).gameObject.SetActive(true);
@@ -51,7 +52,6 @@ public class AttackScript : MonoBehaviour
                     gameObject.GetComponent<CharacterScript>().SetMoveBool(false);
                     gameObject.GetComponent<MoveScript>().SetMoveVec2(gameObject.transform.position);
                 }
-                GetComponent<Animator>().SetBool("Attacking", true);
 
             }
             else

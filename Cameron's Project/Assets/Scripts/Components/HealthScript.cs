@@ -42,12 +42,13 @@ public class HealthScript : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0;
             gameObject.GetComponent<Collider2D>().enabled = false;
 
-            GetComponent<CharacterScript>().SetMoveBool(false);
             GetComponent<AttackScript>().SetAttackAbility(false);
 
             // kill character
             if (gameObject.tag == "Player")
             {
+                GetComponent<CharacterScript>().SetMoveBool(false);
+
                 //transfer to other zombie
                 GameObject closestZombie = GameMan.GetComponent<GameManagerScript>().ClosestZombie(gameObject.transform.position);
 
@@ -69,6 +70,8 @@ public class HealthScript : MonoBehaviour
             }
             else
             {
+                GetComponent<ZombieScript>().SetMoveBool(false);
+
                 // kill the obj
                 GameMan.GetComponent<GameManagerScript>().DeleteZombieFromList(gameObject);
 

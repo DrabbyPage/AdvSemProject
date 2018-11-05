@@ -74,7 +74,6 @@ public class RunToObjectScript : MonoBehaviour
             objVal = Random.Range(0, 100) % numberOfItems;
 
             Debug.Log(objVal);
-            objVal = 0;
 
             if (objVal == 1)
             {
@@ -107,7 +106,6 @@ public class RunToObjectScript : MonoBehaviour
         {
             if (closeObj != null)
             {
-                GameObject threat = GetComponent<ShootScript>().threat;
                 Vector2 knownLoc = GetComponent<ShootScript>().threatsKnownLoc;
 
                 // call the police to (the last known loc of the threat)

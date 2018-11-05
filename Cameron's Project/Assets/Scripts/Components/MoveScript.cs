@@ -19,7 +19,7 @@ public class MoveScript : MonoBehaviour
     float notMovingTimer = 0;
     float maxTime = 3.0f;
 
-    private void Start()
+    void Start()
     {
         walkToPoint = gameObject.transform.position;
     }
@@ -47,7 +47,6 @@ public class MoveScript : MonoBehaviour
 
         if (canMove)
         {
-            //LookAtPoint();
             MoveToPoint();
             CheckForNotMoving();
         }
@@ -62,27 +61,25 @@ public class MoveScript : MonoBehaviour
     {
         float distance;
         Vector2 playerPos = gameObject.transform.position;
-        Vector2 direction = walkToPoint - playerPos;
+        //Vector2 direction = walkToPoint - playerPos;
 
         if (target != null)
         {
             walkToPoint = target.transform.position;
         }
 
+        Vector2 direction = walkToPoint - playerPos;
+
         distance = Mathf.Sqrt(Mathf.Pow(walkToPoint.x - transform.position.x, 2) + Mathf.Pow(walkToPoint.y - transform.position.y, 2));
 
         if (distance < distToTargetPos)
-        {
-            //GetComponent<Animator>().SetBool("Walking", false);
-            
+        {            
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().angularVelocity = 0f;
 
             if (gameObject.tag == "Human" || gameObject.tag == "Policeman")
             {
-                //Debug.Log("At the point");
                 gameObject.GetComponent<WanderScript>().RandomizePoint();
-                //Debug.Log(walkToPoint);
 
             }
 
@@ -99,9 +96,10 @@ public class MoveScript : MonoBehaviour
 
                 stuck = false;
 
+                //GetComponent<Rigidbody2D>().AddForce(direction.normalized * moveSpeed);
+
             }
 
-            //GetComponent<Rigidbody2D>().AddForce(transform.right * moveSpeed);
             GetComponent<Rigidbody2D>().AddForce(direction.normalized * moveSpeed);
 
             if(direction.normalized.x > 0.4f)
@@ -118,59 +116,7 @@ public class MoveScript : MonoBehaviour
         }
 
     }
-    /*
-    void LookAtPoint()
-    {
-        float lookAngle;
-        float lookAngleDeg;
-        float currAngle = transform.eulerAngles.z;
 
-        float lookX;
-        float lookY;
-
-        float diff;
-        float yDiff;
-        float xDiff;
-
-        if (target != null)
-        {
-            lookX = target.transform.position.x;
-            lookY = target.transform.position.y;
-        }
-        else
-        {
-            lookX = walkToPoint.x;
-            lookY = walkToPoint.y;
-        }
-
-        xDiff = lookX - transform.position.x;
-        yDiff = lookY - transform.position.y;
-
-        lookAngle = Mathf.Atan2(yDiff, xDiff);
-
-        lookAngleDeg = lookAngle * Mathf.Rad2Deg;
-
-        diff = lookAngleDeg - currAngle;
-
-        if (diff > 180)
-        {
-            diff -= 360;
-        }
-        else if (diff < -180)
-        {
-            diff += 360;
-        }
-
-        if (diff > 10)
-        {
-            transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + turnSpeed);
-        }
-        else if (diff < -10)
-        {
-            transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - turnSpeed);
-        }
-    }
-    */
     void CheckForNotMoving()
     {
         if (notMovingTimer > 0)

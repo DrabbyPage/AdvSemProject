@@ -9,8 +9,6 @@ public class PolicemanScript : MonoBehaviour
     public bool targetSighted = false;
     public bool canMove = true;
 
-    GameObject target;
-
     // Use this for initialization
     void Start ()
     {
@@ -60,7 +58,6 @@ public class PolicemanScript : MonoBehaviour
 
     public void SetTarget(GameObject newObj)
     {
-        target = newObj;
         GetComponent<MoveScript>().SetTarget(newObj);
     }
 

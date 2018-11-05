@@ -14,7 +14,6 @@ public class OneClickSelectionScript : MonoBehaviour
 
     Vector2 newPoint;
 
-    Vector4 whiteColor;
     Vector4 redColor;
     Vector4 greenColor;
 	// Use this for initialization
@@ -35,7 +34,6 @@ public class OneClickSelectionScript : MonoBehaviour
             Player.GetComponent<CharacterScript>().SetMovePoint(Player.transform.position);
         }
 
-        whiteColor = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
         redColor = new Vector4(1.0f, 0.0f, 0.0f, 1.0f);
         greenColor = new Vector4(0.0f, 1.0f, 0.0f, 1.0f);
     }
@@ -62,8 +60,12 @@ public class OneClickSelectionScript : MonoBehaviour
             if(Player != null)
             {
                 Player.GetComponent<CharacterScript>().SetNewTarget(null);
-                //Player.GetComponent<CharacterScript>().SetMoveBool(true);
                 Player.GetComponent<MoveScript>().SetMoveVec2(newPoint);
+
+                if(!Player.GetComponent<HealthScript>().isDying)
+                {
+                    Player.GetComponent<CharacterScript>().SetMoveBool(true);
+                }
             }
 
             crosshair.SetActive(true);

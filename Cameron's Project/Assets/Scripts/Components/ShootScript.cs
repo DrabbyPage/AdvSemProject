@@ -5,7 +5,6 @@ using UnityEngine;
 public class ShootScript : MonoBehaviour
 {
     float shootingDist = 7.0f;
-    float turnSpeed;
 
     float time = 0.0f;
     float fireRate = 1.4f;
@@ -38,13 +37,15 @@ public class ShootScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        CheckConditions();
+        if(!GetComponent<BeingAttackedScript>().beingAttacked)
+        {
+            CheckConditions();
+        }
     }
 
     void CheckConditions()
     {
         target = GetComponent<MoveScript>().target;
-        turnSpeed = GetComponent<MoveScript>().turnSpeed;
 
         if (target == null)
         {
@@ -143,13 +144,27 @@ public class ShootScript : MonoBehaviour
         newX = gameObject.transform.position.x;
         newY = gameObject.transform.position.y;
 
-        Debug.Log("bullet is shot");
 
-        newBullet = Instantiate(bullet) as GameObject;
-        newBullet.GetComponent<BulletScript>().SetAngle(lookAngleDeg);
-        newBullet.transform.position = new Vector2(newX, newY);
+        float dist = Mathf.Sqrt(xDiff * xDiff + yDiff * yDiff);
+        Debug.Log(dist + " vs " + shootingDist);
 
-        ableToShoot = false;
+        if (dist < shootingDist)
+        {
+            Debug.Log("bullet is shot");
+
+            newBullet = Instantiate(bullet) as GameObject;
+            newBullet.GetComponent<BulletScript>().SetAngle(lookAngleDeg);
+            newBullet.transform.position = new Vector2(newX, newY);
+
+            ableToShoot = false;
+        }
+        else
+        {
+            targetSighted = false;
+            GetComponent<MoveScript>().SetMoveVec2(target.transform.position);
+            GetComponent<MoveScript>().SetTarget(null);
+        }
+
 
         //gameObject.GetComponent<Animator>().SetBool("Attacking", false);
     }

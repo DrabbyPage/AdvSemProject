@@ -5,11 +5,6 @@ using UnityEngine;
 public class CharacterScript : MonoBehaviour
 {
     public GameObject target;
-    GameObject GameMan;
-    
-    float targetRadius = 0.8f;
-
-    float lockOnRange = 1.0f;
 
     public bool canMove = true;
 
@@ -17,8 +12,6 @@ public class CharacterScript : MonoBehaviour
     void Start()
     {
         target = null;
-        //newPoint = new Vector2(transform.position.x, transform.position.y);
-        GameMan = GameObject.Find("GameManager");
     }
 
     // Update is called once per frame
