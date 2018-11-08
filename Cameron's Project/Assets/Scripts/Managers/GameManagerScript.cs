@@ -520,12 +520,12 @@ public class GameManagerScript : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3.0f);
-        //GetComponent<SceneManagerScript>().LoadScene("Level_Select");
+        GetComponent<SceneManagerScript>().LoadScene("Level_Select");
     }
 
     IEnumerator GoBackToMenu()
     {
         yield return new WaitForSeconds(3.0f);
-        //GetComponent<SceneManagerScript>().LoadScene("Main_Menu");
+        GetComponent<SceneManagerScript>().LoadScene("Main_Menu");
     }
 }

@@ -73,8 +73,6 @@ public class RunToObjectScript : MonoBehaviour
         {
             objVal = Random.Range(0, 100) % numberOfItems;
 
-            Debug.Log(objVal);
-
             if (objVal == 1)
             {
                 closeObj = GameObject.Find("GameManager").GetComponent<GameManagerScript>().ClosestBooth(gameObject.transform.position);

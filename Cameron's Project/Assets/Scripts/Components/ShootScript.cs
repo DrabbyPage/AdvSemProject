@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShootScript : MonoBehaviour
 {
-    float shootingDist = 7.0f;
+    float shootingDist = 3.0f;
 
     float time = 0.0f;
     float fireRate = 1.4f;
@@ -146,16 +146,16 @@ public class ShootScript : MonoBehaviour
 
 
         float dist = Mathf.Sqrt(xDiff * xDiff + yDiff * yDiff);
-        Debug.Log(dist + " vs " + shootingDist);
 
         if (dist < shootingDist)
         {
+            GameObject SoundMan = GameObject.Find("SoundManager");
             Debug.Log("bullet is shot");
 
             newBullet = Instantiate(bullet) as GameObject;
             newBullet.GetComponent<BulletScript>().SetAngle(lookAngleDeg);
             newBullet.transform.position = new Vector2(newX, newY);
-
+            SoundMan.GetComponent<SoundManagerScript>().PlayShootSound();
             ableToShoot = false;
         }
         else

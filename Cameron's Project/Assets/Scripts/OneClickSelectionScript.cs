@@ -49,6 +49,7 @@ public class OneClickSelectionScript : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
+            GameObject SoundMan = GameObject.Find("SoundManager");
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.z));
             newPoint = new Vector2(mouseWorld.x, mouseWorld.y);
             
@@ -57,15 +58,20 @@ public class OneClickSelectionScript : MonoBehaviour
                 target = null;
             }
 
-            if(Player != null)
+            if (Player != null)
             {
                 Player.GetComponent<CharacterScript>().SetNewTarget(null);
                 Player.GetComponent<MoveScript>().SetMoveVec2(newPoint);
 
-                if(!Player.GetComponent<HealthScript>().isDying)
+                if (!Player.GetComponent<HealthScript>().isDying)
                 {
                     Player.GetComponent<CharacterScript>().SetMoveBool(true);
                 }
+            }
+
+            if (SoundMan != false)
+            {
+                SoundMan.GetComponent<SoundManagerScript>().PlayerZombieMoveSound();
             }
 
             crosshair.SetActive(true);
@@ -78,9 +84,28 @@ public class OneClickSelectionScript : MonoBehaviour
         }
         if (Input.GetMouseButton(1))
         {
-            if(Player != null)
+            GameObject SoundMan = GameObject.Find("SoundManager");
+
+            if (Player != null)
             {
                 Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.z));
+
+
+                if (Player != null)
+                {
+                    Player.GetComponent<CharacterScript>().SetNewTarget(null);
+                    Player.GetComponent<MoveScript>().SetMoveVec2(newPoint);
+
+                    if (!Player.GetComponent<HealthScript>().isDying)
+                    {
+                        Player.GetComponent<CharacterScript>().SetMoveBool(true);
+                    }
+                }
+
+                if(SoundMan != false)
+                {
+                    SoundMan.GetComponent<SoundManagerScript>().PlayerZombieMoveSound();
+                }
 
                 CheckHumanDist(mouseWorld);
             }

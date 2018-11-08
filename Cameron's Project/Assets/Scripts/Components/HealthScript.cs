@@ -36,6 +36,8 @@ public class HealthScript : MonoBehaviour
 
         if(health <= 1)
         {
+            GameObject SoundMan = GameObject.Find("SoundManager");
+
             isDying = true;
 
             gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -43,6 +45,12 @@ public class HealthScript : MonoBehaviour
             gameObject.GetComponent<Collider2D>().enabled = false;
 
             GetComponent<AttackScript>().SetAttackAbility(false);
+
+
+            if (SoundMan != false)
+            {
+                SoundMan.GetComponent<SoundManagerScript>().PlayerZombieDeathSound();
+            }
 
             // kill character
             if (gameObject.tag == "Player")

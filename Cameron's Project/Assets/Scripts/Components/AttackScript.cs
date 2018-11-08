@@ -8,10 +8,16 @@ public class AttackScript : MonoBehaviour
 
     public bool canAttack = true;
 
+    GameObject SoundMan;
+
+    bool canCheckHitSound = true;
+    float audioTimer = 1.4f;
+    float maxTime = 1.4f;
+
     // Use this for initialization
     void Start()
     {
-
+        SoundMan = GameObject.Find("SoundManager");
     }
 
     // Update is called once per frame
@@ -26,6 +32,8 @@ public class AttackScript : MonoBehaviour
     void CheckToAttack()
     {
         GameObject human = GetComponent<MoveScript>().target;
+
+        CheckHitSoundTimer();
 
         if (human != null)
         {
@@ -52,6 +60,15 @@ public class AttackScript : MonoBehaviour
                     gameObject.GetComponent<CharacterScript>().SetMoveBool(false);
                     gameObject.GetComponent<MoveScript>().SetMoveVec2(gameObject.transform.position);
                 }
+                
+                if(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+                {
+                    if (SoundMan != null && canCheckHitSound)
+                    {
+                        SoundMan.GetComponent<SoundManagerScript>().PlayHitSound();
+                        canCheckHitSound = false;
+                    }
+                }
 
             }
             else
@@ -70,6 +87,22 @@ public class AttackScript : MonoBehaviour
             transform.GetChild(0).gameObject.SetActive(false);
 
             GetComponent<Animator>().SetBool("Attacking", false);
+        }
+    }
+
+    void CheckHitSoundTimer()
+    {
+        if(canCheckHitSound == false)
+        {
+            if(audioTimer > 0)
+            {
+                audioTimer = audioTimer - Time.deltaTime;
+            }
+            else
+            {
+                audioTimer = maxTime;
+                canCheckHitSound = true;
+            }
         }
     }
 

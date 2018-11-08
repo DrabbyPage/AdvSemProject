@@ -23,22 +23,33 @@ public class SoundManagerScript : MonoBehaviour
     }
 
     [Header("universal sounds")]
-    public AudioClip ReadyClip;
-    public AudioClip CoolDownClip;
-    public AudioClip Hit_snd;
+    public AudioClip Hit_Sound;
+    public AudioClip ZombieMoveSound;
+    public AudioClip CitizenDyingSound;
+    public AudioClip ZombieDyingSound;
+    public AudioClip Shoot_Sound;
+    public AudioClip ButtonPressAudio;
+    public AudioClip ButtonHoverAudio;
 
     [Header("RECORD PLAYERS")]
     [Header("player 1 specific record players")]
-    public AudioSource ASause; //this is player 1's source
-    public AudioSource Player1Walking;
-    public AudioSource Player1Hits;
+    public AudioSource MenuPlayer; //this is player 1's source
+    public AudioSource PlayerWalking;
+    public AudioSource PlayerHits;
+    public AudioSource CharacterDeath;
+    public AudioSource ShootingSource;
     
     [Header("music record players")]
     public AudioSource MusicRecordPlayer;
+    public AudioClip FantasyMusicAudio;
+    public AudioClip RaceMusicAudio;
+    public AudioClip ArcadeMusicAudio;
+
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
         //If instance already exists and it's not this:
         if (instance == null)
         {
@@ -47,17 +58,15 @@ public class SoundManagerScript : MonoBehaviour
         if (instance != this)
         {
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
-            Destroy(gameObject);
+            Destroy(instance.gameObject);
+            instance = this;
         }
     }
 
     // Use this for initialization
     void Start()
     {
-        ASause = gameObject.GetComponent<AudioSource>();
-        Debug.Log(ASause);
-        MusicRecordPlayer.Play();
-        instance = this;
+
     }
 
     // Update is called once per frame
@@ -68,26 +77,117 @@ public class SoundManagerScript : MonoBehaviour
 
     //*************** UNIVERSAL SOUNDS***************
 
-    public void EndCoolDownSound(bool isPlayer1)
-    {
-        if (isPlayer1)
-        {
-            // basically the tape in the player
-            ASause.clip = ReadyClip;
-            //this actually players whatever clip is loaded into the source
-            ASause.Play();
-        }
-
-    }
-
     // this function determins which player is being hit and then which record player plays the sound
-    public void PlayHitSound(bool isPlayer1)
+    public void PlayHitSound()
     {
-        if (isPlayer1)
+        if (MenuPlayer != null)
         {
-            Player1Hits.clip = Hit_snd;
-            Player1Hits.Play();
+            PlayerHits.clip = Hit_Sound;
+
+            if (!PlayerHits.isPlaying)
+            {
+                PlayerHits.Play();
+            }
         }
     }
 
+    public void PlayShootSound()
+    {
+        if (ShootingSource != null)
+        {
+            ShootingSource.clip = Shoot_Sound;
+
+            if (!ShootingSource.isPlaying)
+            {
+                ShootingSource.Play();
+            }
+        }
+    }
+
+    public void PlayCharDeathSound()
+    {
+        if (CharacterDeath != null)
+        {
+            CharacterDeath.clip = CitizenDyingSound;
+
+            if (!CharacterDeath.isPlaying)
+            {
+                CharacterDeath.Play();
+            }
+        }
+    }
+
+    public void PlayerZombieDeathSound()
+    {
+        if (CharacterDeath != null)
+        {
+            CharacterDeath.clip = ZombieDyingSound;
+
+            if (!CharacterDeath.isPlaying)
+            {
+                CharacterDeath.Play();
+            }
+        }
+    }
+
+    public void PlayerZombieMoveSound()
+    {
+        if (PlayerWalking != null)
+        {
+            PlayerWalking.clip = ZombieMoveSound;
+
+            if (!PlayerWalking.isPlaying)
+            {
+                PlayerWalking.Play();
+            }
+        }
+    }
+
+    public void PlayButtonPress()
+    {
+        if (MenuPlayer != null)
+        {
+            MenuPlayer.clip = ButtonPressAudio;
+
+            MenuPlayer.Play();
+        }
+    }
+
+    public void PlayButtonHover()
+    {
+        if (MenuPlayer != null)
+        {
+            MenuPlayer.clip = ButtonHoverAudio;
+
+            MenuPlayer.Play();
+        }
+    }
+
+    public void PlayFantasyMusic()
+    {
+        if (MusicRecordPlayer != null)
+        {
+            MusicRecordPlayer.clip = FantasyMusicAudio;
+            MusicRecordPlayer.Play();
+        }
+
+    }
+
+    public void PlayRaceMusic()
+    {
+        if (MusicRecordPlayer != null)
+        {
+            MusicRecordPlayer.clip = RaceMusicAudio;
+            MusicRecordPlayer.Play();
+        }
+    }
+
+    public void PlayArcadeMusic()
+    {
+        if (MusicRecordPlayer != null)
+        {
+            MusicRecordPlayer.clip = ArcadeMusicAudio;
+            MusicRecordPlayer.Play();
+        }
+    }
 }
