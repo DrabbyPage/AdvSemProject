@@ -166,7 +166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  targetSighted: 0
 --- !u!114 &114746808355706866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackTime: 1.5
+  canAttack: 1
 --- !u!198 &198779351456681472
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3405,7 +3405,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 628486920cb585745b1f18d6ab53b7da, type: 3}
-  m_Color: {r: 0.051674835, g: 0.32352942, b: 0.1556192, a: 1}
+  m_Color: {r: 1, g: 0.29411763, b: 0.29411763, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

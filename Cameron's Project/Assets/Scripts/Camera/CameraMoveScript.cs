@@ -7,7 +7,11 @@ public class CameraMoveScript : MonoBehaviour
     public int bound = 50; // distance from edge scrolling starts
     public int speed = 20;
 
+    float screenHeight = Screen.height;
+    float screenWidth = Screen.width;
+
     bool canMove;
+    bool mouseToEdgeMovement = true;
 
     FollowPlayerScript folPlayScript;
 
@@ -50,32 +54,33 @@ public class CameraMoveScript : MonoBehaviour
         float xSpeed = 0;
         float ySpeed = 0;
 
-        // move the camera horizontally with mouse pos
-        /*
-        if (Input.mousePosition.x > screenWidth - bound)
+        if (mouseToEdgeMovement)
         {
-            xSpeed = speed;
-            //newX = transform.position.x + speed * Time.deltaTime;
-        }
-        if (Input.mousePosition.x < 0 + bound)
-        {
-            xSpeed = -speed;
-        }
+            // move the camera horizontally with mouse pos
+            if (Input.mousePosition.x > screenWidth - bound)
+            {
+                xSpeed = speed;
+            }
+            if (Input.mousePosition.x < 0 + bound)
+            {
+                xSpeed = -speed;
+            }
 
-        // move the camera vertically with mouse pos 
-        /*
-        if (Input.mousePosition.y > screenHeight - bound)
-        {
-            ySpeed = speed;
+            // move the camera vertically with mouse pos 
+            if (Input.mousePosition.y > screenHeight - bound)
+            {
+                ySpeed = speed;
+            }
+            if (Input.mousePosition.y < 0 + bound)
+            {
+                ySpeed = -speed;
+            }
         }
-        if (Input.mousePosition.y < 0 + bound)
-        {
-            ySpeed = -speed;
-        }
-        */
+      
+        
 
         // keyboard camera movement horizontally
-        if(Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             xSpeed = -speed;
         }

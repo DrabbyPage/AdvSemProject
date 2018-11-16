@@ -40,37 +40,55 @@ public class SightScript : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Zombie" || collision.gameObject.tag == "Player")
+        bool ableToSee = true;
+        RaycastHit hit;
+
+        if (Physics.Linecast(transform.position, collision.gameObject.transform.position, out hit))
         {
-            if (canCheck)
+            if (hit.transform.tag == "Player" || hit.transform.tag == "Zombie")
             {
-                if (gameObject.tag == "Human")
-                {
-                    if (GetComponent<HumanScript>().hasGun)
-                    {
-                        gameObject.GetComponent<HumanScript>().SetTargetSighted(true);
-                        gameObject.GetComponent<HumanScript>().SetTarget(collision.gameObject);
-                    }
-                    else
-                    {
-                        gameObject.GetComponent<HumanScript>().SetPanic(true);
-                    }
-                }
-                else if (gameObject.tag == "Policeman")
-                {
-                    gameObject.GetComponent<PolicemanScript>().SetTargetSighted(true);
-                    gameObject.GetComponent<PolicemanScript>().SetTarget(collision.gameObject);
-                }
-
-                gameObject.GetComponent<ShootScript>().SetThreatLocation(collision.gameObject);
-
+                ableToSee = true;
+                Debug.Log("can see play/zombie");
+            }
+            else
+            {
+                ableToSee = false;
+                Debug.Log("obj in the way of player/zombie");
             }
         }
-        else
-        {
 
+        if(ableToSee)
+        {
+            if (collision.gameObject.tag == "Zombie" || collision.gameObject.tag == "Player")
+            {
+
+                if (canCheck)
+                {
+                    if (gameObject.tag == "Human")
+                    {
+                        if (GetComponent<HumanScript>().hasGun)
+                        {
+                            gameObject.GetComponent<HumanScript>().SetTargetSighted(true);
+                            gameObject.GetComponent<HumanScript>().SetTarget(collision.gameObject);
+                        }
+                        else
+                        {
+                            gameObject.GetComponent<HumanScript>().SetPanic(true);
+                        }
+                    }
+                    else if (gameObject.tag == "Policeman")
+                    {
+                        gameObject.GetComponent<PolicemanScript>().SetTargetSighted(true);
+                        gameObject.GetComponent<PolicemanScript>().SetTarget(collision.gameObject);
+                    }
+
+                    gameObject.GetComponent<ShootScript>().SetThreatLocation(collision.gameObject);
+
+                }
+            }
         }
+
     }
 }

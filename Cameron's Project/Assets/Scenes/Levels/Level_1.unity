@@ -275,8 +275,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 310225440}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 11.1, z: 0}
-  m_LocalScale: {x: 32.317787, y: 7, z: 1}
+  m_LocalPosition: {x: -0.7, y: 11.1, z: 0}
+  m_LocalScale: {x: 32.19747, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 2015366773}
   m_RootOrder: 6
@@ -524,8 +524,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519379626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.8, y: 2.3, z: 0}
-  m_LocalScale: {x: 7, y: 24.481613, z: 1}
+  m_LocalPosition: {x: 11.8, y: 2.4, z: 0}
+  m_LocalScale: {x: 7, y: 24.24098, z: 1}
   m_Children: []
   m_Father: {fileID: 2015366773}
   m_RootOrder: 2
@@ -755,7 +755,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1225227094}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7, y: 2.3, z: 0}
+  m_LocalPosition: {x: -0.7, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2015366773}
@@ -798,7 +798,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 31.67401, y: 24.565681}
+  m_Size: {x: 31.67401, y: 24.084414}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
@@ -1037,8 +1037,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1717499054}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.3, y: 2.7, z: 0}
-  m_LocalScale: {x: 7, y: 24.506767, z: 1}
+  m_LocalPosition: {x: -13.3, y: 2.4, z: 0}
+  m_LocalScale: {x: 7, y: 23.905184, z: 1}
   m_Children: []
   m_Father: {fileID: 2015366773}
   m_RootOrder: 1
@@ -1133,8 +1133,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1767425478}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6, y: -6.2, z: 0}
-  m_LocalScale: {x: 32.56861, y: 7, z: 1}
+  m_LocalPosition: {x: -0.8, y: -6.2, z: 0}
+  m_LocalScale: {x: 32.20766, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 2015366773}
   m_RootOrder: 7

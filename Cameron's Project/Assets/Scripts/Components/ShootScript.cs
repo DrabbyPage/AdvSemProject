@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShootScript : MonoBehaviour
 {
-    float shootingDist = 3.0f;
+    float shootingDist = 5.0f;
 
     float time = 0.0f;
     float fireRate = 1.4f;
