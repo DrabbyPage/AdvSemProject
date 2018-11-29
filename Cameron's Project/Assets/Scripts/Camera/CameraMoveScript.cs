@@ -11,6 +11,8 @@ public class CameraMoveScript : MonoBehaviour
     float screenWidth = Screen.width;
 
     bool canMove;
+
+    [SerializeField]
     bool mouseToEdgeMovement = true;
 
     FollowPlayerScript folPlayScript;
