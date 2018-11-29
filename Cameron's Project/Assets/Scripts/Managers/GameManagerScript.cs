@@ -33,6 +33,7 @@ public class GameManagerScript : MonoBehaviour
     public Text gameText;
     public Text humanText;
 
+    public bool gamePaused = false;
     bool checkingForBooth = false;
     bool checkingForChest = false;
 
@@ -93,9 +94,27 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        CheckForPause();
         CheckForLevelEnd();
 	}
-    
+
+    void CheckForPause()
+    {
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            if(gamePaused)
+            {
+                gamePaused = false;
+                GameObject.Find("PausePanel").SetActive(false);
+            }
+            else
+            {
+                gamePaused = true;
+                GameObject.Find("PausePanel").SetActive(true);
+            }
+        }
+    }
+
     void CheckForLevelEnd()
     {
         if(humanList.Count <= 0)

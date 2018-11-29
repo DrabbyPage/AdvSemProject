@@ -78,11 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d00e819b3311f46a12ce1c6bd0b054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightConnect: {fileID: 0}
-  leftConnect: {fileID: 0}
-  upConnect: {fileID: 0}
-  downConnect: {fileID: 0}
-  showConnections: 1
+  fromNode: {fileID: 0}
+  endPoint: 0
+  showConnections: 0
 --- !u!120 &120228046492574312
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -116,9 +114,6 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   m_Parameters:

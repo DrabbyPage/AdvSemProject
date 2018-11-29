@@ -2,30 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeScript : MonoBehaviour {
+public class NodeScript : MonoBehaviour
+{
 
     Vector2 pos;
 
     #region Connections
-    public GameObject rightConnect;
-    public GameObject leftConnect;
-    public GameObject upConnect;
-    public GameObject downConnect;
+
+    GameObject rightConnect;
+    GameObject leftConnect;
+    GameObject upConnect;
+    GameObject downConnect;
+
+
     #endregion
 
-    bool endPoint = false;
+    public GameObject fromNode;
 
     [SerializeField]
-    bool showConnections = true;
+    public bool endPoint = false;
+
+    [SerializeField]
+    bool showConnections = false;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
 
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
 
     }
@@ -49,7 +56,7 @@ public class NodeScript : MonoBehaviour {
         searchDown = GameObject.Find("Node_" + pos.x + "_" + (pos.y - 1));
         searchUp = GameObject.Find("Node_" + pos.x + "_" + (pos.y + 1));
 
-        if(searchRight != null)
+        if (searchRight != null)
         {
             rightConnect = searchRight;
         }
@@ -71,11 +78,11 @@ public class NodeScript : MonoBehaviour {
 
     void CheckShowConnections()
     {
-        if(showConnections)
+        if (showConnections)
         {
             gameObject.GetComponent<LineRenderer>().SetPosition(0, gameObject.transform.position);
 
-            if(rightConnect != null && gameObject.GetComponent<LineRenderer>().positionCount >= 1)
+            if (rightConnect != null && gameObject.GetComponent<LineRenderer>().positionCount >= 1)
             {
                 MakeConnection(rightConnect, 1);
             }
@@ -119,10 +126,22 @@ public class NodeScript : MonoBehaviour {
         gameObject.GetComponent<LineRenderer>().SetPosition(connectIndex, connection.transform.position);
     }
 
+    public List<GameObject> GetConnections()
+    {
+        List<GameObject> tempList = new List<GameObject>();
+
+        tempList.Add(upConnect);
+        tempList.Add(downConnect);
+        tempList.Add(leftConnect);
+        tempList.Add(rightConnect);
+
+        return tempList;
+    }
+
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Environment")
+        if (col.gameObject.tag == "Environment")
         {
             endPoint = true;
         }

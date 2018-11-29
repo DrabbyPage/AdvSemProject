@@ -40,6 +40,11 @@ public class RunToObjectScript : MonoBehaviour
             {
                 if (GetComponent<MoveScript>().canMove)
                 {
+                    if (closeObj.name == "PhoneBooth")
+                        gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "I gotta go call someone";
+                    else if(closeObj.name == "Chest")
+                        gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "I gotta go grab a weapon";
+
                     GetComponent<MoveScript>().MoveToPoint();
                 }
             }
@@ -49,11 +54,13 @@ public class RunToObjectScript : MonoBehaviour
 
                 if(objVal == 1)
                 {
+                    gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "Hello! Somebody! Come Help!";
                     closeObj.GetComponent<PhoneBoothScript>().SetOccupation(true);
                     StartCoroutine(WaitForCall());
                 }
                 else if(objVal == 0)
                 {
+                    gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "Where is that spell book?";
                     closeObj.GetComponent<ChestScript>().SetOccupation(true);
                     StartCoroutine(WaitForItem());
                 }
@@ -99,8 +106,9 @@ public class RunToObjectScript : MonoBehaviour
     IEnumerator WaitForCall()
     {
         yield return new WaitForSeconds(5.0f);
+        gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "";
 
-        if(!GetComponent<HumanScript>().beingAttacked)
+        if (!GetComponent<HumanScript>().beingAttacked)
         {
             if (closeObj != null)
             {
@@ -126,6 +134,8 @@ public class RunToObjectScript : MonoBehaviour
     IEnumerator WaitForItem()
     {
         yield return new WaitForSeconds(3.0f);
+
+        gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "";
 
         canCheckCondition = true;
 

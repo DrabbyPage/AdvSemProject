@@ -150,7 +150,6 @@ public class ShootScript : MonoBehaviour
         if (dist < shootingDist)
         {
             GameObject SoundMan = GameObject.Find("SoundManager");
-            Debug.Log("bullet is shot");
 
             newBullet = Instantiate(bullet) as GameObject;
             newBullet.GetComponent<BulletScript>().SetAngle(lookAngleDeg);
