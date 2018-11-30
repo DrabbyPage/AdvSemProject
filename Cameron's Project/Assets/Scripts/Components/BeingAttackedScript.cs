@@ -38,7 +38,12 @@ public class BeingAttackedScript : MonoBehaviour
     public void ScreamForHelp()
     {
         //underDistress = true;
-        GameObject.Find("SoundManager").GetComponent<SoundManagerScript>().PlayCharDeathSound();
+        GameObject SoundMan = GameObject.Find("SoundManager");
+
+        if(SoundMan !=null)
+        {
+            SoundMan.GetComponent<SoundManagerScript>().PlayCharDeathSound();
+        }
     }
 
     public IEnumerator BeingAttacked()

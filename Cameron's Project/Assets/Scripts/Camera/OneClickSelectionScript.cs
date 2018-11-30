@@ -47,7 +47,7 @@ public class OneClickSelectionScript : MonoBehaviour
 
     void CheckForMouseInput()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !GameObject.Find("GameManager").GetComponent<GameManagerScript>().gamePaused)
         {
             GameObject SoundMan = GameObject.Find("SoundManager");
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, gameObject.transform.position.z));

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PolicemanScript : MonoBehaviour
 {
+    GameObject GameMan;
+
     public bool hasGun = true;
     public bool beingAttacked = false;
     public bool targetSighted = false;
@@ -12,14 +14,39 @@ public class PolicemanScript : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
+        GameMan = GameObject.Find("GameManager");
     }
 
     // Update is called once per frame
     void Update ()
     {
-        CheckSituation();
+        CheckForPause();
+
 	}
+
+    void CheckForPause()
+    {
+        if (GameMan != null)
+        {
+            if (GameMan.GetComponent<GameManagerScript>().gamePaused)
+            {
+                gameObject.GetComponent<Animator>().SetBool("Walking", false);
+                canMove = false;
+            }
+            else
+            {
+                gameObject.GetComponent<Animator>().SetBool("Walking", true);
+                canMove = true;
+                CheckSituation();
+            }
+        }
+        else
+        {
+            canMove = true;
+            CheckSituation();
+        }
+
+    }
 
     void CheckSituation()
     {

@@ -27,6 +27,22 @@ public class MoveScript : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        CheckCanMove();
+
+        if (canMove)
+        {
+            MoveToPoint();
+            CheckForNotMoving();
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        }
+    }
+
+    void CheckCanMove()
+    {
         if (gameObject.tag == "Human")
         {
             canMove = GetComponent<HumanScript>().canMove;
@@ -42,18 +58,6 @@ public class MoveScript : MonoBehaviour
         else if (gameObject.tag == "Policeman")
         {
             canMove = GetComponent<PolicemanScript>().canMove;
-        }
-
-
-        if (canMove)
-        {
-            MoveToPoint();
-            CheckForNotMoving();
-        }
-        else
-        {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            GetComponent<Rigidbody2D>().angularVelocity = 0f;
         }
     }
 

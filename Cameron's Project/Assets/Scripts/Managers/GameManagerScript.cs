@@ -28,14 +28,23 @@ public class GameManagerScript : MonoBehaviour
     List<GameObject> boothList;
     List<GameObject> chestList;
 
-    //public GameObject mainCanvas;
-
     public Text gameText;
     public Text humanText;
 
-    public bool gamePaused = false;
     bool checkingForBooth = false;
     bool checkingForChest = false;
+
+    #region PauseMenuVariables
+    [SerializeField]
+    GameObject pausePanel;
+
+    public bool gamePaused = false;
+    bool gameChanged = false;
+    bool canChangeMenu = true;
+
+    float pauseTimer = 1.0f;
+    float maxTime = 1.0f;
+    #endregion
 
     void Awake()
     {
@@ -95,22 +104,52 @@ public class GameManagerScript : MonoBehaviour
     void Update ()
     {
         CheckForPause();
+        UpdatePauseTimer();
         CheckForLevelEnd();
 	}
 
     void CheckForPause()
     {
-        if(Input.GetKey(KeyCode.Escape))
+        if(Input.GetKey(KeyCode.Escape) && canChangeMenu)
         {
-            if(gamePaused)
+            canChangeMenu = false;
+
+            gameChanged = true;
+
+            DoPauseAction();
+
+        }
+
+        if(pausePanel!=null)
+        {
+            pausePanel.SetActive(gamePaused);
+        }
+    }
+
+    public void DoPauseAction()
+    {
+        if (gamePaused)
+        {
+            gamePaused = false;
+        }
+        else
+        {
+            gamePaused = true;
+        }
+    }
+
+    void UpdatePauseTimer()
+    {
+        if(gameChanged)
+        {
+            if(pauseTimer > 0)
             {
-                gamePaused = false;
-                GameObject.Find("PausePanel").SetActive(false);
+                pauseTimer = pauseTimer - Time.deltaTime;
             }
             else
             {
-                gamePaused = true;
-                GameObject.Find("PausePanel").SetActive(true);
+                pauseTimer = maxTime;
+                canChangeMenu = true;
             }
         }
     }

@@ -53,6 +53,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameText: {fileID: 0}
+  humanText: {fileID: 0}
+  pausePanel: {fileID: 0}
+  gamePaused: 0
 --- !u!114 &114579450903511594
 MonoBehaviour:
   m_ObjectHideFlags: 1

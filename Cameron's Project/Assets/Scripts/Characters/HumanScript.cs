@@ -7,18 +7,49 @@ public class HumanScript : MonoBehaviour
     // this is the manager for the human script
     // and all the scripts that may be used by the human
 
+    GameObject GameMan;
+
     public bool panicMode = false;
     public bool hasGun = false;
     public bool beingAttacked = false;
     public bool targetSighted = false;
     public bool canMove = true;
-	
-	// Update is called once per frame
-	void Update ()
+
+    void Start()
     {
-        CheckSituation();
+        GameMan = GameObject.Find("GameManager");
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        CheckForPause();
+
 	}
 
+    void CheckForPause()
+    {
+        if(GameMan!=null)
+        {
+            if (GameMan.GetComponent<GameManagerScript>().gamePaused)
+            {
+                gameObject.GetComponent<Animator>().SetBool("Walking", false);
+                canMove = false;
+            }
+            else
+            {
+                gameObject.GetComponent<Animator>().SetBool("Walking", true);
+                canMove = true;
+                CheckSituation();
+            }
+        }
+        else
+        {
+            canMove = true;
+            CheckSituation();
+        }
+
+    }
     void CheckSituation()
     {
         if(panicMode && !hasGun)

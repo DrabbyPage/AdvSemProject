@@ -37,22 +37,27 @@ public class CallMusic : MonoBehaviour
             SoundMan = GameObject.Find("SoundManager");
         }
 
-		if(SoundMan.GetComponent<SoundManagerScript>().MusicRecordPlayer.isPlaying == false)
+        if(SoundMan != null)
         {
-            if (currentScene.name == "Main_Menu")
+            if (SoundMan.GetComponent<SoundManagerScript>().MusicRecordPlayer.isPlaying == false)
             {
-                CallMenuMusic();
+                if (currentScene.name == "Main_Menu")
+                {
+                    CallMenuMusic();
+                }
+                else if (currentScene.name == "Level_Select")
+                {
+                    CallLevelSelectMusic();
+                }
+                else
+                {
+                    CallGameMusic();
+                }
             }
-            else if (currentScene.name == "Level_Select")
-            {
-                CallLevelSelectMusic();
-            }
-            else
-            {
-                CallGameMusic();
-            }
+
         }
-	}
+
+    }
 
     void CallMenuMusic()
     {
@@ -61,7 +66,10 @@ public class CallMusic : MonoBehaviour
             SoundMan = GameObject.Find("SoundManager");
         }
 
-        SoundMan.GetComponent<SoundManagerScript>().PlayFantasyMusic();
+        if (SoundMan != null)
+        {
+            SoundMan.GetComponent<SoundManagerScript>().PlayFantasyMusic();
+        }
     }
 
     void CallLevelSelectMusic()
@@ -71,7 +79,10 @@ public class CallMusic : MonoBehaviour
             SoundMan = GameObject.Find("SoundManager");
         }
 
-        SoundMan.GetComponent<SoundManagerScript>().PlayRaceMusic();
+        if (SoundMan != null)
+        {
+            SoundMan.GetComponent<SoundManagerScript>().PlayRaceMusic();
+        }
     }
 
     void CallGameMusic()
@@ -81,6 +92,9 @@ public class CallMusic : MonoBehaviour
             SoundMan = GameObject.Find("SoundManager");
         }
 
-        SoundMan.GetComponent<SoundManagerScript>().PlayArcadeMusic();
+        if (SoundMan != null)
+        {
+            SoundMan.GetComponent<SoundManagerScript>().PlayArcadeMusic();
+        }
     }
 }
