@@ -44,7 +44,14 @@ public class PathHolderScript : MonoBehaviour
     public Vector2 GetNextPos()
     {
         Vector2 outputPos;
-        outputPos = objectPath[0].transform.position;
+
+        outputPos = gameObject.transform.position;
+
+        if(objectPath.Count > 0)
+        {
+            outputPos = objectPath[0].transform.position;
+        }
+
         return outputPos;
     }
 

@@ -134,54 +134,7 @@ public class OneClickSelectionScript : MonoBehaviour
             Player.GetComponent<CharacterScript>().SetNewTarget(null);
         }
     }
-    /*
-    void CheckZombieDist(Vector3 mouse)
-    {
-        GameObject newTarget = null;
 
-        if (GameMan != null)
-        {
-            newTarget = GameMan.GetComponent<GameManagerScript>().CloseToZombie(mouse, lockOnRange);
-        }
-
-        if (newTarget != null)
-        {
-            GameObject newZombie;
-
-            if (Player != null)
-            {
-                newZombie = Instantiate(Resources.Load("Prefabs/Zombie")) as GameObject;
-
-                newZombie.transform.position = Player.transform.position;
-
-                GameMan.GetComponent<GameManagerScript>().AddZombieToList(newZombie);
-
-                Player.transform.position = newTarget.transform.position;
-
-                GameMan.GetComponent<GameManagerScript>().DeleteZombieFromList(newTarget);
-                Destroy(newTarget);
-
-                crosshair.SetActive(false);
-                crosshair.GetComponent<SpriteRenderer>().color = redColor;
-            }
-            else
-            {
-                Player = Instantiate(Resources.Load("Prefabs/Player")) as GameObject;
-
-                GameMan.GetComponent<GameManagerScript>().AddZombieToList(Player);
-
-                Player.transform.position = newTarget.transform.position;
-
-                GameMan.GetComponent<GameManagerScript>().DeleteZombieFromList(newTarget);
-                Destroy(newTarget);
-                
-                crosshair.SetActive(false);
-                crosshair.GetComponent<SpriteRenderer>().color = redColor;
-            }
-
-        }
-    }
-    */
     void CheckCrosshairDist()
     {
         if(Player != null)

@@ -118,6 +118,7 @@ public class RunToObjectScript : MonoBehaviour
                 if (GetComponent<ShootScript>().threat != null)
                 {
                     closeObj.GetComponent<PhoneBoothScript>().CallThePoPo(knownLoc);
+                    GetComponent<ShootScript>().threat = null;
                 }
             }
 

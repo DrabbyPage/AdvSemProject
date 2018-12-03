@@ -11,6 +11,9 @@ public class PolicemanScript : MonoBehaviour
     public bool targetSighted = false;
     public bool canMove = true;
 
+    public bool hasBeenCalledIn = false;
+    Vector2 callInPos;
+
     // Use this for initialization
     void Start ()
     {
@@ -20,9 +23,49 @@ public class PolicemanScript : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        CheckForPause();
+        CheckForPath();
 
+        CheckForPause();
 	}
+
+    void CheckForPath()
+    {
+        if(GetComponent<PathHolderScript>().objectPath != null)
+        {
+            if (hasBeenCalledIn && GetComponent<PathHolderScript>().objectPath.Count > 0)
+            {
+                Vector3 nextNodePos = GetComponent<PathHolderScript>().GetNextPos();
+
+                Vector3 diff = nextNodePos - gameObject.transform.position;
+
+                float dist = diff.magnitude;
+
+                float minDist = 0.5f;
+
+                if (dist < minDist)
+                {
+                    GetComponent<PathHolderScript>().KnockOutPathNode();
+                    nextNodePos = GetComponent<PathHolderScript>().GetNextPos();
+                }
+
+                SetMovePoint(nextNodePos);
+            }
+            else if (hasBeenCalledIn)
+            {
+                Vector2 charObjVec2 = gameObject.transform.position;
+
+                GetComponent<PathHolderScript>().GeneratePath(charObjVec2, callInPos);
+            }
+        }
+        else if (hasBeenCalledIn)
+        {
+            Vector2 charObjVec2 = gameObject.transform.position;
+
+            GetComponent<PathHolderScript>().GeneratePath(charObjVec2, callInPos);
+        }
+
+
+    }
 
     void CheckForPause()
     {
@@ -67,6 +110,11 @@ public class PolicemanScript : MonoBehaviour
         GetComponent<MoveScript>().SetMoveBool(newMove);
     }
 
+    public void SetMovePoint(Vector2 newPoint)
+    {
+        GetComponent<MoveScript>().SetMoveVec2(newPoint);
+    }
+
     public void SetBeingAttacked(bool newAttack)
     {
         beingAttacked = newAttack;
@@ -79,8 +127,10 @@ public class PolicemanScript : MonoBehaviour
 
     public void CallInTarget(Vector2 targetPoint)
     {
-        Debug.Log("threat was called in");
-        GetComponent<MoveScript>().SetMoveVec2(targetPoint);
+        //Debug.Log("threat was called in");
+        hasBeenCalledIn = true;
+        callInPos = targetPoint;
+        //GetComponent<MoveScript>().SetMoveVec2(targetPoint);
     }
 
     public void SetTarget(GameObject newObj)
