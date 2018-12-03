@@ -49,7 +49,7 @@ public class CharacterScript : MonoBehaviour
         }
 
     }
-
+    
     public void SetMoveBool(bool newMove)
     {
         canMove = newMove;
@@ -64,6 +64,5 @@ public class CharacterScript : MonoBehaviour
     public void SetMovePoint(Vector2 newPos)
     {
         GetComponent<MoveScript>().SetMoveVec2(newPos);
-        //newPoint = newPos;
     }
 }

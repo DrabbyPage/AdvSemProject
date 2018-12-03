@@ -84,7 +84,6 @@ public class MoveScript : MonoBehaviour
             if (gameObject.tag == "Human" || gameObject.tag == "Policeman")
             {
                 gameObject.GetComponent<WanderScript>().RandomizePoint();
-
             }
 
             GetComponent<Animator>().SetBool("Walking", false);

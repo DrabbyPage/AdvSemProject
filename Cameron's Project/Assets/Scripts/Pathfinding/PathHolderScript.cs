@@ -33,23 +33,7 @@ public class PathHolderScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && canPressButton)
-        {
-            canPressButton = false;
-            Vector2 testStart = new Vector2(-30.0f, -20.0f);
-            Vector2 testEnd = new Vector2(0.0f, 0.0f);
 
-            objectPath = GetDijkstraPath(testStart, testEnd);
-        }
-        if (Input.GetKeyDown(KeyCode.S) && canPressButton)
-        {
-            if (objectPath.Count > 0)
-            {
-                objectPath = SmoothPath(objectPath);
-            }
-        }
-        */
     }
 
     public void GeneratePath(Vector2 start, Vector2 end)
