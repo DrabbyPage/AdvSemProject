@@ -198,7 +198,7 @@ public class GridScript : MonoBehaviour
                                 inOpen = true;
                             }
                         }
-                        if(!inOpen)
+                        if(!inOpen && !endNodeRecord.node.GetComponent<NodeScript>().endPoint)
                         {
                             openList.Add(endNodeRecord);
                         }
@@ -282,7 +282,7 @@ public class GridScript : MonoBehaviour
 
             float dist = Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.y, 2));
 
-            if(dist < minDist)
+            if(dist < minDist && !grid[i].GetComponent<NodeScript>().endPoint)
             {
                 minDist = dist;
                 foundPoint = grid[i];
@@ -335,6 +335,7 @@ public class GridScript : MonoBehaviour
 
             if(!rayClear)
             {
+                Debug.Log("adding to the smoothi list");
                 outputPath.Add(inputPath[inputIndex - 1]);
             }
 
@@ -359,19 +360,21 @@ public class GridScript : MonoBehaviour
         // getting the direction of the input node from the output
         diff = toGridPos - fromGridPos;
 
-        int amountOfChecks = (int)diff.magnitude;
-
         // this is using unity raycasting
         // will check in between the two given nodes for the wall/ or blocking value
-        RaycastHit2D pathBlocked = Physics2D.Raycast(fromGridPos, diff, diff.magnitude);
+        RaycastHit2D pathBlocked = Physics2D.Raycast(fromGridPos, diff, diff.magnitude, 0);
 
-        if(pathBlocked.collider.gameObject.tag == "Environment")
+        if (pathBlocked.collider.gameObject != null)
         {
             // we learned there is a wall in the way and therefore we cannot see the input node
+            Debug.Log("collided with something");
             return false;
         }
+        else
+        {
+            //by this time we have learned there is no wall in the way
+            return true;
+        }
 
-        //by this time we have learned there is no wall in the way
-        return true;
     }
 }
