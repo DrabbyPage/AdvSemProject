@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class NodeScript : MonoBehaviour
 {
+    public struct Connection
+    {
+        public GameObject toNode;
+        public GameObject fromNode;
+        public float weight;
+    }
 
     Vector2 pos;
 
-    #region Connections
+    #region Node Connections
 
-    GameObject rightConnect;
-    GameObject leftConnect;
-    GameObject upConnect;
-    GameObject downConnect;
-
+    Connection rightConnect;
+    Connection leftConnect;
+    Connection upConnect;
+    Connection downConnect;
 
     #endregion
-
-    public GameObject fromNode;
 
     [SerializeField]
     public bool endPoint = false;
@@ -58,19 +61,35 @@ public class NodeScript : MonoBehaviour
 
         if (searchRight != null)
         {
-            rightConnect = searchRight;
+            //rightConnect = searchRight;
+            rightConnect = new Connection();
+            rightConnect.fromNode = gameObject;
+            rightConnect.toNode = searchRight;
+            rightConnect.weight = 1;
         }
         if (searchLeft != null)
         {
-            leftConnect = searchLeft;
+            //leftConnect = searchLeft;
+            leftConnect = new Connection();
+            leftConnect.fromNode = gameObject;
+            leftConnect.toNode = searchLeft;
+            leftConnect.weight = 1;
         }
         if (searchUp != null)
         {
-            upConnect = searchUp;
+            //upConnect = searchUp;
+            upConnect = new Connection();
+            upConnect.fromNode = gameObject;
+            upConnect.toNode = searchUp;
+            upConnect.weight = 1;
         }
         if (searchDown != null)
         {
-            downConnect = searchDown;
+            //downConnect = searchDown;
+            downConnect = new Connection();
+            downConnect.fromNode = gameObject;
+            downConnect.toNode = searchDown;
+            downConnect.weight = 1;
         }
 
         CheckShowConnections();
@@ -82,36 +101,36 @@ public class NodeScript : MonoBehaviour
         {
             gameObject.GetComponent<LineRenderer>().SetPosition(0, gameObject.transform.position);
 
-            if (rightConnect != null && gameObject.GetComponent<LineRenderer>().positionCount >= 1)
+            if (rightConnect.toNode != null && gameObject.GetComponent<LineRenderer>().positionCount >= 1)
             {
-                MakeConnection(rightConnect, 1);
+                MakeConnection(rightConnect.toNode, 1);
             }
             else if (gameObject.GetComponent<LineRenderer>().positionCount >= 1)
             {
                 MakeConnection(gameObject, 1);
             }
 
-            if (leftConnect != null && gameObject.GetComponent<LineRenderer>().positionCount >= 2)
+            if (leftConnect.toNode != null && gameObject.GetComponent<LineRenderer>().positionCount >= 2)
             {
-                MakeConnection(leftConnect, 2);
+                MakeConnection(leftConnect.toNode, 2);
             }
             else if (gameObject.GetComponent<LineRenderer>().positionCount >= 2)
             {
                 MakeConnection(gameObject, 2);
             }
 
-            if (upConnect != null && gameObject.GetComponent<LineRenderer>().positionCount >= 3)
+            if (upConnect.toNode != null && gameObject.GetComponent<LineRenderer>().positionCount >= 3)
             {
-                MakeConnection(upConnect, 3);
+                MakeConnection(upConnect.toNode, 3);
             }
             else if (gameObject.GetComponent<LineRenderer>().positionCount >= 3)
             {
                 MakeConnection(gameObject, 3);
             }
 
-            if (downConnect != null && gameObject.GetComponent<LineRenderer>().positionCount >= 4)
+            if (downConnect.toNode != null && gameObject.GetComponent<LineRenderer>().positionCount >= 4)
             {
-                MakeConnection(downConnect, 4);
+                MakeConnection(downConnect.toNode, 4);
             }
             else if (gameObject.GetComponent<LineRenderer>().positionCount >= 4)
             {
@@ -126,14 +145,29 @@ public class NodeScript : MonoBehaviour
         gameObject.GetComponent<LineRenderer>().SetPosition(connectIndex, connection.transform.position);
     }
 
-    public List<GameObject> GetConnections()
+    public List<Connection> GetConnections()
     {
-        List<GameObject> tempList = new List<GameObject>();
+        List<Connection> tempList = new List<Connection>();
 
-        tempList.Add(upConnect);
-        tempList.Add(downConnect);
-        tempList.Add(leftConnect);
-        tempList.Add(rightConnect);
+        if(upConnect.toNode != null)
+        {
+            tempList.Add(upConnect);
+        }
+
+        if (downConnect.toNode != null)
+        {
+            tempList.Add(downConnect);
+        }
+
+        if (leftConnect.toNode != null)
+        {
+            tempList.Add(leftConnect);
+        }
+
+        if (rightConnect.toNode != null)
+        {
+            tempList.Add(rightConnect);
+        }
 
         return tempList;
     }

@@ -5,23 +5,21 @@ using UnityEngine;
 public class GridScript : MonoBehaviour
 {
     #region NodeRecord
+
     struct NodeRecord
     {
         public GameObject node;
 
-        public List<GameObject> connections;
+        public NodeScript.Connection recordConnection;
 
         public float costSoFar;
         public float estiTotalCost;
     }
-
-    void SetRecord(NodeRecord nodeRecord, GameObject newNode, List<GameObject> newConnects, float estiCost)
-    {
-        nodeRecord.node = newNode;
-        nodeRecord.connections = newConnects;
-        nodeRecord.costSoFar = estiCost;
-    }
+    
     #endregion
+
+    [SerializeField]
+    List<GameObject> testPath;
 
     [SerializeField]
     int rows;
@@ -31,17 +29,28 @@ public class GridScript : MonoBehaviour
 
     List<GameObject> grid;
 
+    bool canPressButton = true;
+
     // Use this for initialization
     void Start ()
     {
         grid = new List<GameObject>();
         MakeGrid();
+
+        testPath = new List<GameObject>();
     }
 
     // Update is called once per frame
     void Update ()
     {
+        if(Input.GetKeyDown(KeyCode.Space) && canPressButton)
+        {
+            canPressButton = false;
+            Vector2 testStart = new Vector2(-30.0f, -20.0f);
+            Vector2 testEnd = new Vector2(0.0f, 0.0f);
 
+            testPath = GetPath(testStart, testEnd);
+        }
     }
 
     void MakeGrid()
@@ -78,8 +87,6 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    // ready to scrap
-    /*
     List<GameObject> GetPath(Vector3 start, Vector3 end)
     {
         List<GameObject> path = new List<GameObject>();
@@ -90,15 +97,21 @@ public class GridScript : MonoBehaviour
         GameObject startNode = FindClosestNode(start);
         GameObject endNode = FindClosestNode(end);
 
-        Vector2 startPos = start;
-
         NodeRecord startRecord = new NodeRecord();
-        List<GameObject> startConnection = startRecord.node.GetComponent<NodeScript>().GetConnections();
-        SetRecord(startRecord, startNode, null, EstimateCost(startNode, endNode));
+        NodeScript.Connection startConnection = new NodeScript.Connection();
+
+        startRecord.node = startNode;
+        startRecord.recordConnection = startConnection;
+        startRecord.estiTotalCost = EstimateCost(startNode, endNode);
 
         openList.Add(startRecord);
 
         NodeRecord currentNode = new NodeRecord();
+
+        Debug.Log(endNode.name);
+        Debug.Log(startNode.name);
+
+        return null;
 
         //iterate through processing each node
         while (openList.Count > 0)
@@ -109,21 +122,21 @@ public class GridScript : MonoBehaviour
             // if it is the goal node then terminate
             if (currentNode.node == endNode)
             {
-                Debug.Log("Reached the end of A_Star");
+                Debug.Log("there is no route");
                 break;
             }
             // otherwise get its outgoing connections
             else
             {
                 // connections= graph.getConnections(current)
-                List<GameObject> curNodeConnect = new List<GameObject>();
+                List<NodeScript.Connection> curNodeConnect = new List<NodeScript.Connection>();
                 curNodeConnect = currentNode.node.GetComponent<NodeScript>().GetConnections();
 
                 // loop through each connection in turn
                 for (int i = 0; i < curNodeConnect.Count; i++)
                 {
                     // get the cost estimate for the end node
-                    GameObject newEndNode = curNodeConnect[i];
+                    GameObject newEndNode = curNodeConnect[i].toNode;
                     float endNodeCost = currentNode.costSoFar + 1; // usually i would have to get the amount in
                                                                    // connection but we didnt have a cost amount for
                                                                    // connections so it is just 1
@@ -191,7 +204,7 @@ public class GridScript : MonoBehaviour
 
                                     // we can use the node's old cost values to calculate its heuristic without
                                     // calling the possibly expensive heuristic function
-                                    endNodeHeuristic = currentNode.costSoFar;
+                                    endNodeHeuristic = endNodeRecord.recordConnection.weight - currentNode.costSoFar;
                                 }
                                 break;
                             }
@@ -211,7 +224,7 @@ public class GridScript : MonoBehaviour
                         // we're here if we need to update the node
                         // update the cost, estimate, and connection
                         endNodeRecord.costSoFar = endNodeCost;
-                        endNodeRecord.connections = curNodeConnect;
+                        endNodeRecord.recordConnection = curNodeConnect[i];
                         endNodeRecord.estiTotalCost = endNodeCost + endNodeHeuristic;
 
                     }
@@ -267,7 +280,7 @@ public class GridScript : MonoBehaviour
                 // current = current.connection.getFromNode()
                 // FYI Update the current's connection as well
                 a_Star_Path.Add(currentNode.node);
-                currentNode.node = currentNode.connections.getFromNode();
+                currentNode.node = currentNode.recordConnection.fromNode;
 
                 //for (auto node = closedList.begin(); node < closedList.end(); node++)
                 for (int i = 0; i < closedList.Count; i++)
@@ -296,38 +309,42 @@ public class GridScript : MonoBehaviour
                 reversePath.Add(newNode);
             }
 
-
-            // return reverse path
-            //return reversePath;
+            path = reversePath;
             return path;
         }
     }
-    */
 
     GameObject FindClosestNode(Vector2 point)
     {
-        point.x = (int)point.x;
-        point.y = (int)point.y;
+        GameObject foundPoint = null;// = GameObject.Find("Node_" + point.x + "_" + point.y);
 
-        GameObject foundPoint = GameObject.Find("Node_" + point.x + "_" + point.y);
+        float minDist = 1000;
 
-        if(foundPoint != null)
+        for(int i = 0; i < grid.Count; i++)
         {
-            return foundPoint;
+            Vector2 diff = new Vector3(point.x, point.y, 0) - grid[i].transform.position;
+
+            float dist = Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.y, 2));
+
+            if(dist < minDist)
+            {
+                minDist = dist;
+                foundPoint = grid[i];
+            }
         }
-        else
-        {
-            return null;
-        }
+
+        return foundPoint;
+
     }
 
     float EstimateCost(GameObject startNode, GameObject endNode)
     {
+        //Debug.Log(startNode.name);
         Vector2 fromGridPos = startNode.transform.position;
         Vector2 toGridPos = endNode.transform.position;
         Vector2 dist = toGridPos - fromGridPos;
 
-        return dist.sqrMagnitude;
+        return dist.magnitude;
     }
     
 }
