@@ -51,6 +51,13 @@ public class GridScript : MonoBehaviour
 
             testPath = GetDijkstraPath(testStart, testEnd);
         }
+        if(Input.GetKeyDown(KeyCode.S)&&canPressButton)
+        {
+            if(testPath.Count > 0)
+            {
+                testPath = SmoothPath(testPath);
+            }
+        }
     }
 
     void MakeGrid()
@@ -121,7 +128,7 @@ public class GridScript : MonoBehaviour
             // if we are at the goal node then terminate
             if(currentNode.node == startEndNode)
             {
-                Debug.Log("at end of dijkstra");
+                ///Debug.Log("at end of dijkstra");
                 break;
             }
             // otherwise get the outgoing connections
@@ -242,24 +249,30 @@ public class GridScript : MonoBehaviour
                 GameObject newNode;
                 int lastNodeIndex;
 
-                lastNodeIndex = dijkstraPath.Count - (i + 1);
+                lastNodeIndex = dijkstraPath.Count - (i+1);
 
                 newNode = dijkstraPath[lastNodeIndex];
 
                 reversePath.Add(newNode);
             }
 
-            Debug.Log("finished making the path");
+            //Debug.Log("finished making the path");
 
             canPressButton = true;
 
-            return reversePath;
+            List<GameObject> outputPath = new List<GameObject>();
+
+            outputPath = reversePath;
+
+            //outputPath = SmoothPath(reversePath); // uncomment to smooth the path after making it
+
+            return outputPath;
         }
     }
 
     GameObject FindClosestNode(Vector2 point)
     {
-        GameObject foundPoint = null;// = GameObject.Find("Node_" + point.x + "_" + point.y);
+        GameObject foundPoint = null;
 
         float minDist = 1000;
 
@@ -290,4 +303,75 @@ public class GridScript : MonoBehaviour
         return dist.magnitude;
     }
     
+    List<GameObject> SmoothPath(List<GameObject> inputPath)
+    {
+        // if the path is only two nodes ling then we cant smooth it so return
+        if(inputPath.Count <= 2)
+        {
+            Debug.Log("Path is less than two units and cannot be smoothed");
+            return inputPath;
+        }
+        else
+        {
+            Debug.Log("Smoothing the path");
+        }
+
+        // compile an output path
+        List<GameObject> outputPath = new List<GameObject>();
+        outputPath.Add(inputPath[0]);
+
+        // keep track of where we are in the input path we start at 2, cause
+        // we assume two adjacent nodes will pass the ray cast
+        int inputIndex = 2;
+        int amountOfOutput = 1;
+
+        // loop until we find the last item in the input
+        while(inputIndex < inputPath.Count - 1)
+        {
+            amountOfOutput = outputPath.Count;
+
+            // check if we can "see" the next node (there is no wall/ blocking value in the way)
+            bool rayClear = ClearedRaycast(outputPath[amountOfOutput - 1], inputPath[inputIndex]);
+
+            if(!rayClear)
+            {
+                outputPath.Add(inputPath[inputIndex - 1]);
+            }
+
+            // consider the next node
+            inputIndex++;
+        }
+
+        // we reached the end of the input path, add the end node to the output and return it
+        outputPath.Add(inputPath[inputPath.Count - 1]);
+
+        // return the output path
+        return outputPath;
+    }
+
+    bool ClearedRaycast(GameObject outputNode, GameObject inputNode)
+    {
+        Vector2 fromGridPos = outputNode.transform.position;
+        Vector2 toGridPos = inputNode.transform.position;
+
+        Vector2 diff;
+
+        // getting the direction of the input node from the output
+        diff = toGridPos - fromGridPos;
+
+        int amountOfChecks = (int)diff.magnitude;
+
+        // this is using unity raycasting
+        // will check in between the two given nodes for the wall/ or blocking value
+        RaycastHit2D pathBlocked = Physics2D.Raycast(fromGridPos, diff, diff.magnitude);
+
+        if(pathBlocked.collider.gameObject.tag == "Environment")
+        {
+            // we learned there is a wall in the way and therefore we cannot see the input node
+            return false;
+        }
+
+        //by this time we have learned there is no wall in the way
+        return true;
+    }
 }
