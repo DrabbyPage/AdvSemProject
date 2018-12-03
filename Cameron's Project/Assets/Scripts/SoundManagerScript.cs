@@ -149,7 +149,10 @@ public class SoundManagerScript : MonoBehaviour
         {
             MenuPlayer.clip = ButtonPressAudio;
 
-            MenuPlayer.Play();
+            if(MenuPlayer.clip != null)
+            {
+                MenuPlayer.Play();
+            }
         }
     }
 
@@ -159,7 +162,10 @@ public class SoundManagerScript : MonoBehaviour
         {
             MenuPlayer.clip = ButtonHoverAudio;
 
-            MenuPlayer.Play();
+            if(MenuPlayer.clip != null)
+            {
+                MenuPlayer.Play();
+            }
         }
     }
 
@@ -168,9 +174,12 @@ public class SoundManagerScript : MonoBehaviour
         if (MusicRecordPlayer != null)
         {
             MusicRecordPlayer.clip = FantasyMusicAudio;
-            MusicRecordPlayer.Play();
-        }
 
+            if(MusicRecordPlayer.clip != null)
+            {
+                MusicRecordPlayer.Play();
+            }
+        }
     }
 
     public void PlayRaceMusic()
@@ -178,7 +187,11 @@ public class SoundManagerScript : MonoBehaviour
         if (MusicRecordPlayer != null)
         {
             MusicRecordPlayer.clip = RaceMusicAudio;
-            MusicRecordPlayer.Play();
+
+            if(MusicRecordPlayer.clip != null)
+            {
+                MusicRecordPlayer.Play();
+            }
         }
     }
 
@@ -187,7 +200,11 @@ public class SoundManagerScript : MonoBehaviour
         if (MusicRecordPlayer != null)
         {
             MusicRecordPlayer.clip = ArcadeMusicAudio;
-            MusicRecordPlayer.Play();
+
+            if(MusicRecordPlayer.clip != null)
+            {
+                MusicRecordPlayer.Play();
+            }
         }
     }
 }

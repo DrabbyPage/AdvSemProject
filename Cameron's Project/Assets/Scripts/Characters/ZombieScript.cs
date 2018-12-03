@@ -5,6 +5,7 @@ using UnityEngine;
 public class ZombieScript : MonoBehaviour
 {
     GameObject GameMan;
+    public GameObject closestHuman;
 
     bool attacking = false;
     public bool canMove = true;
@@ -20,12 +21,48 @@ public class ZombieScript : MonoBehaviour
     {
         CheckForPause();
 
+        CheckPath();
+
         // might change to wander and go to roar
         if(!attacking && canMove)
         {
             GetComponent<MoveScript>().MoveToPoint();
         }
 	}
+
+    void CheckPath()
+    {
+        if (GetComponent<PathHolderScript>().objectPath.Count > 0)
+        {
+            Vector3 nextNodePos = GetComponent<PathHolderScript>().GetNextPos();
+
+            Vector3 diff = nextNodePos - gameObject.transform.position;
+
+            float dist = diff.magnitude;
+
+            float minDist = 0.5f;
+
+            if(dist < minDist)
+            {
+                GetComponent<PathHolderScript>().KnockOutPathNode();
+                nextNodePos = GetComponent<PathHolderScript>().GetNextPos();
+            }
+
+            SetMovePoint(nextNodePos);
+        }
+        else
+        {
+            closestHuman = GetComponent<FindClosestTargetScript>().GetClosestTargetObject();
+
+            if(closestHuman != null)
+            {
+                Vector2 closeObjVec2 = closestHuman.transform.position;
+                Vector2 charObjVec2 = gameObject.transform.position;
+
+                GetComponent<PathHolderScript>().GeneratePath(charObjVec2, closeObjVec2);
+            }
+        }
+    }
 
     void CheckForPause()
     {

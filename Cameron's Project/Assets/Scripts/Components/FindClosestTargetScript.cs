@@ -14,7 +14,7 @@ public class FindClosestTargetScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        CheckState();
+        //CheckState();
 	}
 
     void CheckState()
@@ -45,6 +45,24 @@ public class FindClosestTargetScript : MonoBehaviour
         if (gameObject.tag == "Zombie")
         {
             GetComponent<MoveScript>().SetTarget(newTarget);
+            //GetComponent<ZombieScript>().SetMovePoint(newTarget.transform.position);
         }
+    }
+
+    public GameObject GetClosestTargetObject()
+    {
+        GameObject GameMan = GameObject.Find("GameManager");
+        GameObject newTarget;
+
+        if (GameMan != null)
+        {
+            newTarget = GameMan.GetComponent<GameManagerScript>().FindClosestHuman(gameObject);
+        }
+        else
+        {
+            newTarget = null;
+        }
+
+        return newTarget;
     }
 }

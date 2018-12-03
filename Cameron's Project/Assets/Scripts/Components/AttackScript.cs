@@ -31,7 +31,19 @@ public class AttackScript : MonoBehaviour
 
     void CheckToAttack()
     {
-        GameObject human = GetComponent<MoveScript>().target;
+        GameObject human;
+        if(gameObject.tag == "Zombie")
+        {
+            human = GetComponent<ZombieScript>().closestHuman;
+        }
+        else if(gameObject.tag == "Player")
+        {
+            human = GetComponent<CharacterScript>().target;
+        }
+        else
+        {
+            human = GetComponent<MoveScript>().target;
+        }
 
         CheckHitSoundTimer();
 
@@ -48,8 +60,19 @@ public class AttackScript : MonoBehaviour
                 human.GetComponent<BeingAttackedScript>().SetBeingAttacked(true);
                 GetComponent<Animator>().SetBool("Attacking", true);
 
+                if(GetComponent<PathHolderScript>())
+                {
+                    GetComponent<PathHolderScript>().ResetPath();
+                }
+
                 // set teh particle system activity to true
-                transform.GetChild(0).gameObject.SetActive(true);
+                if (transform.childCount > 0)
+                {
+                    if (transform.GetChild(0) != null)
+                    {
+                        transform.GetChild(0).gameObject.SetActive(true);
+                    }
+                }
 
                 if (gameObject.tag == "Zombie")
                 {
@@ -75,7 +98,16 @@ public class AttackScript : MonoBehaviour
             {
                 // shut the particle system off
                 gameObject.GetComponent<MoveScript>().SetMoveBool(true);
-                transform.GetChild(0).gameObject.SetActive(false);
+
+
+                if (transform.childCount >= 0)
+                {
+                    if (transform.GetChild(0) != null)
+                    {
+                        transform.GetChild(0).gameObject.SetActive(false);
+                    }
+                }
+
                 gameObject.GetComponent<MoveScript>().SetMoveVec2(gameObject.transform.position);
 
                 GetComponent<Animator>().SetBool("Attacking", false);
@@ -84,7 +116,14 @@ public class AttackScript : MonoBehaviour
         else
         {
             GetComponent<MoveScript>().SetMoveBool(true);
-            transform.GetChild(0).gameObject.SetActive(false);
+
+            if (transform.childCount > 0)
+            {
+                if (transform.GetChild(0) != null)
+                {
+                    transform.GetChild(0).gameObject.SetActive(false);
+                }
+            }
 
             GetComponent<Animator>().SetBool("Attacking", false);
         }
