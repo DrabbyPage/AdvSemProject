@@ -43,21 +43,6 @@ public class SightScript : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         bool ableToSee = true;
-        RaycastHit hit;
-
-        if (Physics.Linecast(transform.position, collision.gameObject.transform.position, out hit))
-        {
-            if (hit.transform.tag == "Player" || hit.transform.tag == "Zombie")
-            {
-                ableToSee = true;
-                Debug.Log("can see play/zombie");
-            }
-            else
-            {
-                ableToSee = false;
-                Debug.Log("obj in the way of player/zombie");
-            }
-        }
 
         if(ableToSee)
         {

@@ -163,9 +163,6 @@ public class ShootScript : MonoBehaviour
             GetComponent<MoveScript>().SetMoveVec2(target.transform.position);
             GetComponent<MoveScript>().SetTarget(null);
         }
-
-
-        //gameObject.GetComponent<Animator>().SetBool("Attacking", false);
     }
 
     void TimeBetweenShots()

@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class RunToObjectScript : MonoBehaviour
 {
-    bool canCheckCondition = true;
 
-    GameObject closeObj;
+    public GameObject closeObj;
 
     float objVal = -1.0f;
     int numberOfItems = 2;
@@ -29,7 +28,7 @@ public class RunToObjectScript : MonoBehaviour
 
         if(closeObj != null)
         {
-            GetComponent<MoveScript>().SetTarget(closeObj);// MoveToPoint();
+            //GetComponent<MoveScript>().SetTarget(closeObj);// MoveToPoint();
 
             float objX = closeObj.transform.position.x;
             float objY = closeObj.transform.position.y;
@@ -45,7 +44,7 @@ public class RunToObjectScript : MonoBehaviour
                     else if(closeObj.name == "Chest")
                         gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "I gotta go grab a weapon";
 
-                    GetComponent<MoveScript>().MoveToPoint();
+                    //GetComponent<MoveScript>().MoveToPoint();
                 }
             }
             else
@@ -74,10 +73,8 @@ public class RunToObjectScript : MonoBehaviour
     }
 
     // will come if there is no object yet set for the character to run to
-    void RandomizeObjVal()
+    public void RandomizeObjVal()
     {
-        if (canCheckCondition)
-        {
             objVal = Random.Range(0, 100) % numberOfItems;
 
             if (objVal == 1)
@@ -98,12 +95,9 @@ public class RunToObjectScript : MonoBehaviour
                     objVal = 1;
                 }
             }
-        }
-
-        canCheckCondition = false;
     }
 
-    IEnumerator WaitForCall()
+    public IEnumerator WaitForCall()
     {
         yield return new WaitForSeconds(5.0f);
         gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "";
@@ -122,8 +116,6 @@ public class RunToObjectScript : MonoBehaviour
                 }
             }
 
-            canCheckCondition = true;
-
             GetComponent<HumanScript>().SetPanic(false);
             GetComponent<HumanScript>().SetMoveBool(true);
 
@@ -132,13 +124,11 @@ public class RunToObjectScript : MonoBehaviour
 
     }
 
-    IEnumerator WaitForItem()
+    public IEnumerator WaitForItem()
     {
         yield return new WaitForSeconds(3.0f);
 
         gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "";
-
-        canCheckCondition = true;
 
         GetComponent<HumanScript>().SetGun(true);
         GetComponent<HumanScript>().SetPanic(false);
@@ -146,6 +136,8 @@ public class RunToObjectScript : MonoBehaviour
         
         GetComponent<MoveScript>().SetTarget(null);
         GetComponent<MoveScript>().SetMoveVec2(GetComponent<ShootScript>().threatsKnownLoc);
+
+        GetComponent<PathHolderScript>().GeneratePath(gameObject.transform.position, GetComponent<ShootScript>().threatsKnownLoc);
 
     }
 

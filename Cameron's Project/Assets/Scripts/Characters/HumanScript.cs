@@ -14,6 +14,9 @@ public class HumanScript : MonoBehaviour
     public bool beingAttacked = false;
     public bool targetSighted = false;
     public bool canMove = true;
+    public bool inObj = false;
+
+    GameObject closestObj; 
 
     void Start()
     {
@@ -25,7 +28,85 @@ public class HumanScript : MonoBehaviour
     {
         CheckForPause();
 
+        CheckForPath();
+        
 	}
+
+    void CheckForPath()
+    {
+        if(panicMode && !inObj)
+        {
+            if(GetComponent<PathHolderScript>().objectPath.Count > 0)
+            {
+                Vector3 nextNodePos = GetComponent<PathHolderScript>().GetNextPos();
+
+                Vector3 diff = nextNodePos - gameObject.transform.position;
+
+                float dist = diff.magnitude;
+
+                float minDist = 0.5f;
+
+                if (dist < minDist)
+                {
+                    GetComponent<PathHolderScript>().KnockOutPathNode();
+                    nextNodePos = GetComponent<PathHolderScript>().GetNextPos();
+                }
+
+                Vector2 diffToObj = closestObj.transform.position - gameObject.transform.position;
+                float distToObj = diffToObj.magnitude;
+
+                float minObjDist = 1.0f;
+
+                if(distToObj < minObjDist)
+                {
+                    inObj = true;
+                    SetMoveBool(false);
+
+                    if (closestObj.tag == "Chest")
+                    {
+                        SetMoveBool(false);
+
+                        canMove = false;
+
+                        gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "Where is that spell book?";
+                        closestObj.GetComponent<ChestScript>().SetOccupation(true);
+
+                        StartCoroutine(WaitForItem());
+                    }
+                    else if (closestObj.tag == "Booth")
+                    {
+                        SetMoveBool(false);
+
+                        gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "Hello! Somebody! Come Help!";
+                        closestObj.GetComponent<PhoneBoothScript>().SetOccupation(true);
+
+                        StartCoroutine(WaitForCall());
+                    }
+                }
+                else
+                {
+                    if (canMove)
+                    {
+                        SetMovePoint(nextNodePos);
+                    }
+                }
+            }
+            else
+            {
+                GetComponent<RunToObjectScript>().RandomizeObjVal();
+                closestObj = GetComponent<RunToObjectScript>().closeObj;
+                Vector2 closeObjVec2 = closestObj.transform.position;
+                Vector2 charObjVec2 = gameObject.transform.position;
+
+                if (closestObj.name == "PhoneBooth")
+                    gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "I gotta go call someone";
+                else if (closestObj.name == "Chest")
+                    gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "I gotta go grab a weapon";
+
+                GetComponent<PathHolderScript>().GeneratePath(charObjVec2, closeObjVec2);
+            }
+        }
+    }
 
     void CheckForPause()
     {
@@ -33,33 +114,20 @@ public class HumanScript : MonoBehaviour
         {
             if (GameMan.GetComponent<GameManagerScript>().gamePaused)
             {
-                gameObject.GetComponent<Animator>().SetBool("Walking", false);
                 canMove = false;
+                SetMoveBool(false);
             }
             else
             {
-                gameObject.GetComponent<Animator>().SetBool("Walking", true);
                 canMove = true;
-                CheckSituation();
+                SetMoveBool(true);
             }
         }
         else
         {
             canMove = true;
-            CheckSituation();
         }
 
-    }
-    void CheckSituation()
-    {
-        if(panicMode && !hasGun)
-        {
-            GetComponent<RunToObjectScript>().RunToObj();
-        }
-        else if(!panicMode && canMove)
-        {
-            GetComponent<MoveScript>().MoveToPoint();
-        }
     }
 
     public void SetPanic(bool newMode)
@@ -76,6 +144,11 @@ public class HumanScript : MonoBehaviour
     {
         canMove = newMove;
         GetComponent<MoveScript>().SetMoveBool(newMove);
+    }
+
+    public void SetMovePoint(Vector2 newPoint)
+    {
+        GetComponent<MoveScript>().SetMoveVec2(newPoint);
     }
 
     public void SetBeingAttacked(bool newAttack)
@@ -96,6 +169,56 @@ public class HumanScript : MonoBehaviour
     public void SetTargetLastLoc(Vector2 targetLoc)
     {
         GetComponent<MoveScript>().SetMoveVec2(targetLoc);
+    }
+
+    public IEnumerator WaitForCall()
+    {
+        yield return new WaitForSeconds(5.0f);
+        gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "";
+
+        if (!GetComponent<HumanScript>().beingAttacked)
+        {
+            if (closestObj != null)
+            {
+                Vector2 knownLoc = GetComponent<ShootScript>().threatsKnownLoc;
+
+                // call the police to (the last known loc of the threat)
+                if (GetComponent<ShootScript>().threat != null)
+                {
+                    closestObj.GetComponent<PhoneBoothScript>().CallThePoPo(knownLoc);
+                    GetComponent<ShootScript>().threat = null;
+                }
+            }
+
+            inObj = false;
+
+            SetPanic(false);
+            SetMoveBool(true);
+
+            SetTarget(null);
+
+            GetComponent<WanderScript>().RandomizePoint();
+        }
+
+    }
+
+    public IEnumerator WaitForItem()
+    {
+        yield return new WaitForSeconds(3.0f);
+
+        gameObject.transform.GetChild(1).GetComponent<TextMesh>().text = "";
+
+        inObj = false;
+
+        SetGun(true);
+        SetPanic(false);
+        SetMoveBool(true);
+
+        SetTarget(null);
+        SetMovePoint(GetComponent<ShootScript>().threatsKnownLoc);
+
+        GetComponent<PathHolderScript>().GeneratePath(gameObject.transform.position, GetComponent<ShootScript>().threatsKnownLoc);
+
     }
 
 }

@@ -45,27 +45,29 @@ public class MoveScript : MonoBehaviour
     {
         if (gameObject.tag == "Human")
         {
-            canMove = GetComponent<HumanScript>().canMove;
+            canMove = GetComponent<HumanScript>().canMove && !GameObject.Find("GameManager").GetComponent<GameManagerScript>().gamePaused;
         }
         else if (gameObject.tag == "Player")
         {
-            canMove = GetComponent<CharacterScript>().canMove;
+            canMove = GetComponent<CharacterScript>().canMove && !GameObject.Find("GameManager").GetComponent<GameManagerScript>().gamePaused;
         }
         else if (gameObject.tag == "Zombie")
         {
-            canMove = GetComponent<ZombieScript>().canMove;
+            canMove = GetComponent<ZombieScript>().canMove && !GameObject.Find("GameManager").GetComponent<GameManagerScript>().gamePaused;
         }
         else if (gameObject.tag == "Policeman")
         {
-            canMove = GetComponent<PolicemanScript>().canMove;
+            canMove = GetComponent<PolicemanScript>().canMove && !GameObject.Find("GameManager").GetComponent<GameManagerScript>().gamePaused;
         }
+
+        GetComponent<Animator>().SetBool("Walking", canMove);
+
     }
 
     public void MoveToPoint()
     {
         float distance;
         Vector2 playerPos = gameObject.transform.position;
-        //Vector2 direction = walkToPoint - playerPos;
 
         if (target != null)
         {
@@ -81,7 +83,14 @@ public class MoveScript : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().angularVelocity = 0f;
 
-            if (gameObject.tag == "Human" || gameObject.tag == "Policeman")
+            if (gameObject.tag == "Human")
+            {
+                if(!GetComponent<HumanScript>().inObj)
+                {
+                    gameObject.GetComponent<WanderScript>().RandomizePoint();
+                }
+            }
+            else if (gameObject.tag == "Policeman")
             {
                 gameObject.GetComponent<WanderScript>().RandomizePoint();
             }
@@ -99,8 +108,6 @@ public class MoveScript : MonoBehaviour
 
                 stuck = false;
 
-                //GetComponent<Rigidbody2D>().AddForce(direction.normalized * moveSpeed);
-
             }
 
             GetComponent<Rigidbody2D>().AddForce(direction.normalized * moveSpeed);
@@ -113,9 +120,6 @@ public class MoveScript : MonoBehaviour
             {
                 GetComponent<SpriteRenderer>().flipX = true;
             }
-
-            GetComponent<Animator>().SetBool("Walking", true);
-
         }
 
     }
@@ -153,6 +157,5 @@ public class MoveScript : MonoBehaviour
     public void SetMoveBool(bool newMove)
     {
         canMove = newMove;
-        GetComponent<Animator>().SetBool("Walking", newMove);
     }
 }
