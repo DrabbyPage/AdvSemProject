@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -103,6 +104,7 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        CheckAmountHumansLeft();
         CheckForPause();
         UpdatePauseTimer();
         CheckForLevelEnd();
@@ -580,12 +582,19 @@ public class GameManagerScript : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3.0f);
-        GetComponent<SceneManagerScript>().LoadScene("Level_Select");
+
+        if (SceneManager.GetActiveScene().name != "TestScene")
+        {
+            GetComponent<SceneManagerScript>().LoadScene("Level_Select");
+        }
     }
 
     IEnumerator GoBackToMenu()
     {
         yield return new WaitForSeconds(3.0f);
-        GetComponent<SceneManagerScript>().LoadScene("Main_Menu");
+        if(SceneManager.GetActiveScene().name != "TestScene")
+        {
+            GetComponent<SceneManagerScript>().LoadScene("Main_Menu");
+        }
     }
 }
