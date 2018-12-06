@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114446376162973974}
   - component: {fileID: 114929149435343096}
   - component: {fileID: 114064529577076264}
-  - component: {fileID: 114006887888667048}
+  - component: {fileID: 114230012331706466}
   - component: {fileID: 95598780321552186}
   m_Layer: 0
   m_Name: Zombie
@@ -133,17 +133,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114006887888667048
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1161098494587480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da7005f97f6acdb4e9804ce16826808b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114064529577076264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -156,6 +145,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDying: 0
+--- !u!114 &114230012331706466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1161098494587480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da7005f97f6acdb4e9804ce16826808b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114446376162973974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bfe056570ab7bc4ca24e580853d6974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 16
+  moveSpeed: 6
   turnSpeed: 10
   walkToPoint: {x: 0, y: 0}
   target: {fileID: 0}
@@ -209,7 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackTime: 1.5
-  canAttack: 1
 --- !u!198 &198542247820503106
 ParticleSystem:
   m_ObjectHideFlags: 1

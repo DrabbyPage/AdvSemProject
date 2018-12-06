@@ -6,7 +6,7 @@ public class AttackScript : MonoBehaviour
 {
     public float attackTime = 1.5f;
 
-    public bool canAttack = true;
+    bool canAttack = true;
 
     GameObject SoundMan;
 
@@ -31,7 +31,8 @@ public class AttackScript : MonoBehaviour
 
     void CheckToAttack()
     {
-        GameObject human;
+        GameObject human = null;
+
         if(gameObject.tag == "Zombie")
         {
             human = GetComponent<ZombieScript>().closestHuman;
@@ -39,10 +40,6 @@ public class AttackScript : MonoBehaviour
         else if(gameObject.tag == "Player")
         {
             human = GetComponent<CharacterScript>().target;
-        }
-        else
-        {
-            human = GetComponent<MoveScript>().target;
         }
 
         CheckHitSoundTimer();

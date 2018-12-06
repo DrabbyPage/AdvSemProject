@@ -57,6 +57,8 @@ public class HealthScript : MonoBehaviour
             {
                 GetComponent<CharacterScript>().SetMoveBool(false);
 
+                GameMan.GetComponent<GameManagerScript>().DeleteZombieFromList(gameObject);
+
                 //transfer to other zombie
                 GameObject closestZombie = GameMan.GetComponent<GameManagerScript>().ClosestZombie(gameObject.transform.position);
 

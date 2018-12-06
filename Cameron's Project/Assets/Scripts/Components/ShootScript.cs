@@ -154,8 +154,13 @@ public class ShootScript : MonoBehaviour
             newBullet = Instantiate(bullet) as GameObject;
             newBullet.GetComponent<BulletScript>().SetAngle(lookAngleDeg);
             newBullet.transform.position = new Vector2(newX, newY);
-            SoundMan.GetComponent<SoundManagerScript>().PlayShootSound();
+
             ableToShoot = false;
+
+            if(SoundMan != null)
+            {
+                SoundMan.GetComponent<SoundManagerScript>().PlayShootSound();
+            }
         }
         else
         {

@@ -182,7 +182,7 @@ public class GameManagerScript : MonoBehaviour
 
             dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
 
-            if(dist < closestDist)
+            if (dist < closestDist)
             {
                 closestDist = dist;
                 closeHumIndex = i;
@@ -362,17 +362,19 @@ public class GameManagerScript : MonoBehaviour
 
         for (int i = 0; i < zombieList.Count; i++)
         {
-            float distX = zombieList[i].transform.position.x - point.x;
-            float distY = zombieList[i].transform.position.y - point.y;
-
-            dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
-
-            if(dist < closestDist)
+            if (zombieList[i].tag != "Player")
             {
-                closestDist = dist;
-                closeZomIndex = i;
-            }
+                float distX = zombieList[i].transform.position.x - point.x;
+                float distY = zombieList[i].transform.position.y - point.y;
 
+                dist = Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
+
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closeZomIndex = i;
+                }
+            }
         }
 
         return zombieList[closeZomIndex];

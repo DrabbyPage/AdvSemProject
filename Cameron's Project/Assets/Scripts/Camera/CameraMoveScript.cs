@@ -5,7 +5,8 @@ using UnityEngine;
 public class CameraMoveScript : MonoBehaviour
 {
     public int bound = 50; // distance from edge scrolling starts
-    public int speed = 20;
+    public int speed = 5;
+    int maxSpeed = 20;
 
     float screenHeight = Screen.height;
     float screenWidth = Screen.width;
@@ -26,6 +27,8 @@ public class CameraMoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        speed = maxSpeed * (int)GetComponent<Camera>().orthographicSize/12;
+
         CheckMove();
 
         if(canMove)

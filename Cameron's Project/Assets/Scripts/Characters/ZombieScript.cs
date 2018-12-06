@@ -7,7 +7,7 @@ public class ZombieScript : MonoBehaviour
     GameObject GameMan;
     public GameObject closestHuman;
 
-    bool attacking = false;
+    //bool attacking = false;
     public bool canMove = true;
 
     // Use this for initialization
@@ -24,10 +24,11 @@ public class ZombieScript : MonoBehaviour
         CheckPath();
 
         // might change to wander and go to roar
-        if(!attacking && canMove)
+        if(canMove)
         {
             GetComponent<MoveScript>().MoveToPoint();
         }
+        
 	}
 
     void CheckPath()

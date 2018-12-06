@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BeingAttackedScript : MonoBehaviour
 {
-    GameObject gameManObj;
+    GameObject GameMan;
 
     float timeToTurn = 3.0f;
     float dyingTime = 2.0f;
@@ -15,7 +15,7 @@ public class BeingAttackedScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        gameManObj = GameObject.Find("GameManager");
+        GameMan = GameObject.Find("GameManager");
     }
 
     // Update is called once per frame
@@ -95,8 +95,8 @@ public class BeingAttackedScript : MonoBehaviour
 
         GameObject newZombie = Instantiate(Resources.Load("Prefabs/Zombie"),objPos, objQuat) as GameObject;
 
-        gameManObj.GetComponent<GameManagerScript>().DeleteHumanFromList(gameObject);
-        gameManObj.GetComponent<GameManagerScript>().AddZombieToList(newZombie);
+        GameMan.GetComponent<GameManagerScript>().DeleteHumanFromList(gameObject);
+        GameMan.GetComponent<GameManagerScript>().AddZombieToList(newZombie);
 
         Destroy(gameObject);
     }

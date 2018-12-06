@@ -17,7 +17,9 @@ public class MoveScript : MonoBehaviour
     bool stuck = false;
 
     float notMovingTimer = 0;
-    float maxTime = 3.0f;
+    float maxTime = 1.0f;
+
+    Vector2 StartPos;
 
     void Start()
     {
@@ -43,21 +45,51 @@ public class MoveScript : MonoBehaviour
 
     void CheckCanMove()
     {
+        GameObject GameMan = GameObject.Find("GameManager");
+
         if (gameObject.tag == "Human")
         {
-            canMove = GetComponent<HumanScript>().canMove && !GameObject.Find("GameManager").GetComponent<GameManagerScript>().gamePaused;
+            if (GameMan != null)
+            {
+                canMove = GetComponent<HumanScript>().canMove && !GameMan.GetComponent<GameManagerScript>().gamePaused;
+            }
+            else
+            {
+                canMove = GetComponent<HumanScript>().canMove;
+            }
         }
         else if (gameObject.tag == "Player")
         {
-            canMove = GetComponent<CharacterScript>().canMove && !GameObject.Find("GameManager").GetComponent<GameManagerScript>().gamePaused;
+            if (GameMan != null)
+            {
+                canMove = GetComponent<CharacterScript>().canMove && !GetComponent<HealthScript>().isDying && !GameMan.GetComponent<GameManagerScript>().gamePaused;
+            }
+            else
+            {
+                canMove = GetComponent<CharacterScript>().canMove && !GetComponent<HealthScript>().isDying;
+            }
         }
         else if (gameObject.tag == "Zombie")
         {
-            canMove = GetComponent<ZombieScript>().canMove && !GameObject.Find("GameManager").GetComponent<GameManagerScript>().gamePaused;
+            if (GameMan != null)
+            {
+                canMove = GetComponent<ZombieScript>().canMove && !GetComponent<HealthScript>().isDying && !GameMan.GetComponent<GameManagerScript>().gamePaused;
+            }
+            else
+            {
+                canMove = GetComponent<ZombieScript>().canMove && !GetComponent<HealthScript>().isDying;
+            }
         }
         else if (gameObject.tag == "Policeman")
         {
-            canMove = GetComponent<PolicemanScript>().canMove && !GameObject.Find("GameManager").GetComponent<GameManagerScript>().gamePaused;
+            if (GameMan != null)
+            {
+                canMove = GetComponent<PolicemanScript>().canMove && !GameMan.GetComponent<GameManagerScript>().gamePaused;
+            }
+            else
+            {
+                canMove = GetComponent<PolicemanScript>().canMove;
+            }
         }
 
         GetComponent<Animator>().SetBool("Walking", canMove);
@@ -88,6 +120,7 @@ public class MoveScript : MonoBehaviour
                 if(!GetComponent<HumanScript>().inObj)
                 {
                     gameObject.GetComponent<WanderScript>().RandomizePoint();
+                    StartPos = gameObject.transform.position;
                 }
             }
             else if (gameObject.tag == "Policeman")
@@ -110,7 +143,7 @@ public class MoveScript : MonoBehaviour
 
             }
 
-            GetComponent<Rigidbody2D>().AddForce(direction.normalized * moveSpeed);
+            GetComponent<Rigidbody2D>().velocity = direction.normalized * moveSpeed;
 
             if(direction.normalized.x > 0.4f)
             {
@@ -132,7 +165,11 @@ public class MoveScript : MonoBehaviour
         }
         else
         {
-            if (GetComponent<Rigidbody2D>().velocity.magnitude <= 1.0f)
+            Vector2 diff = gameObject.transform.position - new Vector3(StartPos.x, StartPos.y, 0);
+
+            float dist = diff.magnitude;
+
+            if (dist <= 1.0f)
             {
                 stuck = true;
             }
@@ -141,6 +178,8 @@ public class MoveScript : MonoBehaviour
                 stuck = false;
             }
             notMovingTimer = maxTime;
+
+            StartPos = gameObject.transform.position;
         }
     }
 
