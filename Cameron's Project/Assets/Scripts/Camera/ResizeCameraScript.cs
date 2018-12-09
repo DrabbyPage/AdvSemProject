@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class ResizeCameraScript : MonoBehaviour
 {
+    [SerializeField]
     float minCameraSize = 5.0f;
+
+    [SerializeField]
     float maxCameraSize = 11.0f;
+
     float cameraSizeChange = 0.5f;
 
 	// Use this for initialization
