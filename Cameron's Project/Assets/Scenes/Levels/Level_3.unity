@@ -311,7 +311,7 @@ Transform:
   - {fileID: 940550107}
   - {fileID: 1769089128}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &249288152
 GameObject:
@@ -382,7 +382,7 @@ Transform:
   - {fileID: 713504938}
   - {fileID: 590003070}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &283896759
 Prefab:
@@ -497,7 +497,7 @@ Prefab:
         type: 2}
       propertyPath: gameText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1215493953}
     - target: {fileID: 114004426879551056, guid: aea1a182c7c1d9248a428ef0db2aaa59,
         type: 2}
       propertyPath: humanText
@@ -511,6 +511,18 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aea1a182c7c1d9248a428ef0db2aaa59, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &315873093 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114579450903511594, guid: aea1a182c7c1d9248a428ef0db2aaa59,
+    type: 2}
+  m_PrefabInternal: {fileID: 315873092}
+  m_Script: {fileID: 11500000, guid: ec4eae04e52c86a4382cf1a4c45ab234, type: 3}
+--- !u!114 &315873094 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114004426879551056, guid: aea1a182c7c1d9248a428ef0db2aaa59,
+    type: 2}
+  m_PrefabInternal: {fileID: 315873092}
+  m_Script: {fileID: 11500000, guid: 283370f455567a94f9a827d772fd04d8, type: 3}
 --- !u!1 &338090803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,7 +1481,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &820602547
 GameObject:
@@ -2183,7 +2195,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1174858366 stripped
 Transform:
@@ -2307,9 +2319,80 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 224864261931416882, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 13.799988
+      objectReference: {fileID: 0}
+    - target: {fileID: 114971460673052656, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1277386301}
+    - target: {fileID: 114971460673052656, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayButtonPress
+      objectReference: {fileID: 0}
+    - target: {fileID: 114971460673052656, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1277386301}
+    - target: {fileID: 114971460673052656, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayButtonHover
+      objectReference: {fileID: 0}
+    - target: {fileID: 114706152176829674, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 315873094}
+    - target: {fileID: 114706152176829674, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DoPauseAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 114206594588207604, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 315873093}
+    - target: {fileID: 114206594588207604, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 114171249955597568, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1277386301}
+    - target: {fileID: 114171249955597568, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayButtonHover
+      objectReference: {fileID: 0}
+    - target: {fileID: 114171249955597568, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1277386301}
+    - target: {fileID: 114171249955597568, guid: 322ae24d7afcaa64384dd21b2236d763,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayButtonPress
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 322ae24d7afcaa64384dd21b2236d763, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &1215493953 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114489256364526386, guid: 322ae24d7afcaa64384dd21b2236d763,
+    type: 2}
+  m_PrefabInternal: {fileID: 1215493952}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1263604898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,6 +2463,12 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5f9bdeb1b7192d4aba384a95f08357e, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &1277386301 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114041820945040794, guid: f5f9bdeb1b7192d4aba384a95f08357e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1277386300}
+  m_Script: {fileID: 11500000, guid: 2c1e1ed3ad659084baf4efb061c2f087, type: 3}
 --- !u!1001 &1342893798
 Prefab:
   m_ObjectHideFlags: 0
