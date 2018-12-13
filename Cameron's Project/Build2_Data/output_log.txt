@@ -5,7 +5,7 @@ Direct3D:
     Renderer: NVIDIA GeForce GTX 1050 (ID=0x1c8d)
     Vendor:   NVIDIA
     VRAM:     3072 MB
-    Driver:   25.21.14.1634
+    Driver:   25.21.14.1722
 Begin MonoManager ReloadAssembly
 Platform assembly: D:\GitHub\AdvSemProject\Cameron's Project\Build2_Data\Managed\UnityEngine.dll (this message is harmless)
 Loading D:\GitHub\AdvSemProject\Cameron's Project\Build2_Data\Managed\UnityEngine.dll into Unity Child Domain
@@ -24,9 +24,29 @@ desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 2.339557 ms
+UnloadTime: 2.284886 ms
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.517772 ms
+
+Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 381.
+Total: 0.248888 ms (FindLiveObjects: 0.019999 ms CreateObjectMapping: 0.011111 ms MarkObjects: 0.189333 ms  DeleteObjects: 0.027999 ms)
+
+Can not play a disabled audio source
+ 
+(Filename:  Line: 536)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.554666 ms
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 374.
+Total: 0.204888 ms (FindLiveObjects: 0.020444 ms CreateObjectMapping: 0.011111 ms MarkObjects: 0.157777 ms  DeleteObjects: 0.015555 ms)
+
+Can not play a disabled audio source
+ 
+(Filename:  Line: 536)
+
 Setting up 4 worker threads for Enlighten.
-  Thread -> id: 7454 -> priority: 1 
-  Thread -> id: 400c -> priority: 1 
-  Thread -> id: 718 -> priority: 1 
-  Thread -> id: 1270 -> priority: 1 
+  Thread -> id: 1f48 -> priority: 1 
+  Thread -> id: 5690 -> priority: 1 
+  Thread -> id: 398c -> priority: 1 
+  Thread -> id: 946c -> priority: 1 

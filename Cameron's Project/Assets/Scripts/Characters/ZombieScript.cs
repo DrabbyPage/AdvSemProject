@@ -33,7 +33,7 @@ public class ZombieScript : MonoBehaviour
 
     void CheckPath()
     {
-        if (GetComponent<PathHolderScript>().objectPath.Count > 0)
+        if (GetComponent<PathHolderScript>().objectPath.Count > 0 || closestHuman != null)
         {
             Vector3 nextNodePos = GetComponent<PathHolderScript>().GetNextPos();
 
@@ -45,8 +45,12 @@ public class ZombieScript : MonoBehaviour
 
             if(dist < minDist)
             {
-                GetComponent<PathHolderScript>().KnockOutPathNode();
-                nextNodePos = GetComponent<PathHolderScript>().GetNextPos();
+                if (GetComponent<PathHolderScript>().objectPath.Count > 0)
+                {
+                    GetComponent<PathHolderScript>().KnockOutPathNode();
+
+                    nextNodePos = GetComponent<PathHolderScript>().GetNextPos();
+                }
             }
 
             SetMovePoint(nextNodePos);

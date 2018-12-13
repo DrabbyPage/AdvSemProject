@@ -42,7 +42,13 @@ public class BeingAttackedScript : MonoBehaviour
 
         if(SoundMan !=null)
         {
-            SoundMan.GetComponent<SoundManagerScript>().PlayCharDeathSound();
+            Vector2 diff = GameObject.Find("Player").transform.position - gameObject.transform.position;
+            float distance = diff.magnitude;
+
+            if (distance < 5)
+            {
+                SoundMan.GetComponent<SoundManagerScript>().PlayCharDeathSound();
+            }
         }
     }
 

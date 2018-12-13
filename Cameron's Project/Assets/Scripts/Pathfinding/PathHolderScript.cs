@@ -57,15 +57,13 @@ public class PathHolderScript : MonoBehaviour
 
     public void KnockOutPathNode()
     {
-        objectPath.RemoveAt(0);
+        int frontValue = 0;
+        objectPath.RemoveAt(frontValue);
     }
 
     public void ResetPath()
     {
-        while(objectPath.Count > 0)
-        {
-            objectPath.RemoveAt(0);
-        }
+        objectPath.Clear();
     }
 
     List<GameObject> GetDijkstraPath(Vector3 start, Vector3 end)
@@ -233,9 +231,9 @@ public class PathHolderScript : MonoBehaviour
 
             List<GameObject> outputPath = new List<GameObject>();
 
-            //outputPath = reversePath;
+            outputPath = reversePath;
 
-            outputPath = SmoothPath(reversePath); // uncomment to smooth the path after making it
+            //outputPath = SmoothPath(reversePath); // uncomment to smooth the path after making it
 
             return outputPath;
         }
